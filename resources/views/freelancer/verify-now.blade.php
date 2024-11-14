@@ -17,7 +17,7 @@
                 <div class="col-lg-3">
                     @include('front.account.sidebar')
                 </div>
-                <form action="" method="post" id="verifyForm" name="verifyForm" class="col-lg-9">
+                <form action="" method="post" id="verifyForm" name="verifyForm" enctype="multipart/form-data" class="col-lg-9">
                     @include('front.message')
                     <div>
                         @if (Auth::user()->role == 'freelancer')
@@ -43,7 +43,7 @@
                                     </div>  
 
                                     <div class="mb-4">
-                                        <label for="certificate" class="mb-2">Certificate</label>
+                                        <label for="certificate" class="mb-2">Certificates</label>
                                         <input type="file" name="certificate" id="certificate" class="form-control">
                                         <p class="text-danger" id="image-error"></p>
                                     </div>   
@@ -66,95 +66,85 @@
 @endsection
 
 @section('customJs')
-    <script type="text/javascript">
-        $("#verifyForm").submit(function(e){
-            e.preventDefault();
+<script type="text/javascript">
+    $("#verifyForm").submit(function(e) {
+        e.preventDefault();
 
-            $.ajax({
-                url:'{{ route("account.updateProfile") }}',
-                type: 'put',
-                dataType: 'json',
-                data: $("#verifyForm").serializeArray(),
-                success: function(response) {
-                    
-                    if(response.status == true) {
+        // Create FormData object
+        let formData = new FormData(this);
 
-                        $("#firstName").removeClass('is-invalid')
+        $.ajax({
+            url: '{{ route("freelancer.verifyCredentials") }}',
+            type: 'POST',
+            dataType: 'json',
+            data: formData,
+            processData: false, // Prevent jQuery from automatically transforming the data into a query string
+            contentType: false, // Necessary for file uploads
+            success: function(response) {
+                if (response.status === true) {
+                    // Reset the error messages and classes on success
+                    ["#valid_id", "#selfie_with_id", "#diploma", "#certificate"].forEach(id => {
+                        $(id).removeClass('is-invalid')
                             .siblings('p')
                             .removeClass('invalid-feedback')
-                            .html('')
+                            .html('');
+                    });
 
-                        $("#midName").removeClass('is-invalid')
+                    window.location.href = "{{ route('freelancer.verify-now') }}";
+                } else {
+                    // Display error messages for each invalid field
+                    var errors = response.errors;
+                    if (errors.valid_id) {
+                        $("#valid_id").addClass('is-invalid')
                             .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('')
-
-                        $("#lastName").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('')
-
-                        $("#email").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('')
-
-                        window.location.href="{{ route('account.profile') }}";
-
+                            .addClass('invalid-feedback')
+                            .html(errors.valid_id);
                     } else {
-                        var errors = response.errors;
-
-                        if (errors.firstName) {
-                                $("#firstName").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.firstName)
-                            } else {
-                                $("#firstName").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.midName) {
-                                $("#midName").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.midName)
-                            } else {
-                                $("#midName").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.lastName) {
-                                $("#lastName").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.lastName)
-                            } else {
-                                $("#lastName").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.email) {
-                                $("#email").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.email)
-                            } else {
-                                $("#email").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
+                        $("#valid_id").removeClass('is-invalid')
+                            .siblings('p')
+                            .removeClass('invalid-feedback')
+                            .html('');
                     }
 
+                    if (errors.selfie_with_id) {
+                        $("#selfie_with_id").addClass('is-invalid')
+                            .siblings('p')
+                            .addClass('invalid-feedback')
+                            .html(errors.selfie_with_id);
+                    } else {
+                        $("#selfie_with_id").removeClass('is-invalid')
+                            .siblings('p')
+                            .removeClass('invalid-feedback')
+                            .html('');
+                    }
+
+                    if (errors.diploma) {
+                        $("#diploma").addClass('is-invalid')
+                            .siblings('p')
+                            .addClass('invalid-feedback')
+                            .html(errors.diploma);
+                    } else {
+                        $("#diploma").removeClass('is-invalid')
+                            .siblings('p')
+                            .removeClass('invalid-feedback')
+                            .html('');
+                    }
+
+                    if (errors.certificate) {
+                        $("#certificate").addClass('is-invalid')
+                            .siblings('p')
+                            .addClass('invalid-feedback')
+                            .html(errors.certificate);
+                    } else {
+                        $("#certificate").removeClass('is-invalid')
+                            .siblings('p')
+                            .removeClass('invalid-feedback')
+                            .html('');
+                    }
                 }
-            });
+            }
         });
-    </script>
+    });
+</script>
+
 @endsection
