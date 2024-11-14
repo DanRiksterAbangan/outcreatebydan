@@ -17,52 +17,39 @@
                 <div class="col-lg-3">
                     @include('front.account.sidebar')
                 </div>
-                <form action="" method="post" id="userForm" name="userForm" class="col-lg-9">
+                <form action="" method="post" id="verifyForm" name="verifyForm" class="col-lg-9">
                     @include('front.message')
                     <div>
-                        <div class="card border-0 shadow mb-4">
-                            <div class="card-body p-4">
-                                <h3 class="fs-4 mb-1">My Profile</h3>
-                                <div class="mb-4">
-                                    <label for="" class="mb-2">First Name*</label>
-                                    <input type="text" name="firstName" id="firstName" placeholder="John" class="form-control" value="{{ $user->firstName }}">
-                                    <p></p>
-                                </div>
+                        @if (Auth::user()->role == 'freelancer')
+                            <div class="card border-0 shadow mb-4">
+                                <div class="card-body  p-4">
+                                    <h3 class="fs-4 mb-1">Credentials</h3>
+                                    <div class="mb-4">
+                                        <label for="valid_id" class="form-label mb-2">Valid ID</label>
+                                        <input type="file" name="valid_id" id="valid_id" class="form-control">
+                                        <p class="text-danger" id="image-error"></p>
+                                    </div>
 
-                                <div class="mb-4">
-                                    <label for="" class="mb-2">Middle name*</label>
-                                    <input type="text" name="midName" id="midName" placeholder="Smith" class="form-control" value="{{  $user->midName }}">
-                                    <p></p>
-                                </div>
+                                    <div class="mb-4">
+                                        <label for="selfie_with_id" class="mb-2">Selfie with Valid ID</label>
+                                        <input type="file" name="selfie_with_id" id="selfie_with_id" class="form-control">
+                                        <p class="text-danger" id="image-error"></p>
+                                    </div>
 
-                                <div class="mb-4">
-                                    <label for="" class="mb-2">Last Name*</label>
-                                    <input type="text" name="lastName" id="lastName" placeholder="Doe" class="form-control" value="{{ $user->lastName }}">
-                                    <p></p>
+                                    <div class="mb-4">
+                                        <label for="diploma" class="mb-2">Diploma</label>
+                                        <input type="file" name="diploma" id="diploma" class="form-control">
+                                        <p class="text-danger" id="image-error"></p>
+                                    </div>  
+
+                                    <div class="mb-4">
+                                        <label for="certificate" class="mb-2">Certificate</label>
+                                        <input type="file" name="certificate" id="certificate" class="form-control">
+                                        <p class="text-danger" id="image-error"></p>
+                                    </div>   
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="card border-0 shadow mb-4">
-                            <div class="card-body  p-4">
-                                <h3 class="fs-4 mb-1">More Info</h3>
-                                <div class="mb-4">
-                                    <label for="" class="mb-2">Email*</label>
-                                    <input type="text" name="email" id="email" placeholder="johndoe@email.com" value="{{ $user->email }}" class="form-control">
-                                    <p></p>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="" class="mb-2">Designation</label>
-                                    <input type="text" name="designation" id="designation" placeholder="Designation" value="{{ $user->designation }}" class="form-control">
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="" class="mb-2">Mobile</label>
-                                    <input type="number" name="mobile" id="mobile" placeholder="Mobile" value="{{ $user->mobile }}" class="form-control">
-                                </div>   
-                            </div>
-                        </div>
+                        @endif
 
                         <div class="card border-0 shadow mb-4">
                             <div class="card-body p-4">
@@ -80,14 +67,14 @@
 
 @section('customJs')
     <script type="text/javascript">
-        $("#userForm").submit(function(e){
+        $("#verifyForm").submit(function(e){
             e.preventDefault();
 
             $.ajax({
                 url:'{{ route("account.updateProfile") }}',
                 type: 'put',
                 dataType: 'json',
-                data: $("#userForm").serializeArray(),
+                data: $("#verifyForm").serializeArray(),
                 success: function(response) {
                     
                     if(response.status == true) {
