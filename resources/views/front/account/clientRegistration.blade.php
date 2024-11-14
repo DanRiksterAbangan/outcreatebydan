@@ -9,6 +9,9 @@
                     <div class="card shadow border-0 p-5">
                         <h1 class="h3">Client Register</h1>
                         <form action="" name="registrationForm" id="registrationForm">
+                            @csrf
+                            <input type="hidden" name="role" value="{{ request('role') }}">
+                            
                             <div class="mb-3">
                                 <label for="" class="mb-2">First Name*</label>
                                 <input type="text" name="firstName" id="firstName" class="form-control" placeholder="John">
