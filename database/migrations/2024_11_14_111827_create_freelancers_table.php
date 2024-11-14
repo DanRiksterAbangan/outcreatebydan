@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('valid_id')->nullable();
             $table->string('selfie_with_id')->nullable();
             $table->string('diploma')->nullable();
-            $table->string('certificate ')->nullable();
+            $table->string('certificate')->nullable();
             $table->timestamps();
         });
     }
