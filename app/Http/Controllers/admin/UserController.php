@@ -12,12 +12,50 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     // Admin Dashboard - All Users
-    public function index() {
-        $users = User::orderBy('created_at','DESC')->paginate(10);
-        return view('admin.users.list',[
+    public function index(Request $request) {
+
+        // Start the query builder
+        $users = User::orderBy('created_at','DESC');
+    
+        // Check if there is a search keyword and filter the results
+        if ($request->has('keyword') && $request->get('keyword') != '') {
+            $keyword = $request->get('keyword');
+            $users = $users->where(function($query) use ($keyword) {
+                $query->where('id', 'like', '%' . $keyword . '%')
+                      ->orWhere('firstName', 'like', '%' . $keyword . '%')
+                      ->orWhere('midName', 'like', '%' . $keyword . '%')
+                      ->orWhere('lastName', 'like', '%' . $keyword . '%')
+                      ->orWhere('email', 'like', '%' . $keyword . '%')
+                      ->orWhere('mobile', 'like', '%' . $keyword . '%')
+                      ->orWhere('role', 'like', '%' . $keyword . '%');
+            });
+        }
+    
+        // Apply role-based filtering based on the request
+        if ($request->sort == '3') {
+            // Display all users
+            $users = $users->whereIn('role', ['admin', 'freelancer']);
+        } else if ($request->sort == '2') {
+            // Display only admins
+            $users = $users->where('role', 'admin');
+        } else if ($request->sort == '1') {
+            // Display only freelancers
+            $users = $users->where('role', 'freelancer');
+        } else if ($request->sort == '0') {
+            // Display only clients
+            $users = $users->where('role', 'user');
+        }
+    
+        // Apply pagination
+        $users = $users->paginate(6);
+    
+        return view('admin.users.list', [
             'users' => $users
         ]);
     }
+    
+    
+    
 
     // Admin Function - Open Edit User Page
     public function edit($id) {

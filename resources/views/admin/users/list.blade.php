@@ -5,7 +5,7 @@
         <div class="container py-5">
             <div class="row">
                 <div class="col">
-                    <nav aria-label="breadcrumb" class=" rounded-3 p-3 mb-4">
+                    <nav aria-label="breadcrumb" class="rounded-3 p-3 mb-4">
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                             <li class="breadcrumb-item active">All Users</li>
@@ -29,10 +29,44 @@
                                 <div style="margin-top: -10px;">
                                     <a class="btn btn-primary me-2" href="{{ route('admin.users.create') }}" type="submit">Create User</a>
                                 </div>
-                                
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <div class="flex-grow-1">
+                                    <form method="GET" action="{{ route('admin.users') }}">
+                                        <input 
+                                            value="{{ Request::get('keyword') }}" 
+                                            type="text" 
+                                            name="keyword" 
+                                            id="keyword" 
+                                            placeholder="Search a User" 
+                                            class="form-control"
+                                        >
+                                    </form>
+                                </div>
+                                <div class="ms-3">
+                                    <form method="GET" action="{{ route('admin.users') }}">
+                                        <input type="hidden" name="sort" value="{{ Request::get('sort') }}">
+                                        <button type="submit" class="btn btn-secondary">Reset</button>
+                                    </form>
+                                </div>
+                            </div>
+                            
+
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="col-6 col-md-2">
+                                    <div class="align-end">
+                                        <select name="sort" id="sort" class="form-control" onchange="sortUsers()">
+                                            <option value="3" {{ (Request::get('sort') == '3') ? 'selected' : ''}}>All Users</option>
+                                            <option value="2" {{ (Request::get('sort') == '2') ? 'selected' : ''}}>Admins</option>
+                                            <option value="1" {{ (Request::get('sort') == '1') ? 'selected' : ''}}>Freelancers</option>
+                                            <option value="0" {{ (Request::get('sort') == '0') ? 'selected' : ''}}>Users/Clients</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table ">
+                                <table class="table">
                                     <thead class="bg-light">
                                         <tr>
                                             <th scope="col">ID</th>
@@ -51,15 +85,9 @@
                                             @foreach ($users as $user)
                                                 <tr class="active">
                                                     <td>{{ $user->id }}</td>
-                                                    <td>
-                                                        <div class="job-name fw-500">{{ $user->firstName }}</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="job-name fw-500">{{ $user->midName }}</div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="job-name fw-500">{{ $user->lastName }}</div>
-                                                    </td>
+                                                    <td>{{ $user->firstName }}</td>
+                                                    <td>{{ $user->midName }}</td>
+                                                    <td>{{ $user->lastName }}</td>
                                                     <td>{{ $user->email }}</td>
                                                     <td>{{ $user->mobile }}</td>
                                                     <td>{{ $user->role }}</td>
@@ -71,8 +99,8 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        <div class="action-dots ">
-                                                            <button href="#" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <div class="action-dots">
+                                                            <button class="btn" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end">
@@ -84,12 +112,17 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="9" class="text-center text-danger">User Not Found!</td>
+                                            </tr>
                                         @endif
-                                    </tbody>  
+                                    </tbody>
                                 </table>
                             </div>
+                            
                             <div>
-                                {{ $users->links() }}
+                                {{ $users->appends(['keyword' => Request::get('keyword'), 'sort' => Request::get('sort')])->links() }}
                             </div>
                         </div>
                     </div>
@@ -101,18 +134,13 @@
 
 @section('customJs')
     <script type="text/javascript">
-        function deleteUser(id) {
-            if (confirm("Are you sure you want to delete this User?")) {
-                $.ajax({
-                    url: '{{ route("admin.users.destroy") }}',
-                    type: 'delete',
-                    data: { id: id},
-                    dataType: 'json',
-                    success: function(response) {
-                        window.location.href = "{{ route('admin.users') }}";
-                    }
-                });
-            }
+        // JavaScript function to trigger page reload when sort value changes
+        function sortUsers() {
+            var sortValue = document.getElementById('sort').value;
+            var currentUrl = window.location.href;
+            var newUrl = new URL(currentUrl);
+            newUrl.searchParams.set('sort', sortValue);  // Update the sort query parameter
+            window.location.href = newUrl.toString();  // Reload the page with the updated sort
         }
     </script>
 @endsection
