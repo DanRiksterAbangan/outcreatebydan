@@ -66,6 +66,19 @@
                                                 <label for="" class="mb-2">Mobile</label>
                                                 <input type="number" name="mobile" id="mobile" placeholder="Mobile" value="{{ $user->mobile }}" class="form-control">
                                             </div>   
+
+                                            <div class="mb-4">
+                                                <label for="" class="mb-2">Role<span class="req">*</span></label>
+                                                <select name="role" id="role" class="form-select">
+                                                    <option value="">Select Role</option>
+                                                    @if ($roles->isNotEmpty())
+                                                        @foreach ($roles as $role)
+                                                            <option value="{{ $role }}" {{ $user->role === $role ? 'selected' : '' }}>{{ ucfirst($role) }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                                <p></p>
+                                            </div>
                                         </div>
                                     </div>
             

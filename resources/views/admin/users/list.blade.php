@@ -27,6 +27,7 @@
                                     <h3 class="fs-4 mb-1">All Users</h3>
                                 </div> 
                                 <div style="margin-top: -10px;">
+                                    <a class="btn btn-primary me-2" href="{{ route('admin.users.create') }}" type="submit">Create User</a>
                                 </div>
                                 
                             </div>
@@ -40,6 +41,7 @@
                                             <th scope="col">Last Name</th>
                                             <th scope="col">Email</th>
                                             <th scope="col">Mobile</th>
+                                            <th scope="col">Role
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
@@ -59,12 +61,14 @@
                                                     </td>
                                                     <td>{{ $user->email }}</td>
                                                     <td>{{ $user->mobile }}</td>
+                                                    <td>{{ $user->role }}</td>
                                                     <td>
                                                         <div class="action-dots ">
                                                             <button href="#" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end">
+                                                                <li><a class="dropdown-item" href="#"><i class="fa fa-user" aria-hidden="true"></i> View</a></li>
                                                                 <li><a class="dropdown-item" href="{{ route('admin.users.edit',$user->id) }}"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li>
                                                                 <li><a class="dropdown-item" href="javascript:void(0);" onclick="deleteUser({{ $user->id }})"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
                                                             </ul>
