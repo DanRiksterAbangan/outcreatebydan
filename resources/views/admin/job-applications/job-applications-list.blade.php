@@ -36,12 +36,12 @@
                                         <tr>
                                             <th scope="col">ID</th>
                                             <th scope="col">Job Title</th>
-                                            <th scope="col">User First Name</th>
-                                            <th scope="col">User Middle Name</th>
-                                            <th scope="col">User Last Name</th>
-                                            <th scope="col">Employer First Name</th>
-                                            <th scope="col">Employer Middle Name</th>
-                                            <th scope="col">Employer Last Name</th>
+                                            <th scope="col">Freelancer First Name</th>
+                                            <th scope="col">Freelancer Middle Name</th>
+                                            <th scope="col">Freelancer Last Name</th>
+                                            <th scope="col">Client First Name</th>
+                                            <th scope="col">Client Middle Name</th>
+                                            <th scope="col">Client Last Name</th>
                                             <th scope="col">Applied Created</th>
                                             <th scope="col">Action</th>
                                         </tr>

@@ -57,7 +57,7 @@
                                                     <td>{{ $job->user->midName }}</td>
                                                     <td>{{ $job->user->lastName }}</td>
                                                     <td>
-                                                        @if ($job->staus == 1)
+                                                        @if ($job->status == 1)
                                                             <p class="text-success">Active</p>
                                                         @else
                                                             <p class="text-danger">Block</p>
@@ -70,6 +70,7 @@
                                                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end">
+                                                                <li><a class="dropdown-item" href="#"><i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
                                                                 <li><a class="dropdown-item" href="{{ route('admin.jobs.edit',$job->id) }}"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li>
                                                                 <li><a class="dropdown-item" href="javascript:void(0);" onclick="deleteJob({{ $job->id }})"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
                                                             </ul>

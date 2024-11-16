@@ -45,6 +45,36 @@
                                                 <input type="text" name="lastName" id="lastName" placeholder="Doe" class="form-control" value="{{ $user->lastName }}">
                                                 <p></p>
                                             </div>
+
+                                            <div class="mb-4 col-md-6">
+                                                <div class="form-check-inline">
+                                                    <label for="" class="mb-2">User Status: </label>
+                                                    <input {{ ($user->isActive == 1) ? 'checked' : '' }} class="form-check-input" type="radio" value="1" id="isActive-active" name="isActive">
+                                                    <label class="form-check-label" for="isActive">
+                                                      Active
+                                                    </label>
+                                                </div>
+        
+                                                <div class="form-check-inline">
+                                                    <input {{ ($user->isActive == 0) ? 'checked' : '' }} class="form-check-input" type="radio" value="0" id="isActive-block" name="isActive">
+                                                    <label class="form-check-label" for="isActive">
+                                                      Block
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="" class="mb-2">Role<span class="req">*</span></label>
+                                                <select name="role" id="role" class="form-select">
+                                                    <option value="">Select Role</option>
+                                                    @if ($roles->isNotEmpty())
+                                                        @foreach ($roles as $role)
+                                                            <option value="{{ $role }}" {{ $user->role === $role ? 'selected' : '' }}>{{ ucfirst($role) }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                                <p></p>
+                                            </div>
                                         </div>
                                     </div>
             
@@ -66,19 +96,6 @@
                                                 <label for="" class="mb-2">Mobile</label>
                                                 <input type="number" name="mobile" id="mobile" placeholder="Mobile" value="{{ $user->mobile }}" class="form-control">
                                             </div>   
-
-                                            <div class="mb-4">
-                                                <label for="" class="mb-2">Role<span class="req">*</span></label>
-                                                <select name="role" id="role" class="form-select">
-                                                    <option value="">Select Role</option>
-                                                    @if ($roles->isNotEmpty())
-                                                        @foreach ($roles as $role)
-                                                            <option value="{{ $role }}" {{ $user->role === $role ? 'selected' : '' }}>{{ ucfirst($role) }}</option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                                <p></p>
-                                            </div>
                                         </div>
                                     </div>
             

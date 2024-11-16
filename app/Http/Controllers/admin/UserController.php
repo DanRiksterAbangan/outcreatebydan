@@ -52,6 +52,7 @@ class UserController extends Controller
             $user->designation = $request->designation;
             $user->mobile = $request->mobile;
             $user->role = $request->role; 
+            $user->isActive = $request->isActive;
             $user->save();
 
             session()->flash('success','User Profile Updated Successfully!');

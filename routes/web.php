@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/blocked', function () {return view('front.account.blocked');})->name('account.blocked');
 Route::get('/jobs', [JobsController::class, 'index'])->name('jobs');
 Route::get('/jobs/detail/{id}', [JobsController::class, 'detail'])->name('jobDetail');
 Route::post('/apply-job', [JobsController::class, 'applyJob'])->name('applyJob');
@@ -62,6 +63,7 @@ Route::group(['prefix' => 'freelancer','middleware' => 'checkFreelancer'], funct
     Route::get('/verify-now', [FreelancerController::class, 'verifyNow'])->name('freelancer.verify-now');
     Route::post('/verify-credentials', [FreelancerController::class, 'verifyCredentials'])->name('freelancer.verifyCredentials');
 });
+
 
 Route::group(['prefix' =>'account'], function(){
 

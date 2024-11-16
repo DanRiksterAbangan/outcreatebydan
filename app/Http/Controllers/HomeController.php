@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Job;
 use Illuminate\Http\Request;
+use Psy\CodeCleaner\FunctionContextPass;
 
 class HomeController extends Controller
 {
@@ -31,5 +32,10 @@ class HomeController extends Controller
             'latestJobs' => $latestJobs,
             'newCategories' => $newCategories,
         ]);
+    }
+
+    // Shows the Blocked Page for the Blocked Account
+    public function blocked() {
+        return view('front.blocked');
     }
 }

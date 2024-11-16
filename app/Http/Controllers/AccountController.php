@@ -119,28 +119,41 @@ class AccountController extends Controller
 
     }
 
-    // User Login Method
-    public function authenticate(Request $request) {
+    // Shows the Blocked Page if the user is Blocked
+    public function blocked() {
+        return view('front.blocked');
+    }
 
+    // User Login Method
+    public function authenticate(Request $request)
+    {
         $validator = Validator::make($request->all(),[
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
+    
         if ($validator->passes()) {
+            // Attempt to log in the user
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+                // Check if the user is active
+                $user = Auth::user();
+                if ($user->isActive == 0) {
+                    Auth::logout(); // Log the user out immediately
+                    return redirect()->route('account.blocked');
+                }
+    
                 return redirect()->route('account.profile');
             } else {
                 return redirect()->route('account.login')->with('error', 'Invalid credentials.');
             }
-
         } else {
             return redirect()->route('account.login')
                 ->withErrors($validator)
                 ->withInput($request->only('email'));
         }
-
     }
+    
+    
 
     // User Profile Page
     public function profile() {
@@ -369,6 +382,7 @@ class AccountController extends Controller
             $job->vacancy = $request->vacancy;
             $job->salary = $request->salary;
             $job->location = $request->location;
+            $job->status = $request->status;
             $job->description = $request->description;
             $job->benefits = $request->benefits;
             $job->responsibility = $request->responsibility;
