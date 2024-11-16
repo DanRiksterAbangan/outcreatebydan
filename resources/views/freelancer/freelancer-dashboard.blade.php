@@ -17,77 +17,63 @@
                 <div class="col-lg-3">
                     @include('front.account.sidebar')
                 </div>
-
-                <div class="col-lg-9">
+                <form action="" method="post" id="userForm" name="userForm" class="col-lg-9">
                     @include('front.message')
-                    <div class="card border-0 shadow mb-4 p-3">
-                        <div class="card-body card-form">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <h3 class="fs-4 mb-1">My Profile</h3>
+                    <div>
+                        <div class="card border-0 shadow mb-4">
+                            <div class="row card-body p-4">
+                                <h3 class="fs-4 mb-1">My Profile</h3>
+                                <div class="col-sm mb-4">
+                                    <label for="" class="mb-2">First Name</label>
+                                    <input readonly type="text" name="firstName" id="firstName" placeholder="John" class="form-control" value="{{ $user->firstName }}">
+                                    <p></p>
                                 </div>
-                                
+
+                                <div class="col-sm mb-4">
+                                    <label for="" class="mb-2">Middle name</label>
+                                    <input readonly type="text" name="midName" id="midName" placeholder="Smith" class="form-control" value="{{  $user->midName }}">
+                                    <p></p>
+                                </div>
+
+                                <div class="col-sm mb-4">
+                                    <label for="" class="mb-2">Last Name</label>
+                                    <input readonly type="text" name="lastName" id="lastName" placeholder="Doe" class="form-control" value="{{ $user->lastName }}">
+                                    <p></p>
+                                </div>
                             </div>
-                            <div class="table-responsive">
-                                <table class="table ">
-                                    <thead class="bg-light">
-                                        <tr>
-                                            <th scope="col">Title</th>
-                                            <th scope="col">Applied Date</th>
-                                            <th scope="col">Applicants</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="border-0">
-                                        {{-- @if ($jobApplications->isNotEmpty()) --}}
-                                            {{-- @foreach ($jobApplications as $jobApplication) --}}
-                                                <tr class="active">
-                                                    <td>
-                                                        <div class="job-name fw-500">Title</div>
-                                                        <div class="info1">Name</div>
-                                                    </td>
-                                                    <td>Applied Date</td>
-                                                    <td>Applicants</td>
-                                                    <td>
-                                                        
-                                                            <div class="job-status text-capitalize">Active</div>
-                                                        
-                                                            <div class="job-status text-capitalize">Block</div> 
-                                                        
-                                                    </td>
-                                                    <td>
-                                                        <div class="action-dots float-end">
-                                                            <button href="#" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                            </button>
-                                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                                <li><a class="dropdown-item" href="#"> <i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
-                                                                <li><a class="dropdown-item" href="#" onclick=""><i class="fa fa-trash" aria-hidden="true"></i> Remove</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            {{-- @endforeach --}}
-                                        {{-- @else --}}
-                                        <tr>
-                                            <td colspan="5">No Job Applications Yet. Apply Now!</td>
-                                        </tr>
-                                        {{-- @endif --}}
-                                    </tbody>  
-                                </table>
-                            </div>
-                            <div>
-                                
+
+                            <div class="row card-body p-4">
+                                <div class="col-sm mb-4">
+                                    <label for="" class="mb-2">Email*</label>
+                                    <input readonly type="text" name="email" id="email" placeholder="johndoe@email.com" value="{{ $user->email }}" class="form-control">
+                                    <p></p>
+                                </div>
+
+                                <div class="col-sm mb-4">
+                                    <label for="" class="mb-2">Mobile</label>
+                                    <input readonly type="number" name="mobile" id="mobile" placeholder="Mobile" value="{{ $user->mobile }}" class="form-control">
+                                </div>   
+
+                                <div class="mb-4">
+                                    <label for="" class="mb-2">Designation</label>
+                                    <input readonly type="text" name="designation" id="designation" placeholder="Designation" value="{{ $user->designation }}" class="form-control">
+                                </div>
                             </div>
                         </div>
-                    </div> 
-                </div>
+
+                        <div class="card border-0 shadow mb-4">
+                            <div class="card-body p-4">
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
             </div>
         </div>
     </section>
 @endsection
 
 @section('customJs')
-
 @endsection

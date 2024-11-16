@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class FreelancerController extends Controller
 {
+
     // Freelancer Dashboard
     public function freelancerDashboard() {
-        return view ('freelancer.freelancer-dashboard');
+        $user = Auth::user(); 
+
+        return view ('freelancer.freelancer-dashboard', compact('user'));
     }
 
     // Freelancer Verify Now Page

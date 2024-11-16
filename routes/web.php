@@ -39,6 +39,8 @@ Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
 
     // Admin Users Authority
     Route::get('/users', [UserController::class, 'index'])->name('admin.users');
+    Route::get('/create', [UserController::class, 'create'])->name('admin.users.create');
+    Route::post('/create-user', [UserController::class, 'processRegister'])->name('admin.users.processRegister');
     Route::get('/users/{id}', [UserController::class, 'edit'])->name('admin.users.edit');
     Route::put('/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
     Route::delete('/users', [UserController::class, 'destroy'])->name('admin.users.destroy');

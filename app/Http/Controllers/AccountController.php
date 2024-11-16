@@ -562,12 +562,12 @@ class AccountController extends Controller
         $mailData = [
             'token' => $token,
             'user' => $user,
-            'subject' => 'You have requested to reset your password.',
+            'subject' => 'Password Reset Request',
         ];
 
         Mail::to($request->email)->send(new ResetPasswordEmail($mailData));
 
-        return redirect()->route('account.forgotPassword')->with('success','Password Reset email has been sent to you. Please check your inbox.');
+        return redirect()->route('account.forgotPassword')->with('success','Password Reset email has been successfully sent to your email address!');
     }
 
     public function resetPassword($tokenString) {
