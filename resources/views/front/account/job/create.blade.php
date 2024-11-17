@@ -31,16 +31,9 @@
                                         <p></p>
                                     </div>
 
-                                    <div class="col-md-6  mb-4">
-                                        <label for="" class="mb-2">Category<span class="req">*</span></label>
-                                        <select name="category" id="category" class="form-control">
-                                            <option value="">Select a Category</option>
-                                            @if ($categories->isNotEmpty())
-                                                @foreach ($categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
+                                    <div class="col-md-6 mb-4">
+                                        <label for="" class="mb-2">Position<span class="req">*</span></label>
+                                        <input type="text" placeholder="Position" id="vacancy" name="vacancy" class="form-control">
                                         <p></p>
                                     </div>
                                 </div>
@@ -60,8 +53,15 @@
                                     </div>
 
                                     <div class="col-md-6  mb-4">
-                                        <label for="" class="mb-2">Vacancy<span class="req">*</span></label>
-                                        <input type="number" min="1" placeholder="Vacancy" id="vacancy" name="vacancy" class="form-control">
+                                        <label for="" class="mb-2">Category<span class="req">*</span></label>
+                                        <select name="category" id="category" class="form-control">
+                                            <option value="">Select a Category</option>
+                                            @if ($categories->isNotEmpty())
+                                                @foreach ($categories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                         <p></p>
                                     </div>
                                 </div>

@@ -85,15 +85,15 @@
                                         <div class="form-check-inline">
                                             <label for="" class="mb-2">Job Status: </label>
                                             <input {{ ($job->status == 1) ? 'checked' : '' }} class="form-check-input" type="radio" value="1" id="status-active" name="status">
-                                            <label class="form-check-label" for="status">
+                                            <label for="status-active" class="form-check-label" for="status">
                                               Active
                                             </label>
                                         </div>
 
                                         <div class="form-check-inline">
                                             <input {{ ($job->status == 0) ? 'checked' : '' }} class="form-check-input" type="radio" value="0" id="status-block" name="status">
-                                            <label class="form-check-label" for="status">
-                                              Block
+                                            <label for="status-block" class="form-check-label" for="status">
+                                              Inactive
                                             </label>
                                         </div>
                                     </div>
