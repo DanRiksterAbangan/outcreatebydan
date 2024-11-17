@@ -11,6 +11,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/ui/trumbowyg.min.css" integrity="sha512-Fm8kRNVGCBZn0sPmwJbVXlqfJmPC13zRsMElZenX6v721g/H7OukJd8XzDEBRQ2FSATK8xNF9UYvzsCtUpfeJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 	<!-- Fav Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="#" />
 
@@ -45,13 +47,15 @@
 					@endif
 					
 					@if (Auth::user()->role == 'freelancer')
-						<a class="btn btn-outline-primary me-2" href="{{ route('freelancer.freelancer-dashboard') }}" type="submit">Freelancer</a>					
+						<a class="btn btn-outline-primary me-2" href="{{ route('account.show', ['id' => Auth::user()->id]) }}" type="submit">Account</a>					
 					@endif
 						<a class="btn btn-primary me-2" href="{{ route('account.profile') }}" type="submit">Profile</a>
 				@endif
 			</div>
 		</div>
 	</nav>
+
+	@yield('header')
 </header>
 
 @yield('main')

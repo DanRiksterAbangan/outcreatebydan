@@ -18,6 +18,9 @@
     <div class="card-body p-0">
         <ul class="list-group list-group-flush ">
             <li class="list-group-item d-flex justify-content-between p-3">
+                <a href="{{ route('account.show', ['id' => Auth::user()->id]) }}">Me</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between p-3">
                 <a href="{{ route('account.profile') }}">Profile Settings</a>
             </li>
             <li class="list-group-item d-flex justify-content-between p-3">

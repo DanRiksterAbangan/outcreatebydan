@@ -114,6 +114,7 @@
                                             <th>Email</th>
                                             <th>Mobile</th>
                                             <th>Applied Date</th>
+                                            <th>Action</th>
                                         </tr>
                                         @if ($applications->isNotEmpty())
                                             @foreach ($applications as $application)
@@ -123,6 +124,9 @@
                                                     <td>{{ $application->user->email }}</td>
                                                     <td>{{ $application->user->mobile }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($application->applied_date)->format('d M, Y') }}</td>
+                                                    <td>
+                                                        <a href="{{ route('account.show', ['id' => $application->user->id]) }}" class="btn btn-primary">Visit</a>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         @else

@@ -618,4 +618,16 @@ class AccountController extends Controller
 
         return redirect()->route('account.login')->with('success','You have successfully changed your password!');
     }
+    public function show($id)
+    {
+        // Find the user by the ID passed to the method
+        $user = User::findOrFail($id);
+    
+        // Find the job related to the user
+        $job = $user->job;
+    
+        // Pass both user and job data to the view
+        return view('front.account.show', compact('user', 'job'));
+    }
+    
 }

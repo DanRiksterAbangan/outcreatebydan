@@ -21,8 +21,12 @@ class User extends Authenticatable
         'firstName',
         'midName',
         'lastName',
+        'address',
         'email',
         'password',
+        'mobile',
+        'contact_method',
+        'contact_time',
         'role',
     ];
 
@@ -45,4 +49,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    
 }

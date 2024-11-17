@@ -112,7 +112,7 @@
                             .removeClass('invalid-feedback')
                             .html('')
 
-                        window.location.href="{{ route('account.profile') }}";
+                        window.location.href="{{ route('account.show', ['id' => Auth::user()->id]) }}";
 
                     } else {
                         var errors = response.errors;
