@@ -38,4 +38,9 @@ class HomeController extends Controller
     public function blocked() {
         return view('front.blocked');
     }
+
+    // About Page
+    public function about() {
+        return view ('front.about');
+    }
 }

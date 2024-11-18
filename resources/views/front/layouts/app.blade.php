@@ -30,9 +30,14 @@
 					<li class="nav-item">
 						<a class="nav-link" aria-current="page" href="{{ route('home') }}">Home</a>
 					</li>	
+
 					<li class="nav-item">
 						<a class="nav-link" aria-current="page" href="{{ route('jobs') }}">Find Jobs</a>
-					</li>										
+					</li>		
+
+					<li class="nav-item">
+						<a class="nav-link" aria-current="page" href="{{ route('about') }}">About</a>
+					</li>								
 				</ul>				
 
 				@if (!Auth::check())
