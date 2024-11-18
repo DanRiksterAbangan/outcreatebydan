@@ -1,6 +1,14 @@
-@extends('front.layouts.about')
+@extends('front.layouts.app')
 
 @section('main')
+
+        <!-- Header End -->
+        <div class="container-xxl py-5 bg-dark page-header mb-5" style="background-image:url('{{ asset ('assets/images/banner-1.jpg') }}'); background-position: center; background-repeat: no-repeat;">
+            <div class="container my-5 pt-5 pb-4">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">About Us</h1>
+            </div>
+        </div>
+        <!-- Header End -->
         <!-- About Start -->
         <div class="container-xxl py-5">
             <div class="container">

@@ -21,8 +21,9 @@
 
                 <div class="col-lg-9">
                     @include('front.message')
-                    <form action="" method="post" id="editJobForm" name="editJobForm">
-                        <div class="card border-0 shadow mb-4 ">
+                    <form action="{{ route('admin.jobs.update', $job->id) }}" method="POST" id="editJobForm" name="editJobForm" enctype="multipart/form-data">
+                        @method('PUT')
+                        @csrf                        <div class="card border-0 shadow mb-4 ">
                             <div class="card-body card-form p-4">
                                 <h3 class="fs-4 mb-1">Edit Job Details</h3>
                                 <div class="row">
@@ -154,6 +155,22 @@
         
                                 <div class="row">
                                     <div class="mb-4 col-md-6">
+                                        <label for="company_logo" class="mb-2">Company Logo</label>
+                                        
+                                        <!-- Preview the stored company logo -->
+                                        @if($job->company_logo)
+                                            <div class="mb-2">
+                                                <img src="{{ asset($job->company_logo) }}" alt="Company Logo" style="max-height: 150px; max-width: 150px;">
+                                            </div>
+                                        @endif
+                                        
+                                        <!-- File input for uploading a new logo -->
+                                        <input type="file" name="company_logo" id="company_logo" class="form-control">
+                                        <p class="text-danger" id="image-error"></p>
+                                    </div>
+                                    
+
+                                    <div class="mb-4 col-md-6">
                                         <label for="" class="mb-2">Name<span class="req">*</span></label>
                                         <input value="{{ $job->company_name }}" type="text" placeholder="Company Name" id="company_name" name="company_name" class="form-control">
                                         <p></p>
@@ -163,11 +180,11 @@
                                         <label for="" class="mb-2">Location</label>
                                         <input value="{{ $job->company_location }}" type="text" placeholder="Location" id="company_location" name="company_location" class="form-control">
                                     </div>
-                                </div>
-        
-                                <div class="mb-4">
-                                    <label for="" class="mb-2">Website</label>
-                                    <input value="{{ $job->company_website }}" type="text" placeholder="Website" id="website" name="website" class="form-control">
+
+                                    <div class="mb-4 col-md-6">
+                                        <label for="" class="mb-2">Website</label>
+                                        <input value="{{ $job->company_website }}" type="text" placeholder="Website" id="website" name="website" class="form-control">
+                                    </div>
                                 </div>
                             </div> 
                             <div class="card-footer  p-4">
@@ -185,159 +202,27 @@
 @section('customJs')
     <script type="text/javascript">
         $("#editJobForm").submit(function(e){
-            e.preventDefault();
-            $("button[type='submit']").prop('disabled',true)
+            e.preventDefault(); // Prevent normal form submission
+            $("button[type='submit']").prop('disabled', true); // Disable button to prevent multiple submissions
+
+            var formData = new FormData(this); // Create a FormData object, which includes the file input
+
             $.ajax({
-                url:'{{ route("admin.jobs.update", $job->id) }}',
-                type: 'put',
-                dataType: 'json',
-                data: $("#editJobForm").serializeArray(),
+                url: '{{ route("admin.jobs.update", $job->id) }}', // Make sure the route is correct
+                type: 'POST', // Use POST for Ajax with FormData
+                data: formData, // Send the form data with the file included
+                dataType: 'json', 
+                processData: false, // Don't process data
+                contentType: false, // Let jQuery handle content-type
                 success: function(response) {
-                    $("button[type='submit']").prop('disabled',false)
-                    if(response.status == true) {
-
-                        $("#title").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('')
-
-                        $("#category").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('')
-
-                        $("#jobType").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('')
-
-                        $("#vacancy").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('')
-
-                        $("#salary").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('')
-
-                        $("#location").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('')
-
-                        $("#description").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('')
-
-                        $("#company_name").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('')
-
-                        window.location.href="{{ route('admin.jobs.jobs-list') }}";
-
+                    $("button[type='submit']").prop('disabled', false); // Enable the submit button again
+                    if (response.status == true) {
+                        // Redirect to the job list page if the update is successful
+                        window.location.href = "{{ route('admin.jobs.jobs-list') }}";
                     } else {
-                        var errors = response.errors;
-
-                        if (errors.title) {
-                                $("#title").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.title)
-                            } else {
-                                $("#title").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.category) {
-                                $("#category").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.category)
-                            } else {
-                                $("#category").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.jobType) {
-                                $("#jobType").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.jobType)
-                            } else {
-                                $("#jobType").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.vacancy) {
-                                $("#vacancy").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.vacancy)
-                            } else {
-                                $("#vacancy").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.salary) {
-                                $("#salary").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.salary)
-                            } else {
-                                $("#salary").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.location) {
-                                $("#location").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.location)
-                            } else {
-                                $("#location").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.description) {
-                                $("#description").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.description)
-                            } else {
-                                $("#description").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.company_name) {
-                                $("#company_name").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.company_name)
-                            } else {
-                                $("#company_name").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
+                        // Handle validation errors
+                        showErrors(response.errors);
                     }
-
                 }
             });
         });

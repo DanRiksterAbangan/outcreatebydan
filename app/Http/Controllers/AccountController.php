@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -273,9 +274,10 @@ class AccountController extends Controller
         ]);
     }
 
-    // Save Job after Creation
+    // Save the Created Job
     public function saveJob(Request $request) {
-
+        $user = Auth::user();
+        
         $rules = [
             'title' => 'required|min:5|max:200',
             'category' => 'required',
@@ -284,18 +286,18 @@ class AccountController extends Controller
             'salary' => 'required',
             'location' => 'required|min:5|max:70',
             'description' => 'required',
+            'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'company_name' => 'required|min:5|max:70',
         ];
-
-        $validator = Validator::make($request->all(),$rules);
-
+    
+        $validator = Validator::make($request->all(), $rules);
+    
         if ($validator->passes()) {
-            
             $job = new Job();
             $job->title = $request->title;
             $job->category_id = $request->category;
             $job->job_type_id = $request->jobType;
-            $job->user_id = Auth::user()->id;
+            $job->user_id = $user->id;
             $job->vacancy = $request->vacancy;
             $job->salary = $request->salary;
             $job->location = $request->location;
@@ -308,15 +310,32 @@ class AccountController extends Controller
             $job->company_name = $request->company_name;
             $job->company_location = $request->company_location;
             $job->company_website = $request->website;
+    
+            // Handle file upload for company logo
+            if ($request->hasFile('company_logo')) {
+                try {
+                    $file = $request->file('company_logo');
+                    $filename = time() . '_company_logo.' . $file->getClientOriginalExtension();
+                    $filePath = public_path('/clients/');
+                    $file->move($filePath, $filename);
+                    $job->company_logo = '/clients/' . $filename; // Assign file path to model
+                } catch (\Exception $e) {
+                    Log::error('File upload failed: ' . $e->getMessage());
+                    return response()->json([
+                        'status' => false,
+                        'errors' => ['company_logo' => 'Error uploading logo.']
+                    ]);
+                }
+            }
+    
             $job->save();
-
+    
             session()->flash('success', 'Job added successfully!');
-
+    
             return response()->json([
                 'status' => true,
                 'errors' => []
             ]);
-
         } else {
             return response()->json([
                 'status' => false,
@@ -324,7 +343,7 @@ class AccountController extends Controller
             ]);
         }
     }
-
+    
     // Posted Jobs
     public function myJobs() {
 

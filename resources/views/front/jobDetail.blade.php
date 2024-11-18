@@ -189,30 +189,37 @@
 
 @section('customJs')
     <script type="text/javascript">
-        function applyJob(id){
-            if (confirm("Are you sure you want to apply for this job?")) {
-                $.ajax({
-                    url: '{{ route("applyJob") }}',
-                    type: 'post',
-                    data: {id:id},
-                    dataType: 'json',
-                    success: function(response) {
-                        window.location.href = "{{ url()->current() }}";
-                    }
-                });
+function applyJob(id) {
+    if (confirm("Are you sure you want to apply for this job?")) {
+        $.ajax({
+            url: '{{ route("applyJob") }}',
+            type: 'post',
+            data: {
+                id: id,
+                _token: $('meta[name="csrf-token"]').attr('content') // Include CSRF Token
+            },
+            dataType: 'json',
+            success: function(response) {
+                window.location.href = "{{ url()->current() }}";
             }
-        }
+        });
+    }
+}
 
-        function saveTheJob(id){
-                $.ajax({
-                    url: '{{ route("saveTheJob") }}',
-                    type: 'post',
-                    data: {id:id},
-                    dataType: 'json',
-                    success: function(response) {
-                        window.location.href = "{{ url()->current() }}";
-                    }
-                });   
+function saveTheJob(id) {
+    $.ajax({
+        url: '{{ route("saveTheJob") }}',
+        type: 'post',
+        data: {
+            id: id,
+            _token: $('meta[name="csrf-token"]').attr('content') // Include CSRF Token
+        },
+        dataType: 'json',
+        success: function(response) {
+            window.location.href = "{{ url()->current() }}";
         }
+    });
+}
+
     </script>
 @endsection
