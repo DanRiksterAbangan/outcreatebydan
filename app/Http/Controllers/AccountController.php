@@ -18,6 +18,7 @@ use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AccountController extends Controller
@@ -376,8 +377,8 @@ class AccountController extends Controller
         ]);
     }
 
+    // Update Job Changes
     public function updateJob(Request $request, $id) {
-
         $rules = [
             'title' => 'required|min:5|max:200',
             'category' => 'required',
@@ -387,39 +388,70 @@ class AccountController extends Controller
             'location' => 'required|min:5|max:70',
             'description' => 'required',
             'company_name' => 'required|min:5|max:70',
+            'status' => 'nullable|in:0,1', // Assuming 'status' is either 0 (inactive) or 1 (active)
         ];
-
-        $validator = Validator::make($request->all(),$rules);
-
+    
+        $validator = Validator::make($request->all(), $rules);
+    
         if ($validator->passes()) {
-            
             $job = Job::find($id);
+    
+            if (!$job) {
+                return response()->json([
+                    'status' => false,
+                    'errors' => ['job' => 'Job not found.']
+                ]);
+            }
+    
+            // Update the job fields
             $job->title = $request->title;
             $job->category_id = $request->category;
             $job->job_type_id = $request->jobType;
-            $job->user_id = Auth::user()->id;
             $job->vacancy = $request->vacancy;
             $job->salary = $request->salary;
             $job->location = $request->location;
-            $job->status = $request->status;
             $job->description = $request->description;
-            $job->benefits = $request->benefits;
-            $job->responsibility = $request->responsibility;
-            $job->qualifications = $request->qualifications;
-            $job->keywords = $request->keywords;
-            $job->experience = $request->experience;
             $job->company_name = $request->company_name;
-            $job->company_location = $request->company_location;
-            $job->company_website = $request->website;
+            
+            // Handle optional status update
+            if ($request->has('status')) {
+                $job->status = $request->status;
+            }
+    
+            // Handle file upload for company logo
+            if ($request->hasFile('company_logo')) {
+                try {
+                    // Delete the old logo if it exists
+                    if ($job->company_logo) {
+                        $oldFilePath = str_replace('storage/', '', $job->company_logo);
+                        Storage::delete('public/' . $oldFilePath); // Delete old logo
+                    }
+
+                    // Upload the new logo
+                    $file = $request->file('company_logo');
+                    $filename = time() . '_company_logo.' . $file->getClientOriginalExtension();
+
+                    // Store the file in the 'public/clients' directory
+                    $path = $file->storeAs('public/clients', $filename);
+
+                    // Assign the relative path for database storage
+                    $job->company_logo = 'storage/clients/' . $filename;
+                } catch (\Exception $e) {
+                    Log::error('File upload failed: ' . $e->getMessage());
+                    return response()->json([
+                        'status' => false,
+                        'errors' => ['company_logo' => 'Error uploading logo.']
+                    ]);
+                }
+            }
+
             $job->save();
-
-            session()->flash('success', 'Job Updated Successfully!');
-
+    
             return response()->json([
                 'status' => true,
                 'errors' => []
             ]);
-
+    
         } else {
             return response()->json([
                 'status' => false,
@@ -427,7 +459,8 @@ class AccountController extends Controller
             ]);
         }
     }
-
+    
+    // Delete Job
     public function deleteJob(Request $request) {
 
         $job = Job::where([

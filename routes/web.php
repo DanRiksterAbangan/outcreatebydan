@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\admin\ContactController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\JobApplicationController;
 use App\Http\Controllers\admin\JobController;
@@ -23,6 +24,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
+
+// Contact Form Routes
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+Route::post('/contact', [HomeController::class, 'processContact'])->name('processContact');
+
 Route::get('/blocked', function () {return view('front.account.blocked');})->name('account.blocked');
 Route::get('/jobs', [JobsController::class, 'index'])->name('jobs');
 Route::get('/jobs/detail/{id}', [JobsController::class, 'detail'])->name('jobDetail');
@@ -56,6 +62,10 @@ Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
     // Admin Job Applications Authority
     Route::get('/job-applications', [JobApplicationController::class, 'index'])->name('admin.jobs.jobApplications');
     Route::delete('/job-applications', [JobApplicationController::class, 'destroyJobApplication'])->name('admin.jobs.jobApplications.destroyJobApplication');
+
+    // Admin Job Contacts Authority
+    Route::get('/contacts', [ContactController::class, 'index'])->name('admin.contacts.contacts-list');
+    Route::delete('/contacts', [ContactController::class, 'destroyContact'])->name('admin.contacts.destroyContact');
 });
 
 Route::group(['prefix' => 'freelancer','middleware' => 'checkFreelancer'], function(){

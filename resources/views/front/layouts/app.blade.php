@@ -66,7 +66,7 @@
             <a href="{{ route('about') }}" class="nav-item nav-link">
                 <i class="fas fa-info-circle me-2"></i>About
             </a>
-            <a href="contact.html" class="nav-item nav-link">
+            <a href="{{ route('contact') }}" class="nav-item nav-link">
                 <i class="fas fa-envelope me-2"></i>Contact
             </a>
         </div>

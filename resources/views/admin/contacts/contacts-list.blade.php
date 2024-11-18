@@ -24,7 +24,7 @@
                         <div class="card-body card-form">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <h3 class="fs-4 mb-1">Clients Jobs</h3>
+                                    <h3 class="fs-4 mb-1">All Contacts</h3>
                                 </div> 
                                 <div style="margin-top: -10px;">
                                 </div>
@@ -35,35 +35,26 @@
                                     <thead class="bg-light">
                                         <tr>
                                             <th scope="col">ID</th>
-                                            <th scope="col">Job</th>
-                                            <th scope="col">First Name</th>
-                                            <th scope="col">Middle Name</th>
-                                            <th scopeac="col">Last Name</th>
-                                            <th scope="col">Status</th>
+                                            <th scope="col">Subject</th>
+                                            <th scope="col">Sender</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Message</th>
                                             <th scope="col">Date Created</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody class="border-0">
-                                        @if ($jobs->isNotEmpty())
-                                            @foreach ($jobs as $job)
+                                        @if ($contacts->isNotEmpty())
+                                            @foreach ($contacts as $contact)
                                                 <tr>
-                                                    <td>{{ $job->id }}</td>
+                                                    <td>{{ $contact->id }}</td>
                                                     <td>
-                                                        <p>{{ $job->title }}</p>
-                                                        <p>Applicants: {{ $job->applications->count() }}</p>
+                                                        <p>{{ $contact->subject }}</p>
                                                     </td>
-                                                    <td>{{ $job->user->firstName }}</td>
-                                                    <td>{{ $job->user->midName }}</td>
-                                                    <td>{{ $job->user->lastName }}</td>
-                                                    <td>
-                                                        @if ($job->status == 1)
-                                                            <p class="text-success">Active</p>
-                                                        @else
-                                                            <p class="text-danger">Block</p>
-                                                        @endif
-                                                    </td>
-                                                    <td>{{ \Carbon\Carbon::parse($job->created_at)->format('d M, Y') }}</td>
+                                                    <td>{{ $contact->name }}</td>
+                                                    <td>{{ $contact->email }}</td>
+                                                    <td>{{ $contact->message }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($contact->created_at)->format('d M, Y') }}</td>
                                                     <td>
                                                         <div class="action-dots ">
                                                             <button href="#" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
@@ -71,8 +62,8 @@
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end">
                                                                 <li><a class="dropdown-item" href="#"><i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
-                                                                <li><a class="dropdown-item" href="{{ route('admin.jobs.edit',$job->id) }}"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li>
-                                                                <li><a class="dropdown-item" href="javascript:void(0);" onclick="deleteJob({{ $job->id }})"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
+                                                                {{-- <li><a class="dropdown-item" href="{{ route('admin.jobs.edit',$job->id) }}"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li> --}}
+                                                                <li><a class="dropdown-item" href="javascript:void(0);" onclick="deleteContact({{ $contact->id }})"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
                                                             </ul>
                                                         </div>
                                                     </td>
@@ -83,7 +74,7 @@
                                 </table>
                             </div>
                             <div>
-                                {{ $jobs->links() }}
+                                {{ $contacts->links() }}
                             </div>
                         </div>
                     </div>
@@ -95,15 +86,15 @@
 
 @section('customJs')
     <script type="text/javascript">
-        function deleteJob(id) {
-            if (confirm("Are you sure you want to delete this Job?")) {
+        function deleteContact(id) {
+            if (confirm("Are you sure you want to delete this Contact Message?")) {
                 $.ajax({
-                    url: '{{ route("admin.jobs.destroyJob") }}',
+                    url: '{{ route("admin.contacts.destroyContact") }}',
                     type: 'delete',
                     data: { id: id},
                     dataType: 'json',
                     success: function(response) {
-                        window.location.href = "{{ route('admin.jobs.jobs-list') }}";
+                        window.location.href = "{{ route('admin.contacts.contacts-list') }}";
                     }
                 });
             }

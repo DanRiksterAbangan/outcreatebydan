@@ -23,7 +23,8 @@
                     @include('front.message')
                     <form action="{{ route('admin.jobs.update', $job->id) }}" method="POST" id="editJobForm" name="editJobForm" enctype="multipart/form-data">
                         @method('PUT')
-                        @csrf                        <div class="card border-0 shadow mb-4 ">
+                        @csrf                        
+                        <div class="card border-0 shadow mb-4 ">
                             <div class="card-body card-form p-4">
                                 <h3 class="fs-4 mb-1">Edit Job Details</h3>
                                 <div class="row">

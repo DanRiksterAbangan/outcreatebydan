@@ -19,7 +19,7 @@ class JobApplicationController extends Controller
         ]);
     }
 
-    //
+    // Delete Job Application
     public function destroyJobApplication(Request $request) {
         $id = $request->id;
 

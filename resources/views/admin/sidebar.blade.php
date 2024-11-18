@@ -4,12 +4,19 @@
             <li class="list-group-item d-flex justify-content-between p-3">
                 <a href="{{ route('admin.users') }}">Users</a>
             </li>
+
             <li class="list-group-item d-flex justify-content-between p-3">
                 <a href="{{ route('admin.jobs.jobs-list') }}">Jobs</a>
             </li>
+
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('admin.jobs.jobApplications') }}">Job Applications</a>
-            </li>                                       
+            </li> 
+
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <a href="{{ route('admin.contacts.contacts-list') }}">Contacts</a>
+            </li> 
+
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('account.logout') }}">Logout</a>
             </li>                                                        
