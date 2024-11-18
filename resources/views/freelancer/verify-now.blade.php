@@ -25,28 +25,49 @@
                                 <div class="card-body  p-4">
                                     <h3 class="fs-4 mb-1">Credentials</h3>
                                     <div class="mb-4">
-                                        <label for="valid_id" class="form-label mb-2">Valid ID</label>
-                                        <input type="file" name="valid_id" id="valid_id" class="form-control">
-                                        <p class="text-danger" id="image-error"></p>
-                                    </div>
+                                        <label for="valid_id" class="form-label mb-2">Picture of your Valid ID</label>
+                                        <p>Please provide a Clear Image Copy of your Valid ID.</p>
+                                        <input type="file" name="valid_id" id="valid_id" class="form-control @error('valid_id') is-invalid @enderror">
+                                        @error('valid_id')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>                                    
 
                                     <div class="mb-4">
                                         <label for="selfie_with_id" class="mb-2">Selfie with Valid ID</label>
-                                        <input type="file" name="selfie_with_id" id="selfie_with_id" class="form-control">
-                                        <p class="text-danger" id="image-error"></p>
+                                        <p>Please provide a Clear Image of your Selfie with your Valid ID.</p>
+                                        <input type="file" name="selfie_with_id" id="selfie_with_id" class="form-control @error('selfie_with_id') is-invalid @enderror">
+                                        @error('selfie_with_id')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label for="diploma" class="mb-2">Diploma</label>
+                                        <p>Please provide a Clear Image Copy of your Diploma.</p>
+                                        <input type="file" name="diploma" id="diploma" class="form-control @error('diploma') is-invalid @enderror">
+                                        @error('diploma')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
 
                                     <div class="mb-4">
-                                        <label for="diploma" class="mb-2">Diploma</label>
-                                        <input type="file" name="diploma" id="diploma" class="form-control">
-                                        <p class="text-danger" id="image-error"></p>
-                                    </div>  
-
+                                        <label for="certificate" class="mb-2">Certificate</label>
+                                        <p>Please provide a Clear Image Copy of your Certificate.</p>
+                                        <input type="file" name="certificate" id="certificate" class="form-control @error('certificate') is-invalid @enderror">
+                                        @error('certificate')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    
                                     <div class="mb-4">
-                                        <label for="certificate" class="mb-2">Certificates</label>
-                                        <input type="file" name="certificate" id="certificate" class="form-control">
-                                        <p class="text-danger" id="image-error"></p>
-                                    </div>   
+                                        <label for="resume" class="mb-2">Resume</label>
+                                        <p>Please provide a document of your Resume. PDF or DOC is accepted.</p>
+                                        <input type="file" name="resume" id="resume" class="form-control @error('resume') is-invalid @enderror">
+                                        @error('resume')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                         @endif
@@ -78,70 +99,35 @@
             type: 'POST',
             dataType: 'json',
             data: formData,
-            processData: false, // Prevent jQuery from automatically transforming the data into a query string
-            contentType: false, // Necessary for file uploads
+            processData: false,
+            contentType: false,
             success: function(response) {
                 if (response.status === true) {
-                    // Reset the error messages and classes on success
-                    ["#valid_id", "#selfie_with_id", "#diploma", "#certificate"].forEach(id => {
-                        $(id).removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('');
-                    });
-
-                    window.location.href = "{{ route('freelancer.verify-now') }}";
+                    window.location.href = "{{ route('freelancer.freelancer-dashboard') }}";
                 } else {
-                    // Display error messages for each invalid field
                     var errors = response.errors;
-                    if (errors.valid_id) {
-                        $("#valid_id").addClass('is-invalid')
-                            .siblings('p')
-                            .addClass('invalid-feedback')
-                            .html(errors.valid_id);
-                    } else {
-                        $("#valid_id").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('');
-                    }
 
-                    if (errors.selfie_with_id) {
-                        $("#selfie_with_id").addClass('is-invalid')
-                            .siblings('p')
-                            .addClass('invalid-feedback')
-                            .html(errors.selfie_with_id);
-                    } else {
-                        $("#selfie_with_id").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('');
-                    }
-
-                    if (errors.diploma) {
-                        $("#diploma").addClass('is-invalid')
-                            .siblings('p')
-                            .addClass('invalid-feedback')
-                            .html(errors.diploma);
-                    } else {
-                        $("#diploma").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('');
-                    }
-
-                    if (errors.certificate) {
-                        $("#certificate").addClass('is-invalid')
-                            .siblings('p')
-                            .addClass('invalid-feedback')
-                            .html(errors.certificate);
-                    } else {
-                        $("#certificate").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('');
-                    }
+                    // Loop through each field's error and display it
+                    ["valid_id", "selfie_with_id", "diploma", "certificate", "resume"].forEach(function(field) {
+                        if (errors[field]) {
+                            $("#" + field).addClass('is-invalid');
+                            $("#" + field)
+                                .siblings('p')
+                                .addClass('invalid-feedback')
+                                .html(errors[field][0]);
+                        } else {
+                            $("#" + field).removeClass('is-invalid');
+                            $("#" + field)
+                                .siblings('p')
+                                .removeClass('invalid-feedback')
+                                .html('');
+                        }
+                    });
                 }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error:", error);
+                alert("Something went wrong. Please make sure to provide the requested file type.");
             }
         });
     });
