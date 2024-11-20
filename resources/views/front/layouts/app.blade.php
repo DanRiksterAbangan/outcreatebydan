@@ -11,7 +11,7 @@
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
     <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('assets/css/hire-details.css') }}">
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
