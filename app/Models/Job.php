@@ -9,19 +9,47 @@ class Job extends Model
 {
     use HasFactory;
 
-    public function jobType() {
+    protected $fillable = [
+        'title',
+        'description',
+        'location',
+        'user_id', // Employer ID
+        'job_type_id',
+        'category_id',
+        'salary',
+        'vacancy',
+        'company_name',
+        'company_location',
+        'company_website',
+    ];
+
+    // Relationship with JobType
+    public function jobType()
+    {
         return $this->belongsTo(JobType::class);
     }
 
-    public function category() {
+    // Relationship with Category
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function applications() {
+    // Relationship with JobApplication
+    public function applications()
+    {
         return $this->hasMany(JobApplication::class);
     }
 
-    public function user() {
-        return $this->belongsTo(User::class);
+    // Relationship with User (Employer)
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // Relationship with Hires
+    public function hires()
+    {
+        return $this->hasMany(Hire::class);
     }
 }

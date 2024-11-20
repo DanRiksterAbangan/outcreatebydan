@@ -14,6 +14,10 @@
             </li> 
 
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <a href="{{ route('admin.hires.hires-list') }}">Hires</a>
+            </li> 
+
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('admin.contacts.contacts-list') }}">Contacts</a>
             </li> 
 

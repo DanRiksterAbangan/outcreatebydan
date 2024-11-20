@@ -5,10 +5,10 @@
         <div class="container py-5">
             <div class="row">
                 <div class="col">
-                    <nav aria-label="breadcrumb" class="rounded-3 p-3 mb-4">
+                    <nav aria-label="breadcrumb" class=" rounded-3 p-3 mb-4">
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active">All Users</li>
+                            <li class="breadcrumb-item active">All Hires</li>
                         </ol>
                     </nav>
                 </div>
@@ -24,36 +24,35 @@
                         <div class="card-body card-form">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <h3 class="fs-4 mb-1">All Users</h3>
+                                    <h3 class="fs-4 mb-1">All Hires</h3>
                                 </div> 
                                 <div style="margin-top: -10px;">
-                                    <a class="btn btn-primary me-2" href="{{ route('admin.users.create') }}" type="submit">Create User</a>
                                 </div>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <div class="flex-grow-1">
-                                    <form method="GET" action="{{ route('admin.users') }}">
+                                    <form method="GET" action="{{ route('admin.hires.hires-list') }}">
                                         <input 
                                             value="{{ Request::get('keyword') }}" 
                                             type="text" 
                                             name="keyword" 
                                             id="keyword" 
-                                            placeholder="Search a User" 
+                                            placeholder="Search a Hire Transaction" 
                                             class="form-control"
                                         >
                                     </form>
                                 </div>
                                 
                                 <div class="ms-3">
-                                    <form method="GET" action="{{ route('admin.users') }}">
+                                    <form method="GET" action="{{ route('admin.hires.hires-list') }}">
                                         <input type="hidden" name="sort" value="{{ Request::get('sort') }}">
                                         <button type="submit" class="btn btn-secondary">Reset</button>
                                     </form>
                                 </div>
                             </div>      
 
-                            <div class="d-flex justify-content-end mb-4">
+                            {{-- <div class="d-flex justify-content-end mb-4">
                                 <div class="col-6 col-md-2">
                                     <div class="align-end">
                                         <select name="sort" id="sort" class="form-control" onchange="sortUsers()">
@@ -64,50 +63,47 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table ">
                                     <thead class="bg-light">
                                         <tr>
                                             <th scope="col">ID</th>
-                                            <th scope="col">First Name</th>
-                                            <th scope="col">Middle Name</th>
-                                            <th scope="col">Last Name</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Mobile</th>
-                                            <th scope="col">Role</th>
-                                            <th scope="col">Status</th>
+                                            <th scope="col">Job Title</th>
+                                            <th scope="col">Freelancer First Name</th>
+                                            <th scope="col">Freelancer Middle Name</th>
+                                            <th scope="col">Freelancer Last Name</th>
+                                            <th scope="col">Client First Name</th>
+                                            <th scope="col">Client Middle Name</th>
+                                            <th scope="col">Client Last Name</th>
+                                            <th scope="col">Hired Created</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody class="border-0">
-                                        @if ($users->isNotEmpty())
-                                            @foreach ($users as $user)
-                                                <tr class="active">
-                                                    <td>{{ $user->id }}</td>
-                                                    <td>{{ $user->firstName }}</td>
-                                                    <td>{{ $user->midName }}</td>
-                                                    <td>{{ $user->lastName }}</td>
-                                                    <td>{{ $user->email }}</td>
-                                                    <td>{{ $user->mobile }}</td>
-                                                    <td>{{ $user->role }}</td>
+                                        @if ($hires->isNotEmpty())
+                                            @foreach ($hires as $hire)
+                                                <tr>
+                                                    <td>{{ $hire->id }}</td>
                                                     <td>
-                                                        @if ($user->isActive == 1)
-                                                            <p class="text-success">Active</p>
-                                                        @else
-                                                            <p class="text-danger">Blocked</p>
-                                                        @endif
+                                                        <p>{{ $hire->job->title }}</p>
                                                     </td>
+                                                    <td>{{ $hire->user->firstName }}</td>
+                                                    <td>{{ $hire->user->midName }}</td>
+                                                    <td>{{ $hire->user->lastName }}</td>
+                                                    <td>{{ $hire->employer->firstName }}</td>
+                                                    <td>{{ $hire->employer->midName }}</td>
+                                                    <td>{{ $hire->employer->lastName }}</td>
+                                                    
+                                                    <td>{{ \Carbon\Carbon::parse($hire->applied_date)->format('d M, Y') }}</td>
                                                     <td>
-                                                        <div class="action-dots">
-                                                            <button class="btn" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <div class="action-dots float-start">
+                                                            <button href="#" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end">
-                                                                <li><a class="dropdown-item" href="#"><i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
-                                                                <li><a class="dropdown-item" href="{{ route('admin.users.edit',$user->id) }}"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li>
-                                                                <li><a class="dropdown-item" href="javascript:void(0);" onclick="deleteUser({{ $user->id }})"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
+                                                                <li><a class="dropdown-item" href="javascript:void(0);" onclick="deleteHire({{ $hire->id }})"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
                                                             </ul>
                                                         </div>
                                                     </td>
@@ -115,15 +111,14 @@
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td colspan="9" class="text-center text-danger">User Not Found!</td>
+                                                <td colspan="10" class="text-center text-danger">Hire Transaction Not Found!</td>
                                             </tr>
                                         @endif
-                                    </tbody>
+                                    </tbody>  
                                 </table>
                             </div>
-                            
                             <div>
-                                {{ $users->appends(['keyword' => Request::get('keyword'), 'sort' => Request::get('sort')])->links() }}
+                                {{ $hires->appends(['keyword' => Request::get('keyword'), 'sort' => Request::get('sort')])->links() }}
                             </div>
                         </div>
                     </div>
@@ -135,13 +130,29 @@
 
 @section('customJs')
     <script type="text/javascript">
+
         // JavaScript function to trigger page reload when sort value changes
         function sortUsers() {
-            var sortValue = document.getElementById('sort').value;
-            var currentUrl = window.location.href;
-            var newUrl = new URL(currentUrl);
-            newUrl.searchParams.set('sort', sortValue);  // Update the sort query parameter
-            window.location.href = newUrl.toString();  // Reload the page with the updated sort
+                var sortValue = document.getElementById('sort').value;
+                var currentUrl = window.location.href;
+                var newUrl = new URL(currentUrl);
+                newUrl.searchParams.set('sort', sortValue);  // Update the sort query parameter
+                window.location.href = newUrl.toString();  // Reload the page with the updated sort
+            }
+
+        // Delete Hire Transaction
+        function deleteHire(id) {
+            if (confirm("Are you sure you want to delete this Job Application?")) {
+                $.ajax({
+                    url: '{{ route("admin.hires.hires-list.destroyHire") }}',
+                    type: 'delete',
+                    data: { id: id},
+                    dataType: 'json',
+                    success: function(response) {
+                        window.location.href = "{{ route('admin.hires.hires-list') }}";
+                    }
+                });
+            }
         }
     </script>
 @endsection

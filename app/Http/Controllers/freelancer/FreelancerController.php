@@ -78,5 +78,5 @@ class FreelancerController extends Controller
             ]);
         }
     }
-    
+
 }

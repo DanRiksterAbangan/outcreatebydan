@@ -114,7 +114,7 @@
                                             <th>Email</th>
                                             <th>Mobile</th>
                                             <th>Applied Date</th>
-                                            <th>Action</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                         @if ($applications->isNotEmpty())
                                             @foreach ($applications as $application)
@@ -125,8 +125,9 @@
                                                     <td>{{ $application->user->mobile }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($application->applied_date)->format('d M, Y') }}</td>
                                                     <td>
-                                                        <a href="{{ route('account.show', ['id' => $application->user->id]) }}" class="btn btn-primary">Visit</a>
-                                                    </td>
+                                                        <a href="{{ route('account.show', ['id' => $application->user->id]) }}" class="btn btn-secondary">Visit</a>
+                                                        <a href="#" onclick="hireFreelancer({{ $application->id }}, {{ $job->id }}, {{ $application->user->id }})" class="btn btn-primary">Hire</a>
+                                                    </td>                                           
                                                 </tr>
                                             @endforeach
                                         @else
@@ -171,7 +172,7 @@
                                 <ul>
                                     <li>Name: <span>{{ $job->company_name }}</span></li>
                                     @if (!empty($job->company_location))
-                                        <li>Locaiton: <span>{{ $job->company_location }}</span></li>
+                                        <li>Location: <span>{{ $job->company_location }}</span></li>
                                     @endif
 
                                     @if (!empty($job->company_website))
@@ -189,37 +190,71 @@
 
 @section('customJs')
     <script type="text/javascript">
-function applyJob(id) {
-    if (confirm("Are you sure you want to apply for this job?")) {
-        $.ajax({
-            url: '{{ route("applyJob") }}',
-            type: 'post',
-            data: {
-                id: id,
-                _token: $('meta[name="csrf-token"]').attr('content') // Include CSRF Token
-            },
-            dataType: 'json',
-            success: function(response) {
-                window.location.href = "{{ url()->current() }}";
-            }
-        });
-    }
-}
+function hireFreelancer(applicationId, jobId, freelancerId) {
+        // Debugging: log the values to ensure they are correct
+        console.log("Application ID:", applicationId);
+        console.log("Job ID:", jobId);
+        console.log("Freelancer ID:", freelancerId);
 
-function saveTheJob(id) {
-    $.ajax({
-        url: '{{ route("saveTheJob") }}',
-        type: 'post',
-        data: {
-            id: id,
-            _token: $('meta[name="csrf-token"]').attr('content') // Include CSRF Token
-        },
-        dataType: 'json',
-        success: function(response) {
-            window.location.href = "{{ url()->current() }}";
+        if (confirm("Are you sure you want to hire this Freelancer?")) {
+            $.ajax({
+                url: '{{ route("hireFreelancer") }}',
+                type: 'POST',
+                data: {
+                    job_id: jobId,
+                    freelancer_id: freelancerId,
+                    application_id: applicationId,
+                    _token: $('meta[name="csrf-token"]').attr('content') // CSRF Token
+                },
+                dataType: 'json',
+                success: function(response) {
+                    // Check if the response is valid before taking action
+                    if(response.status) {
+                        alert(response.message); 
+                        window.location.reload(); // Reload the page on success
+                    } else {
+                        alert(response.message); // Alert the error message
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log("Error:", xhr.responseText); // Log error for debugging
+                    alert("An error occurred while hiring the freelancer.");
+                }
+            });
         }
-    });
-}
+    }
+
+        function applyJob(id) {
+            if (confirm("Are you sure you want to apply for this Job?")) {
+                $.ajax({
+                    url: '{{ route("applyJob") }}',
+                    type: 'post',
+                    data: {
+                        id: id,
+                        _token: $('meta[name="csrf-token"]').attr('content') // Include CSRF Token
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        window.location.href = "{{ url()->current() }}";
+                    }
+                });
+            }
+        }
+
+        function saveTheJob(id) {
+            $.ajax({
+                url: '{{ route("saveTheJob") }}',
+                type: 'post',
+                data: {
+                    id: id,
+                    _token: $('meta[name="csrf-token"]').attr('content') // Include CSRF Token
+                },
+                dataType: 'json',
+                success: function(response) {
+                    window.location.href = "{{ url()->current() }}";
+                }
+            });
+        }
 
     </script>
 @endsection

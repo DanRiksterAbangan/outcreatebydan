@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\admin\ContactController;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\HireController;
 use App\Http\Controllers\admin\JobApplicationController;
 use App\Http\Controllers\admin\JobController;
 use App\Http\Controllers\admin\UserController;
@@ -34,6 +35,7 @@ Route::get('/jobs', [JobsController::class, 'index'])->name('jobs');
 Route::get('/jobs/detail/{id}', [JobsController::class, 'detail'])->name('jobDetail');
 Route::post('/apply-job', [JobsController::class, 'applyJob'])->name('applyJob');
 Route::post('/save-the-job', [JobsController::class, 'saveTheJob'])->name('saveTheJob');
+Route::post('/hire-freelancer', [JobsController::class, 'hireFreelancer'])->name('hireFreelancer');
 Route::get('/profile/{id}', [AccountController::class, 'show'])->name('account.show');
 Route::get('/forgot-password', [AccountController::class, 'forgotPassword'])->name('account.forgotPassword');
 Route::post('/process-forgot-password', [AccountController::class, 'processForgotPassword'])->name('account.processForgotPassword');
@@ -66,6 +68,10 @@ Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
     // Admin Job Contacts Authority
     Route::get('/contacts', [ContactController::class, 'index'])->name('admin.contacts.contacts-list');
     Route::delete('/contacts', [ContactController::class, 'destroyContact'])->name('admin.contacts.destroyContact');
+
+    // Admin Hires Authority
+    Route::get('/hires', [HireController::class, 'index'])->name('admin.hires.hires-list');
+    Route::delete('/hires', [HireController::class, 'destroyHire'])->name('admin.hires.hires-list.destroyHire');
 });
 
 Route::group(['prefix' => 'freelancer','middleware' => 'checkFreelancer'], function(){
@@ -102,6 +108,7 @@ Route::group(['prefix' =>'account'], function(){
         Route::get('/my-jobs/edit/{jobId}', [AccountController::class, 'editJob'])->name('account.editJob');
         Route::post('/update-job/{jobId}', [AccountController::class, 'updateJob'])->name('account.updateJob');
         Route::post('/delete-job/', [AccountController::class, 'deleteJob'])->name('account.deleteJob');
+        Route::get('/hires', [AccountController::class, 'hiredFreelancers'])->name('account.hires');
         Route::get('/my-job-applications', [AccountController::class, 'myJobApplications'])->name('account.myJobApplications');
     
         Route::post('/remove-job-application', [AccountController::class, 'removeJobs'])->name('account.removeJobs');

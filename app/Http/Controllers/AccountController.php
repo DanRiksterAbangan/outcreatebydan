@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ResetPasswordEmail;
 use App\Models\Category;
+use App\Models\Hire;
 use App\Models\Job;
 use App\Models\JobApplication;
 use App\Models\JobType;
@@ -154,8 +155,6 @@ class AccountController extends Controller
                 ->withInput($request->only('email'));
         }
     }
-    
-    
 
     // User Profile Page
     public function profile() {
@@ -670,6 +669,8 @@ class AccountController extends Controller
 
         return redirect()->route('account.login')->with('success','You have successfully changed your password!');
     }
+
+    // Visit User Profile Page
     public function show($id)
     {
         // Find the user by the ID passed to the method
@@ -681,5 +682,14 @@ class AccountController extends Controller
         // Pass both user and job data to the view
         return view('front.account.show', compact('user', 'job'));
     }
+
+    // Show Hired Freelancers
+    public function hiredFreelancers() {
+        // Use pagination with a desired number of items per page (e.g., 10 items per page)
+        $hires = Hire::with('freelancer', 'job')
+                     ->where('employer_id', auth()->id())
+                     ->paginate(10);  // Adjust the number to your preference
     
+        return view('front.account.hires', compact('hires'));
+    }
 }

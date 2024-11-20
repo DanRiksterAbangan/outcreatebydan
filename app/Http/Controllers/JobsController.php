@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\JobNotificationEmail;
 use App\Models\Category;
+use App\Models\Hire;
 use App\Models\Job;
 use App\Models\JobApplication;
 use App\Models\JobType;
@@ -11,7 +12,9 @@ use App\Models\SavedJob;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class JobsController extends Controller
 {
@@ -218,5 +221,103 @@ class JobsController extends Controller
             'status' => false,
             'message' => $message,
         ]);
+    }
+
+    // Hire Freelancer
+    public function hireFreelancer(Request $request) {
+        // Step 1: Validate the incoming request
+        $validated = $request->validate([
+            'job_id' => 'required|exists:jobs,id',
+            'freelancer_id' => 'required|exists:users,id',
+            'application_id' => 'required|exists:job_applications,id',
+        ]);
+    
+        // Step 2: Retrieve job, application, and other relevant entities
+        $job = Job::find($validated['job_id']);
+        $application = JobApplication::find($validated['application_id']);
+        $freelancerId = $validated['freelancer_id'];
+    
+        Log::info('Hiring Process Initialized', [
+            'job_id' => $job->id,
+            'freelancer_id' => $freelancerId,
+            'application_id' => $application->id,
+        ]);
+    
+        // Step 3: Verify the employer is authorized
+        if ($job->user_id != Auth::id()) {
+            Log::error('Unauthorized employer', [
+                'job_user_id' => $job->user_id,
+                'auth_user_id' => Auth::id(),
+            ]);
+    
+            return response()->json([
+                'status' => false,
+                'message' => 'You are not authorized to hire for this job!'
+            ], 403);
+        }
+    
+        // Step 4: Verify freelancer's application belongs to them
+        if ($application->user_id != $freelancerId) {
+            Log::error('Freelancer ID mismatch', [
+                'application_user_id' => $application->user_id,
+                'freelancer_id' => $freelancerId,
+            ]);
+    
+            return response()->json([
+                'status' => false,
+                'message' => 'Application does not belong to the freelancer!'
+            ], 400);
+        }
+    
+        // Step 5: Check if the freelancer is already hired
+        $existingHire = Hire::where([
+            ['job_id', '=', $job->id],
+            ['freelancer_id', '=', $freelancerId],
+        ])->exists();
+    
+        if ($existingHire) {
+            Log::error('Freelancer already hired', [
+                'job_id' => $job->id,
+                'freelancer_id' => $freelancerId,
+            ]);
+    
+            return response()->json([
+                'status' => false,
+                'message' => 'This freelancer is already hired for the job.'
+            ], 400);
+        }
+    
+        // Step 6: Create the Hire record
+        try {
+            $hire = Hire::create([
+                'job_id' => $job->id,
+                'job_application_id' => $application->id,
+                'freelancer_id' => $freelancerId,
+                'employer_id' => Auth::id(),
+                'hired_date' => now(),
+            ]);
+    
+            Log::info('Freelancer hired successfully', [
+                'hire_id' => $hire->id,
+                'job_id' => $job->id,
+                'freelancer_id' => $freelancerId,
+            ]);
+    
+            return response()->json([
+                'status' => true,
+                'message' => 'Freelancer successfully hired!',
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error hiring freelancer', [
+                'error' => $e->getMessage(),
+                'job_id' => $job->id,
+                'freelancer_id' => $freelancerId,
+            ]);
+    
+            return response()->json([
+                'status' => false,
+                'message' => 'An error occurred while hiring the freelancer. Please try again.',
+            ], 500);
+        }
     }
 }

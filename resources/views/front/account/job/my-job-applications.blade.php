@@ -57,12 +57,14 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        <div class="action-dots float-end">
+                                                        <div class="action-dots float-start">
                                                             <button href="#" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end">
                                                                 <li><a class="dropdown-item" href="{{ route('jobDetail', $jobApplication->job_id) }}"> <i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
+                                                                {{-- <li><a class="dropdown-item" href="{{ route('hireDetail', $hire->id) }}"><i class="fa fa-eye" aria-hidden="true"></i> View</a></li> --}}
+                                                                <li><a class="dropdown-item" href="{{ route('jobDetail', $jobApplication->job_id) }}"> <i class="fa fa-briefcase" aria-hidden="true"></i> Visit</a></li>
                                                                 <li><a class="dropdown-item" href="#" onclick="removeJob({{ $jobApplication->id }})"><i class="fa fa-trash" aria-hidden="true"></i> Remove</a></li>
                                                             </ul>
                                                         </div>

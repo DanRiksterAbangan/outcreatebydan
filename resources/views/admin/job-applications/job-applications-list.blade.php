@@ -63,7 +63,7 @@
                                                     
                                                     <td>{{ \Carbon\Carbon::parse($application->applied_date)->format('d M, Y') }}</td>
                                                     <td>
-                                                        <div class="action-dots ">
+                                                        <div class="action-dots float-start">
                                                             <button href="#" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>

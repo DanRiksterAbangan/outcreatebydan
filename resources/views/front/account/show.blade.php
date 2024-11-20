@@ -12,10 +12,14 @@
                     @include('front.message')
                     <div class="card border-0 shadow-lg mb-8 rounded-lg">
                         <div class="card-body p-6">
-                            <h3 class="text-xl font-bold mb-6 text-gray-800 flex items-center">
-                                <i class="fas fa-user-circle mr-2 text-blue-500"></i> My Profile
-                            </h3>
+                            <h3 class="text-xl font-bold mb-6 text-gray-800 d-flex align-items-center justify-content-between">
+                                <span>
+                                    <i class="fas fa-user-circle me-2 text-blue-500"></i> My Profile
+                                </span>
 
+                                <a href="#" class="btn btn-primary">Message</a>
+                            </h3>                            
+                    
                             <div class="space-y-8">
                                 <!-- Personal Information -->
                                 <div class="border-b pb-6 mb-6">
