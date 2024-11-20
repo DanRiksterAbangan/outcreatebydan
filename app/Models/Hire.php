@@ -27,7 +27,7 @@ class Hire extends Model
     public function freelancer() {
         return $this->belongsTo(User::class, 'freelancer_id');
     }
-    
+
     // Relationship with User (Employer)
     public function employer()
     {

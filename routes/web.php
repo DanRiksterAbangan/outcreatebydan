@@ -79,6 +79,7 @@ Route::group(['prefix' => 'freelancer','middleware' => 'checkFreelancer'], funct
     Route::get('/freelancer-dashboard', [FreelancerController::class, 'freelancerDashboard'])->name('freelancer.freelancer-dashboard');
     Route::get('/verify-now', [FreelancerController::class, 'verifyNow'])->name('freelancer.verify-now');
     Route::post('/verify-credentials', [FreelancerController::class, 'verifyCredentials'])->name('freelancer.verifyCredentials');
+    Route::get('/transactions/{id}', [FreelancerController::class, 'hireDetails'])->name('freelancer.hire-details');
 });
 
 

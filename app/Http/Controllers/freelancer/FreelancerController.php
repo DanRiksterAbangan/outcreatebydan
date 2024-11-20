@@ -4,6 +4,7 @@ namespace App\Http\Controllers\freelancer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Freelancers;
+use App\Models\Hire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -79,4 +80,12 @@ class FreelancerController extends Controller
         }
     }
 
+    // Show Hire Transaction Details
+    public function hireDetails($id) {
+        // Retrieve the hire details by ID
+        $hire = Hire::with('freelancer', 'job')->findOrFail($id);
+    
+        // Pass the hire data to the view
+        return view('freelancer.hire-details', compact('hire'));
+    }
 }

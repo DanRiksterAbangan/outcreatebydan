@@ -684,12 +684,20 @@ class AccountController extends Controller
     }
 
     // Show Hired Freelancers
-    public function hiredFreelancers() {
-        // Use pagination with a desired number of items per page (e.g., 10 items per page)
-        $hires = Hire::with('freelancer', 'job')
-                     ->where('employer_id', auth()->id())
-                     ->paginate(10);  // Adjust the number to your preference
+    public function hiredFreelancers(Request $request) {
+        // Get the 'sort' parameter from the request; default to '1' (Latest)
+        $sort = $request->get('sort', '1');
+            
+        // Query the hires with sorting based on hired_date
+        $hires = Hire::with('job') // Only eager load the 'job' relationship
+            ->orderBy('hired_date', $sort == '0' ? 'ASC' : 'DESC') // Sort by hired_date
+            ->paginate(10);
     
-        return view('front.account.hires', compact('hires'));
+        // Return the view with the sorted data
+        return view('front.account.hires', [
+            'hires' => $hires,
+            'sort' => $sort, // Pass the sort value for use in the view
+        ]);
     }
+    
 }

@@ -9,16 +9,22 @@ use Illuminate\Http\Request;
 class HireController extends Controller
 {
     // Admin All Hire Details
-    public function index() {
-        $hires = Hire::orderBy('created_at','DESC')
-                        ->with('job','user','employer')
-                        ->paginate(10);
-
-        return view('admin.hires.hires-list',[
+    public function index(Request $request) {
+        // Get the 'sort' parameter from the request; default to '1' (Latest)
+        $sort = $request->get('sort', '1');
+        
+        // Query the hires with sorting based on hired_date
+        $hires = Hire::with('job', 'freelancer', 'employer') // Corrected relationships
+            ->orderBy('hired_date', $sort == '0' ? 'ASC' : 'DESC') // Sort by hired_date
+            ->paginate(10);
+    
+        // Return the view with the sorted data
+        return view('admin.hires.hires-list', [
             'hires' => $hires,
+            'sort' => $sort, // Pass the sort value for use in the view
         ]);
-    }
-
+    }    
+    
     // Delete Job Application
     public function destroyJobApplication(Request $request) {
         $id = $request->id;

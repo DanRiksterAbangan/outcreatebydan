@@ -7,8 +7,8 @@
                 <div class="col">
                     <nav aria-label="breadcrumb" class=" rounded-3 p-3 mb-4">
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Account Settings</li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                            <li class="breadcrumb-item active">Hired Transactions</li>
                         </ol>
                     </nav>
                 </div>
@@ -26,8 +26,17 @@
                                 <div>
                                     <h3 class="fs-4 mb-1">Hired Transactions</h3>
                                 </div>
-                                
+
+                                <div class="col-6 col-md-2">
+                                    <div class="w-full flex justify-end"> <!-- Flexbox for alignment -->
+                                        <select name="sort" id="sort" class="form-select" onchange="redirectToSort()">
+                                            <option value="1" {{ request('sort', '1') == '1' ? 'selected' : '' }}>Latest</option>
+                                            <option value="0" {{ request('sort') == '0' ? 'selected' : '' }}>Oldest</option>
+                                        </select>                                                                                                           
+                                    </div>
+                                </div>
                             </div>
+
                             <div class="table-responsive">
                                 <table class="table ">
                                     <thead class="bg-light">
@@ -69,7 +78,7 @@
                                                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end">
-                                                                <li><a class="dropdown-item" href="{{ route('jobDetail', $hire->job_id) }}"> <i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
+                                                                {{-- <li><a class="dropdown-item" href="{{ route('freelancer.hire-details', ['id' => $jobApplication->id]) }}"><i class="fa fa-eye" aria-hidden="true"></i> View</a></li> --}}
                                                                 <li><a class="dropdown-item" href="{{ route('jobDetail', $hire->job_id) }}"> <i class="fa fa-briefcase" aria-hidden="true"></i> Visit</a></li>
                                                             </ul>
                                                         </div>
@@ -97,19 +106,13 @@
 @endsection
 
 @section('customJs')
-{{-- <script type="text/javascript">
-    function deleteHire(id) {
-        if (confirm("Are you sure you want to remove this Transaction?")) {
-            $.ajax({
-                url: '{{ route("account.removeHire") }}',
-                type: 'post',
-                data: {id: id},
-                dataType: 'json',
-                success: function(response) {
-                    window.location.href="{{ route('account.hiredFreelancers') }}";
-                }
-            });
-        }
+<script type="text/javascript">
+    // Redirect to sort on change
+    function redirectToSort() {
+        const sortValue = document.getElementById('sort').value;
+        const baseUrl = window.location.href.split('?')[0]; // Get URL without query parameters
+        window.location.href = `${baseUrl}?sort=${sortValue}`;
     }
-</script> --}}
+
+</script>
 @endsection
