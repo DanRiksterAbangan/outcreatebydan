@@ -9,6 +9,7 @@ use App\Models\Job;
 use App\Models\JobApplication;
 use App\Models\JobType;
 use App\Models\SavedJob;
+use App\Models\Clients;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -705,4 +706,64 @@ class AccountController extends Controller
         ]);
     }
     
+    // Client Verify Now Page
+    public function verifyNow() {
+        return view ('front.account.client-verify');
+    }
+
+    // Verify Credentials Function
+    public function verifyCredentials(Request $request) {
+        $user = Auth::user();
+    
+        // Use firstOrNew instead of firstOrCreate
+        $client = Clients::firstOrNew(['user_id' => $user->id]);
+    
+        $request->validate([
+            'valid_id' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'selfie_with_id' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'business_permit' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'dti_registration' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'sec_registration' => 'nullable|mimes:png,jpg,jpeg,webp',
+        ], [
+            'valid_id.mimes' => 'Valid ID must be a file of type: png, jpg, jpeg, webp.',
+            'selfie_with_id.mimes' => 'Selfie with Valid ID must be a file of type: png, jpg, jpeg, webp.',
+            'business_permit.mimes' => 'Business Permit must be a file of type: png, jpg, jpeg, webp.',
+            'dti_registration.mimes' => 'DTI Registraion must be a file of type: png, jpg, jpeg, webp.',
+            'sec_registration.mimes' => 'SEC Registration must be a file of type: png, jpg, jpeg, webp.',
+        ]);
+    
+        $uploadedFiles = [];
+        foreach (['valid_id', 'selfie_with_id', 'business_permit', 'dti_registration', 'sec_registration'] as $fileField) {
+            if ($request->hasFile($fileField)) {
+                $file = $request->file($fileField);
+                $filePath = $file->storeAs(
+                    'clients', // Changed to store in 'public/storage/clients'
+                    time() . '_' . $fileField . '.' . $file->getClientOriginalExtension(),
+                    'public' // Store in the 'public' disk
+                );
+    
+                // Set the file path in the client model instance
+                $client->$fileField = '/storage/' . $filePath;
+                $uploadedFiles[$fileField] = $filePath;
+            }
+        }
+    
+        // Save the instance to persist all updates at once
+        $client->save();
+    
+        if (count($uploadedFiles) > 0) {
+            session()->flash('success', 'Credentials Updated Successfully!');
+            return response()->json([
+                'status' => true,
+                'errors' => [],
+                'uploaded_files' => $uploadedFiles
+            ]);
+        } else {
+            session()->flash('error', 'No credentials uploaded!');
+            return response()->json([
+                'status' => false,
+                'errors' => ['No files uploaded.'],
+            ]);
+        }
+    }
 }

@@ -43,6 +43,10 @@
                 {{-- Client and Admin Sidebar --}}
                 @if (Auth::user()->role == 'user' || Auth::user()->role == 'admin')
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                        <a href="{{ route('account.client-verify') }}">Verify Now</a>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                         <a href="{{ route('account.createJob') }}">Post a Job</a>
                     </li>
 

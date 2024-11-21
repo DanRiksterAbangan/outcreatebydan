@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\admin\ClientVerificationController;
 use App\Http\Controllers\admin\ContactController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\FreelancerVerificationController;
@@ -80,6 +81,9 @@ Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
     Route::get('/freelancer-verifications/{freelancer}/resume/view', [FreelancerVerificationController::class, 'viewResume'])->name('admin.freelancer-verifications.view-resume');
     Route::put('/freelancer-verifications/update/{id}', [FreelancerVerificationController::class, 'update'])->name('admin.freelancer-verifications.update');
     Route::delete('/freelancer-verifications/{id}', [FreelancerVerificationController::class, 'destroyVerification'])->name('admin.freelancer-verifications.list.deleteVerification');
+
+    // Admin Client Verification Authority
+    Route::get('/client-verifications', [ClientVerificationController::class, 'index'])->name('admin.client-verifications.list');
 });
 
 Route::group(['prefix' => 'freelancer','middleware' => 'checkFreelancer'], function(){
@@ -124,5 +128,7 @@ Route::group(['prefix' =>'account'], function(){
         Route::get('/saved-jobs', [AccountController::class, 'savedJobs'])->name('account.savedJobs');
         Route::post('/remove-saved-job', [AccountController::class, 'removeSavedJob'])->name('account.removeSavedJob');
         Route::post('/update-password', [AccountController::class, 'updatePassword'])->name('account.updatePassword');
+        Route::get('/verify-now', [AccountController::class, 'verifyNow'])->name('account.client-verify');
+        Route::post('/verify-credentials', [AccountController::class, 'verifyCredentials'])->name('account.client-verify.verifyCredentials');
     });
 });
