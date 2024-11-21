@@ -80,11 +80,18 @@
                                 @endif
 
                                 @if (Auth::check())
-                                    <a href="#" onclick="applyJob({{ $job->id }})" class="btn btn-primary">Apply</a>
+                                    @php
+                                        // Check if the user has a corresponding freelancer entry and is verified
+                                        $freelancer = Auth::user()->freelancer;
+                                    @endphp
+                                    @if ($freelancer && $freelancer->isVerified == 1)
+                                        <a href="#" onclick="applyJob({{ $job->id }})" class="btn btn-primary">Apply</a>
+                                    @else
+                                        <a href="javascript:void(0);" class="btn btn-primary disabled">Please verify first in order to apply</a>
+                                    @endif
                                 @else
                                     <a href="javascript:void(0);" class="btn btn-primary disabled">Login to Apply</a>
                                 @endif
-
                             </div>
                         </div>
                     </div>
