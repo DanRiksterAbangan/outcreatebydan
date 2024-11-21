@@ -80,13 +80,13 @@
                                             <label class="form-check-label" for="isVerified">
                                               Pending
                                             </label>
-                                        </div>                                        
+                                        </div>                                      
                                     </div>
                                 </div>
 
                                 <div class="mb-4">
                                     <!-- Link to view the resume -->
-                                    <a href="{{ route('admin.freelancer-verifications.view-resume', $freelancer->id) }}" class="btn btn-primary">View Resume</a>
+                                    <a href="{{ route('admin.freelancer-verifications.view-resume', $freelancer->id) }}" class="btn btn-primary" target="_blank">View Resume</a>
                                 </div>
 
                                 <div class="mb-4">
@@ -173,9 +173,9 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group mt-4 text-center">
-                                    <a href="{{ route('admin.jobs.jobs-list') }}" class="btn btn-danger px-5 py-2">Cancel</a>
-                                    <button class="btn btn-success px-5 py-2" type="submit">Save Changes</button>
+                                <div class="d-flex justify-content-end pt-3">
+                                    <button type="submit" class="btn btn-primary me-2">Update Request</button>
+                                    <a href="{{ route('admin.freelancer-verifications.list') }}" class="btn btn-outline-danger">Cancel</a>
                                 </div>
                             </div>
                         </div>
@@ -184,4 +184,26 @@
             </div>
         </div>
     </section>
+
+    <script>
+        document.getElementById('openModal').addEventListener('click', function() {
+            var modal = new bootstrap.Modal(document.getElementById('exampleModal1'));
+            modal.show();
+        });
+
+        document.getElementById('openSelfieModal').addEventListener('click', function() {
+            var modal = new bootstrap.Modal(document.getElementById('selfieModal'));
+            modal.show();
+        });
+
+        document.getElementById('openDiplomaModal').addEventListener('click', function() {
+            var modal = new bootstrap.Modal(document.getElementById('diplomaModal'));
+            modal.show();
+        });
+
+        document.getElementById('openCertificateModal').addEventListener('click', function() {
+            var modal = new bootstrap.Modal(document.getElementById('certificateModal'));
+            modal.show();
+        });
+    </script>
 @endsection

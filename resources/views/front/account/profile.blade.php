@@ -45,7 +45,7 @@
 
                         <div class="card border-0 shadow mb-4">
                             <div class="card-body  p-4">
-                                <h3 class="fs-4 mb-1">More Info</h3>
+                                <h3 class="fs-4 mb-1">Contacts</h3>
                                 <div class="mb-4">
                                     <label for="" class="mb-2">Email*</label>
                                     <input type="text" name="email" id="email" placeholder="johndoe@email.com" value="{{ $user->email }}" class="form-control">
@@ -64,13 +64,44 @@
                             </div>
                         </div>
 
+                        {{-- About --}}
+                        <div class="card border-0 shadow mb-4">
+                            <div class="card-body  p-4">
+                                <h3 class="fs-4 mb-1">More Info</h3>
+                                <div class="mb-4">
+                                    <label for="about" class="mb-2">About Me</label>
+                                    <textarea class="textarea" name="about" id="about" cols="5" rows="5" placeholder="About Me" value="{{ $user->about }}"></textarea>
+                                    <p></p>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="education" class="mb-2">Education</label>
+                                    <input type="text" name="education" id="education" placeholder="Education" value="{{ $user->education }}" class="form-control">
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="career_start" class="mb-2">Career Start</label>
+                                    <input type="text" name="career_start" id="career_start" placeholder="Career Start" value="{{ $user->career_start }}" class="form-control">
+                                </div>   
+
+                                <div class="mb-4">
+                                    <label for="experience" class="mb-2">Experience</label>
+                                    <input type="text" name="experience" id="experience" placeholder="Experience" value="{{ $user->experience }}" class="form-control">
+                                </div>   
+
+                                <div class="mb-4">
+                                    <label for="other" class="mb-2">Other Info</label>
+                                    <textarea class="textarea" name="other" id="other" cols="5" rows="5" placeholder="Other Info" value="{{ $user->other }}"></textarea>
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="card border-0 shadow mb-4">
                             <div class="card-body p-4">
                                 <button type="submit" class="btn btn-primary">Save Changes</button>
                             </div>
                         </div>
-
-
                     </div>
                 </form>
             </div>

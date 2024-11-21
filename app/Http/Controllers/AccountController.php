@@ -190,6 +190,11 @@ class AccountController extends Controller
             $user->email = $request->email;
             $user->designation = $request->designation;
             $user->mobile = $request->mobile;
+            $user->about = $request->about;
+            $user->education = $request->education;
+            $user->career_start = $request->career_start;
+            $user->experience = $request->experience;
+            $user->other = $request->other;
             $user->save();
 
             session()->flash('success','Profile Updated Successfully!');

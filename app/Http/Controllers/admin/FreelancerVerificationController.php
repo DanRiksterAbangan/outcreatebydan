@@ -15,9 +15,10 @@ class FreelancerVerificationController extends Controller
     // All Freelancer Verification Requests
     public function index(Request $request) {
         $sort = $request->get('sort', '1');
+        $search = $request->get('keyword', '');  // Use 'keyword' instead of 'search'
         
         $freelancers = Freelancers::with('user:id,firstName,midName,lastName');
-    
+        
         // Handle sorting
         if ($sort == '1') { // Latest
             $freelancers = $freelancers->orderBy('created_at', 'DESC');
@@ -28,12 +29,26 @@ class FreelancerVerificationController extends Controller
         } elseif ($sort == '3') { // Pending
             $freelancers = $freelancers->where('isVerified', 0)->orderBy('created_at', 'DESC');
         }
-    
+        
+        // Handle search if there's a search term
+        if ($search != '') {
+            $freelancers = $freelancers->where(function ($query) use ($search) {
+                $query->where('id', 'like', "%$search%") // Search Freelancer ID
+                      ->orWhereHas('user', function ($query) use ($search) {
+                          $query->where('id', 'like', "%$search%")  // Search User ID
+                                ->orWhere('firstName', 'like', "%$search%")
+                                ->orWhere('midName', 'like', "%$search%")
+                                ->orWhere('lastName', 'like', "%$search%")
+                                ->orWhere('email', 'like', "%$search%"); // Search User email
+                      });
+            });
+        }
+        
         $freelancers = $freelancers->paginate(10);
+        
+        return view('admin.freelancer-verifications.list', compact('freelancers', 'sort', 'search'));
+    }
     
-        return view('admin.freelancer-verifications.list', compact('freelancers', 'sort'));
-    }    
-
     // Admin - Edit Update Status of Verification Request
     public function edit($id) {
         $freelancer = Freelancers::findOrFail($id);

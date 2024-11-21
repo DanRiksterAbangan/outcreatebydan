@@ -73,10 +73,12 @@
                                 <textarea class="textarea" name="description" id="description" cols="5" rows="5" placeholder="Description"></textarea>
                                 <p></p>
                             </div>
+
                             <div class="mb-4">
                                 <label for="" class="mb-2">Benefits</label>
                                 <textarea class="textarea" name="benefits" id="benefits" cols="5" rows="5" placeholder="Benefits"></textarea>
                             </div>
+                            
                             <div class="mb-4">
                                 <label for="" class="mb-2">Responsibility</label>
                                 <textarea class="textarea" name="responsibility" id="responsibility" cols="5" rows="5" placeholder="Responsibility"></textarea>
