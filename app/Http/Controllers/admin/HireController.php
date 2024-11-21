@@ -44,11 +44,4 @@ class HireController extends Controller
             'status' => true,
         ]);
     }
-
-        // Hire Transactions
-    // public function hireTransaction() {
-    //     $user = Auth::user(); 
-
-    //     return view ('freelancer.hire-transaction', compact('user'));
-    // }
 }

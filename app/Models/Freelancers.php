@@ -12,6 +12,16 @@ class Freelancers extends Model
     protected $table = 'freelancers';
 
     protected $fillable = [
-        'user_id', 'valid_id', 'selfie_with_id', 'diploma', 'certificate'
-    ];
+        'user_id', 
+        'valid_id', 
+        'selfie_with_id', 
+        'diploma', 
+        'certificate', 
+        'resume', 
+    ];    
+
+    // Define the relationship with the User model
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

@@ -7,7 +7,15 @@
                 <img src="{{ asset('assets/images/avatar7.png') }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
             @endif
 
-            <h5 class="mt-3 pb-0">{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</h5>
+            <div class="d-flex justify-content-center align-items-center mt-3 pb-0">
+                <h5 class="mb-0">{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</h5>
+
+                <!-- Check if the user is a freelancer and if they are verified -->
+                @if(Auth::user()->freelancer && Auth::user()->freelancer->isVerified == 1)
+                    <img src="{{ asset('assets/images/verified.png') }}" alt="Verified User" class="ms-2" style="width: 20px; height: 20px;">
+                @endif
+            </div>
+
             <p class="text-muted mb-1 fs-6">{{ Auth::user()->designation ?? 'No designation provided' }}</p>
             <div class="d-flex justify-content-center mb-2">
                 <button data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">Change Profile Picture</button>

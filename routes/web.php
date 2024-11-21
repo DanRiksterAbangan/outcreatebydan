@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\admin\ContactController;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\admin\FreelancerVerificationController;
 use App\Http\Controllers\admin\HireController;
 use App\Http\Controllers\admin\JobApplicationController;
 use App\Http\Controllers\admin\JobController;
@@ -72,6 +73,13 @@ Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
     // Admin Hires Authority
     Route::get('/hires', [HireController::class, 'index'])->name('admin.hires.hires-list');
     Route::delete('/hires', [HireController::class, 'destroyHire'])->name('admin.hires.hires-list.destroyHire');
+
+    // Admin Freelancer Verification Authority
+    Route::get('/freelancer-verifications', [FreelancerVerificationController::class, 'index'])->name('admin.freelancer-verifications.list');
+    Route::get('/freelancer-verifications/edit/{id}', [FreelancerVerificationController::class, 'edit'])->name('admin.freelancer-verifications.edit');
+    Route::get('/freelancer-verifications/{freelancer}/resume/view', [FreelancerVerificationController::class, 'viewResume'])->name('admin.freelancer-verifications.view-resume');
+    Route::put('/freelancer-verifications/update/{id}', [FreelancerVerificationController::class, 'update'])->name('admin.freelancer-verifications.update');
+    Route::delete('/freelancer-verifications/{id}', [FreelancerVerificationController::class, 'destroyVerification'])->name('admin.freelancer-verifications.list.deleteVerification');
 });
 
 Route::group(['prefix' => 'freelancer','middleware' => 'checkFreelancer'], function(){
