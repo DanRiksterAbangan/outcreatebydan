@@ -58,7 +58,7 @@ class FreelancerVerificationController extends Controller
         ]);
     }
 
-    // Admin - Update the Edited Job
+    // Admin - Update the Edited Freelancer Verification Request
     public function update(Request $request, $id) {
         $freelancer = Freelancers::findOrFail($id);
     

@@ -32,9 +32,11 @@ class Kernel extends HttpKernel
         'web' => [
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\Session\Middleware\StartSession::class,  // Ensure this is present
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
+            \App\Http\Middleware\PreventBackHistory::class,
+            \App\Http\Middleware\PreventCacheLoginPage::class,  // Check this middleware too
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 

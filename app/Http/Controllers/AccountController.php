@@ -129,24 +129,28 @@ class AccountController extends Controller
     }
 
     // User Login Method
-    public function authenticate(Request $request)
-    {
-        $validator = Validator::make($request->all(),[
+    public function authenticate(Request $request) {
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
         ]);
     
         if ($validator->passes()) {
-            // Attempt to log in the user
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-                // Check if the user is active
                 $user = Auth::user();
+                
                 if ($user->isActive == 0) {
-                    Auth::logout(); // Log the user out immediately
+                    Auth::logout();
                     return redirect()->route('account.blocked');
                 }
     
-                return redirect()->route('account.profile');
+                // Apply Cache-Control headers to prevent caching of the redirect
+                return redirect()->intended(route('account.show', ['id' => $user->id]))
+                    ->withHeaders([
+                        'Cache-Control' => 'no-cache, no-store, must-revalidate',
+                        'Pragma' => 'no-cache',
+                        'Expires' => '0'
+                    ]);
             } else {
                 return redirect()->route('account.login')->with('error', 'Invalid credentials.');
             }
@@ -156,7 +160,7 @@ class AccountController extends Controller
                 ->withInput($request->only('email'));
         }
     }
-
+    
     // User Profile Page
     public function profile() {
 
@@ -215,13 +219,21 @@ class AccountController extends Controller
     }
 
     // User Logout
-    public function logout() {
-
+    public function logout(Request $request) {
         Auth::logout();
-        return redirect()->route('account.login');
-
+    
+        // Clear the session to prevent any cached data
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+    
+        // Apply Cache-Control headers to prevent caching of the redirect
+        return redirect()->route('account.login')->withHeaders([
+            'Cache-Control' => 'no-cache, no-store, must-revalidate',
+            'Pragma' => 'no-cache',
+            'Expires' => '0'
+        ]);
     }
-
+    
     // Update Profile Picutre
     public function updateProfilePic(Request $request) {
 

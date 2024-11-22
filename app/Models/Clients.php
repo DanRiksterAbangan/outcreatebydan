@@ -21,7 +21,7 @@ class Clients extends Model
     ];    
 
     // Define the relationship with the User model
-    // public function user() {
-    //     return $this->belongsTo(User::class, 'user_id', 'id');
-    // }
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

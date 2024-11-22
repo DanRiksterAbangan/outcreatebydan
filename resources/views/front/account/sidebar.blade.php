@@ -8,12 +8,19 @@
             @endif
 
             <div class="d-flex justify-content-center align-items-center mt-3 pb-0">
-                <h5 class="mb-0">{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</h5>
+                <h5 class="mb-0">
+                    {{ Auth::user()->firstName }} {{ Auth::user()->lastName }}
 
-                <!-- Check if the user is a freelancer and if they are verified -->
-                @if(Auth::user()->freelancer && Auth::user()->freelancer->isVerified == 1)
-                    <img src="{{ asset('assets/images/verified.png') }}" alt="Verified User" class="ms-2" style="width: 20px; height: 20px;">
-                @endif
+                    <!-- Show verified image beside the name if the freelancer is verified -->
+                    @if(Auth::user()->freelancer && Auth::user()->freelancer->isVerified == 1)
+                        <img src="{{ asset('assets/images/verified.png') }}" alt="Verified Freelancer" class="ms-2" style="width: 20px; height: 20px;">
+                    @endif
+
+                    <!-- Show verified image beside the name if the user/client is verified -->
+                    @if(Auth::user()->client && Auth::user()->client->isVerified == 1)
+                        <img src="{{ asset('assets/images/verified.png') }}" alt="Verified Client" class="ms-2" style="width: 20px; height: 20px;">
+                    @endif       
+                </h5>
             </div>
 
             <p class="text-muted mb-1 fs-6">{{ Auth::user()->designation ?? 'No designation provided' }}</p>
@@ -25,6 +32,7 @@
         @endif
     </div>
 </div>
+
 
 @if(Auth::check())
     <div class="card account-nav border-0 shadow mb-4 mb-lg-0">
@@ -46,17 +54,22 @@
                         <a href="{{ route('account.client-verify') }}">Verify Now</a>
                     </li>
 
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <a href="{{ route('account.createJob') }}">Post a Job</a>
-                    </li>
+                    {{-- Shows All Job Features if Client is Verified --}}
+                    @if(Auth::user()->client && Auth::user()->client->isVerified == 1)
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <a href="{{ route('account.createJob') }}">Post a Job</a>
+                        </li> 
 
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <a href="{{ route('account.myJobs') }}">My Jobs</a>
-                    </li>
-
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <a href="{{ route('account.hires') }}">Hired Freelancers</a>
-                    </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <a href="{{ route('account.myJobs') }}">My Jobs</a>
+                        </li>
+    
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <a href="{{ route('account.hires') }}">Hired Freelancers</a>
+                        </li>
+                    @else
+                        <p class="list-group-item d-flex justify-content-between align-items-center p-3">Please Verify first to acquire Job Features.</p>
+                    @endif       
                 @endif           
 
                 {{-- Freelancer and Admin Sidebar --}}
@@ -65,13 +78,19 @@
                         <a href="{{ route('freelancer.verify-now') }}">Verify Now</a>
                     </li>
 
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <a href="{{ route('account.myJobApplications') }}">Jobs Applied</a>
-                    </li>
+                    <!-- Show verified image beside the name if the freelancer is verified -->
+                    @if(Auth::user()->freelancer && Auth::user()->freelancer->isVerified == 1)
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <a href="{{ route('account.myJobApplications') }}">Jobs Applied</a>
+                        </li>
 
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                        <a href="{{ route('account.savedJobs') }}">Saved Jobs</a>
-                    </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <a href="{{ route('account.savedJobs') }}">Saved Jobs</a>
+                        </li>  
+                    @else
+                    <p class="list-group-item d-flex justify-content-between align-items-center p-3">Please Verify first to acquire Job Features.</p>
+                    @endif
+
                 @endif
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                     <a href="{{ route('account.logout') }}">Logout</a>

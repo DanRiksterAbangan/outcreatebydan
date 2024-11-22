@@ -8,7 +8,7 @@
                     <nav aria-label="breadcrumb" class="rounded-3 p-3 mb-4">
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Freelancers Verification Requests</li>
+                            <li class="breadcrumb-item active">Clients Verification Requests</li>
                         </ol>
                     </nav>
                 </div>
@@ -24,13 +24,13 @@
                         <div class="card-body card-form">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <h3 class="fs-4 mb-1">Freelancers Verification Requests</h3>
+                                    <h3 class="fs-4 mb-1">Clients Verification Requests</h3>
                                 </div>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <div class="flex-grow-1">
-                                    <form method="GET" action="{{ route('admin.freelancer-verifications.list') }}">
+                                    <form method="GET" action="{{ route('admin.client-verifications.list') }}">
                                         <input 
                                             value="{{ Request::get('keyword') }}" 
                                             type="text" 
@@ -43,7 +43,7 @@
                                 </div>
 
                                 <div class="ms-3">
-                                    <form method="GET" action="{{ route('admin.freelancer-verifications.list') }}">
+                                    <form method="GET" action="{{ route('admin.client-verifications.list') }}">
                                         <button type="submit" class="btn btn-secondary">Reset</button>
                                     </form>
                                 </div>                                
@@ -52,7 +52,7 @@
                             <!-- Sorting Dropdown moved to the right -->
                             <div class="d-flex justify-content-end mb-4">
                                 <div class="w-auto">
-                                    <form method="GET" action="{{ route('admin.freelancer-verifications.list') }}">
+                                    <form method="GET" action="{{ route('admin.client-verifications.list') }}">
                                         <select name="sort" id="sort" class="form-select" onchange="this.form.submit()">
                                             <option value="1" {{ (Request::get('sort') == '1' ? 'selected' : '') }}>Latest</option>
                                             <option value="0" {{ (Request::get('sort') == '0' ? 'selected' : '') }}>Oldest</option>
@@ -79,21 +79,22 @@
                                         </tr>
                                     </thead>
                                     <tbody class="border-0">
-                                        @if ($freelancers->isNotEmpty())
-                                            @foreach ($freelancers as $freelancer)
+                                        @if ($clients->isNotEmpty())
+                                            @foreach ($clients as $client)
                                                 <tr>
-                                                    <td>{{ $freelancer->id }}</td>
-                                                    <td>{{ $freelancer->user->id ?? 'N/A' }}</td>
-                                                    <td>{{ $freelancer->user->firstName ?? 'N/A' }}</td>
-                                                    <td>{{ $freelancer->user->midName ?? 'N/A' }}</td>
-                                                    <td>{{ $freelancer->user->lastName ?? 'N/A' }}</td>
+                                                    <td>{{ $client->id }}</td>
+                                                    <td>{{ $client->user->id ?? 'N/A' }}</td>
+                                                    <td>{{ $client->user->firstName ?? 'N/A' }}</td>
+                                                    <td>{{ $client->user->midName ?? 'N/A' }}</td>
+                                                    <td>{{ $client->user->lastName ?? 'N/A' }}</td>
                                                     <td>
-                                                        @if ($freelancer->isVerified == 1)
+                                                        @if ($client->isVerified == 1)
                                                             <p class="text-success">Verified</p>
                                                         @else
                                                             <p class="text-danger">Pending</p>
                                                         @endif
-                                                    </td>                                                    <td>{{ \Carbon\Carbon::parse($freelancer->created_at)->format('d M, Y') }}</td>
+                                                    </td>                                                    
+                                                    <td>{{ \Carbon\Carbon::parse($client->created_at)->format('d M, Y') }}</td>
                                                     <td>
                                                         <div class="action-dots float-start">
                                                             <button href="#" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
@@ -101,12 +102,12 @@
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end">
                                                                 <li>
-                                                                    <a class="dropdown-item" href="{{ route('admin.freelancer-verifications.edit',$freelancer->id) }}">
+                                                                    <a class="dropdown-item" href="{{ route('admin.client-verifications.edit',$client->id) }}">
                                                                         <i class="fa fa-edit" aria-hidden="true"></i> Edit
                                                                     </a>
                                                                 </li>
                                                                 <li>
-                                                                    <a class="dropdown-item" href="javascript:void(0);" onclick="deleteVerification({{ $freelancer->id }})">
+                                                                    <a class="dropdown-item" href="javascript:void(0);" onclick="deleteVerification({{ $client->id }})">
                                                                         <i class="fa fa-trash" aria-hidden="true"></i> Delete
                                                                     </a>
                                                                 </li>
@@ -117,7 +118,7 @@
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td colspan="10" class="text-center text-danger">No Freelancer Verification Requests Found!</td>
+                                                <td colspan="10" class="text-center text-danger">No Client Verification Requests Found!</td>
                                             </tr>
                                         @endif
                                     </tbody>
@@ -125,7 +126,7 @@
                                 </table>
                             </div>
                             <div>
-                                {{ $freelancers->appends(['keyword' => Request::get('keyword'), 'sort' => Request::get('sort')])->links() }}
+                                {{ $clients->appends(['keyword' => Request::get('keyword'), 'sort' => Request::get('sort')])->links() }}
                             </div>
                         </div>
                     </div>
@@ -146,9 +147,9 @@
 
         // Delete Hire Transaction
         function deleteVerification(id) {
-            if (confirm("Are you sure you want to delete this Freelancer Verification Request?")) {
+            if (confirm("Are you sure you want to delete this Client Verification Request?")) {
                 $.ajax({
-                    url: `/admin/freelancer-verifications/${id}`, // Include the ID in the URL
+                    url: `/admin/client-verifications/${id}`, // Include the ID in the URL
                     type: 'DELETE',
                     data: {
                         _token: '{{ csrf_token() }}' // Include CSRF token
@@ -156,7 +157,7 @@
                     dataType: 'json',
                     success: function(response) {
                         if (response.status) {
-                            alert('Freelancer Verification Request Deleted Successfully!');
+                            alert('Client Verification Request Deleted Successfully!');
                             location.reload();
                         } else {
                             alert('Error: ' + response.message);

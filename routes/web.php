@@ -84,6 +84,9 @@ Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
 
     // Admin Client Verification Authority
     Route::get('/client-verifications', [ClientVerificationController::class, 'index'])->name('admin.client-verifications.list');
+    Route::get('/client-verifications/edit/{id}', [ClientVerificationController::class, 'edit'])->name('admin.client-verifications.edit');
+    Route::put('/client-verifications/update/{id}', [ClientVerificationController::class, 'update'])->name('admin.client-verifications.update');
+    Route::delete('/client-verifications/{id}', [ClientVerificationController::class, 'destroyVerification'])->name('admin.client-verifications.list.deleteVerification');
 });
 
 Route::group(['prefix' => 'freelancer','middleware' => 'checkFreelancer'], function(){
@@ -98,7 +101,7 @@ Route::group(['prefix' => 'freelancer','middleware' => 'checkFreelancer'], funct
 Route::group(['prefix' =>'account'], function(){
 
     // Guest Routes
-    Route::group(['middleware' => 'guest'], function(){
+    Route::group(['middleware' => ['guest', \App\Http\Middleware\PreventCacheLoginPage::class]], function() {
         Route::get('/register', [AccountController::class, 'registration'])->name('account.registration');
         Route::get('/client-register', [AccountController::class, 'clientRegistration'])->name('account.clientRegistration');
         Route::get('/freelancer-register', [AccountController::class, 'freelancerRegistration'])->name('account.freelancerRegistration');

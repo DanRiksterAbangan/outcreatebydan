@@ -56,4 +56,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Freelancers::class, 'user_id', 'id');
     }
+
+    public function client() {
+        return $this->hasOne(Clients::class); // Adjust the relationship if needed
+    }
 }
