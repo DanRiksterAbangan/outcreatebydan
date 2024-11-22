@@ -26,10 +26,10 @@
                         @csrf
                         <div class="card border-0 shadow mb-4 ">
                             <div class="card-body card-form p-4">
-                                <h3 class="fs-4 mb-1">Hire Transaction Details</h3>
+                                <h3 class="fs-4 mb-1">Transaction Details</h3>
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
-                                        <label for="id" class="mb-2">Request ID</label>
+                                        <label for="id" class="mb-2">Transaction ID</label>
                                         <input value="{{ $freelancer ? $freelancer->id : '' }}" type="text" id="id" name="id" class="form-control" readonly>
                                     </div>
 
@@ -53,6 +53,20 @@
                                     <div class="mb-4 col-md-4">
                                         <label for="lastName" class="mb-2">Freelancer Last Name</label>
                                         <input value="{{ $freelancer ? $freelancer->lastName : '' }}" type="text" id="id" name="id" class="form-control" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mb-4"> 
+                                    <div class="row box-right"> 
+                                        <div class="col-md-8 ps-0 "> 
+                                            <p class="ps-3 textmuted fw-bold h6 mb-0 pb-3">SALARY</p> 
+                                            <p class="h1 fw-bold d-flex">
+                                                <i class="fa-solid fa-peso-sign"></i> 
+                                                @if (!empty($job->salary))
+                                                    {{ $job->salary }}
+                                                @endif
+                                            </p>
+                                        </div> 
                                     </div>
                                 </div>
 
@@ -96,20 +110,6 @@
                                         </div>
                                     </div>
                                 </div>                                                                                                                      
-                                
-                                <div class="col-12 mb-4"> 
-                                    <div class="row box-right"> 
-                                        <div class="col-md-8 ps-0 "> 
-                                            <p class="ps-3 textmuted fw-bold h6 mb-0 pb-3">SALARY</p> 
-                                            <p class="h1 fw-bold d-flex">
-                                                <i class="fa-solid fa-peso-sign"></i> 
-                                                @if (!empty($job->salary))
-                                                    {{ $job->salary }}
-                                                @endif
-                                            </p>
-                                        </div> 
-                                    </div>
-                                </div>
 
                                 <div class="col-12 px-0 mb-4 d-flex justify-content-between">
                                     <!-- Interview and Assessment Link -->
@@ -156,52 +156,58 @@
                                         </div>
                                     </div>
                                 </div>
-                                                            
+                                
+                                <!-- Centered Button to Open the Modal -->
+                                <div class="d-flex justify-content-center">
+                                    <button type="button" class="btn btn-info btn-lg" data-bs-toggle="modal" data-bs-target="#myModal">Pay Now</button>
+                                </div>
 
-                                <div class="col-12 px-0 mb-4 d-flex justify-content-between align-items-center">
-                                    <!-- Payment Details Box -->
-                                    <div class="box-right w-32 pe-2">
-                                        <div class="d-flex pb-2"> 
-                                            <p class="fw-bold h7">
-                                                <span class="">Payment</span> ID
-                                            </p> 
-                                        </div>
-                                        <div id="col">
-                                            <input type="text" name="" placeholder="Reference ID" id="myInput" class="p-blue bg btn btn-primary h8 text-dark">
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Bank Name Box -->
-                                    <div class="box-right w-32 pe-2">
-                                        <div class="d-flex pb-2"> 
-                                            <p class="fw-bold h7">
-                                                <span class="">If Bank Transfer</span> Bank Name
-                                            </p> 
-                                        </div>
-                                        <div id="col">
-                                            <input type="text" name="" placeholder="Bank Name" id="myInput" class="p-blue bg btn btn-primary h8 text-dark">
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Payment Method Dropdown -->
-                                    <div class="box-right w-32 ps-2">
-                                        <div class="d-flex pb-2"> 
-                                            <p class="fw-bold h7 mb-0">Payment Method</p>
-                                        </div>
-                                        <div class="w-auto">
-                                            <form method="GET" action="#">
-                                                <select name="payment_method" id="payment_method" class="form-select" onchange="this.form.submit()">
-                                                    <option value="3">Gcash</option>
-                                                    <option value="2">Maya</option>
-                                                    <option value="1">Paypal</option>
-                                                    <option value="0">Bank Transfer</option>
-                                                </select>
+                                <!-- Modal -->
+                                <div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content p-3">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="myModalLabel">Payment Form</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form method="POST" action="/process-payment" class="p-3">
+                                                <div class="mb-4">
+                                                    <!-- Payment ID -->
+                                                    <label for="reference_id" class="form-label fw-bold h7">Payment ID</label>
+                                                    <input type="text" name="reference_id" placeholder="Reference ID" id="reference_id" class="form-control text-dark">
+                                                </div>
+                                                <div class="mb-4">
+                                                    <!-- Bank Name -->
+                                                    <label for="bank_name" class="form-label fw-bold h7">If Bank Transfer - Bank Name</label>
+                                                    <input type="text" name="bank_name" placeholder="Bank Name" id="bank_name" class="form-control text-dark">
+                                                </div>
+                                                <div class="mb-4">
+                                                    <!-- Payment Method -->
+                                                    <label for="payment_method" class="form-label fw-bold h7">Payment Method</label>
+                                                    <select name="payment_method" id="payment_method" class="form-select text-dark">
+                                                        <option value="3">Gcash</option>
+                                                        <option value="2">Maya</option>
+                                                        <option value="1">Paypal</option>
+                                                        <option value="0">Bank Transfer</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <!-- Bank Name -->
+                                                    <label for="proof" class="form-label fw-bold h7">Transaction Image</label>
+                                                    <input type="file" name="proof" placeholder="Transction Image" id="proof" class="form-control text-dark">
+                                                </div>
+                                                <div class="text-end">
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
                                             </form>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                
-                                
+
+
                                 <div class="d-flex justify-content-end pt-3">
                                     <button type="submit" class="btn btn-primary me-2">Update Request</button>
                                     <a href="{{ route('admin.freelancer-verifications.list') }}" class="btn btn-outline-danger">Cancel</a>
