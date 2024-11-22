@@ -15,14 +15,14 @@ use App\Http\Controllers\JobsController;
 use Illuminate\Support\Facades\Route;
 
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
+|-------------------------------------------------------------------------- 
+| Web Routes 
+|-------------------------------------------------------------------------- 
+| 
+| Here is where you can register web routes for your application. These 
+| routes are loaded by the RouteServiceProvider and all of them will 
+| be assigned to the "web" middleware group. Make something great! 
+| 
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -32,7 +32,7 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [HomeController::class, 'processContact'])->name('processContact');
 
-Route::get('/blocked', function () {return view('front.account.blocked');})->name('account.blocked');
+Route::get('/blocked', function () { return view('front.account.blocked'); })->name('account.blocked');
 Route::get('/jobs', [JobsController::class, 'index'])->name('jobs');
 Route::get('/jobs/detail/{id}', [JobsController::class, 'detail'])->name('jobDetail');
 Route::post('/apply-job', [JobsController::class, 'applyJob'])->name('applyJob');
@@ -44,7 +44,7 @@ Route::post('/process-forgot-password', [AccountController::class, 'processForgo
 Route::get('/reset-password/{token}', [AccountController::class, 'resetPassword'])->name('account.resetPassword');
 Route::post('/process-reset-password', [AccountController::class, 'processResetPassword'])->name('account.processResetPassword');
 
-Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
+Route::group(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
 
     // Admin Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
@@ -89,19 +89,20 @@ Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
     Route::delete('/client-verifications/{id}', [ClientVerificationController::class, 'destroyVerification'])->name('admin.client-verifications.list.deleteVerification');
 });
 
-Route::group(['prefix' => 'freelancer','middleware' => 'checkFreelancer'], function(){
+Route::group(['prefix' => 'freelancer', 'middleware' => 'checkFreelancer'], function () {
     // Freelancer Dashboard
     Route::get('/freelancer-dashboard', [FreelancerController::class, 'freelancerDashboard'])->name('freelancer.freelancer-dashboard');
     Route::get('/verify-now', [FreelancerController::class, 'verifyNow'])->name('freelancer.verify-now');
     Route::post('/verify-credentials', [FreelancerController::class, 'verifyCredentials'])->name('freelancer.verifyCredentials');
+    
+    // Make sure this route matches the link in the Blade file
     Route::get('/transactions/{id}', [FreelancerController::class, 'hireDetails'])->name('freelancer.hire-details');
 });
 
-
-Route::group(['prefix' =>'account'], function(){
+Route::group(['prefix' => 'account'], function () {
 
     // Guest Routes
-    Route::group(['middleware' => ['guest', \App\Http\Middleware\PreventCacheLoginPage::class]], function() {
+    Route::group(['middleware' => ['guest', \App\Http\Middleware\PreventCacheLoginPage::class]], function () {
         Route::get('/register', [AccountController::class, 'registration'])->name('account.registration');
         Route::get('/client-register', [AccountController::class, 'clientRegistration'])->name('account.clientRegistration');
         Route::get('/freelancer-register', [AccountController::class, 'freelancerRegistration'])->name('account.freelancerRegistration');
@@ -112,7 +113,7 @@ Route::group(['prefix' =>'account'], function(){
     });
 
     // Authenticated Routes
-    Route::group(['middleware' => 'auth'], function(){
+    Route::group(['middleware' => 'auth'], function () {
         Route::get('/profile', [AccountController::class, 'profile'])->name('account.profile');
         Route::put('/update-profile', [AccountController::class, 'updateProfile'])->name('account.updateProfile');
         Route::get('/accountPassword', [AccountController::class, 'accountPassword'])->name('account.accountPassword');
@@ -126,7 +127,7 @@ Route::group(['prefix' =>'account'], function(){
         Route::post('/delete-job/', [AccountController::class, 'deleteJob'])->name('account.deleteJob');
         Route::get('/hires', [AccountController::class, 'hiredFreelancers'])->name('account.hires');
         Route::get('/my-job-applications', [AccountController::class, 'myJobApplications'])->name('account.myJobApplications');
-    
+
         Route::post('/remove-job-application', [AccountController::class, 'removeJobs'])->name('account.removeJobs');
         Route::get('/saved-jobs', [AccountController::class, 'savedJobs'])->name('account.savedJobs');
         Route::post('/remove-saved-job', [AccountController::class, 'removeSavedJob'])->name('account.removeSavedJob');

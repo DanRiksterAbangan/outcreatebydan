@@ -26,28 +26,41 @@
                                 <div class="col"> 
                                     <div class="row"> 
                                         <div class="col-12 px-0 mb-4"> 
-                                            <div class="box-right"> 
-                                                <div class="d-flex pb-2"> 
-                                                    <p class="fw-bold h7">
-                                                        <span class="text-muted">
-                                                            Transaction ID: 
-                                                        </span>
-                                                    </p> 
+                                            <div class="d-flex justify-content-between" style="gap: 20px;">
+                                                <div class="box-left" style="flex: 1;"> 
+                                                    <div class="d-flex pb-2"> 
+                                                        <p class="fw-bold h7">
+                                                            Job Posting ID: 
+                                                        </p>
+                                                    </div> 
+                                                    <h2 class="bold">
+                                                        {{ $transaction->id }}
+                                                    </h2>
                                                 </div> 
-
-                                                <a href="">Job Posting ID</a>                                       
-                                            </div> 
-                                        </div> 
+                                        
+                                                <div class="box-right" style="flex: 1;"> 
+                                                    <div class="d-flex pb-2"> 
+                                                        <p class="fw-bold h7">
+                                                            Transaction ID:  
+                                                        </p>
+                                                    </div>
+                                                    <h2 class="bold">
+                                                        {{ $transaction->job_id }}
+                                                    </h2>
+                                                </div> 
+                                            </div>                                           
+                                        </div>                                        
 
                                         <div class="col-12 mb-4"> 
                                             <div class="row box-right"> 
                                                 <div class="col-md-8 ps-0 "> 
                                                     <p class="ps-3 textmuted fw-bold h6 mb-0 pb-3">EXPECTED SALARY</p> 
-                                                    <p class="h1 fw-bold d-flex"> 
-                                                        <span class=" fas fa-dollar-sign textmuted pe-1 h6 align-text-top mt-1"></span>
-                                                        84,254 
-                                                        <span class="textmuted">.58</span> 
-                                                    </p> 
+                                                    <p class="h1 fw-bold d-flex">
+                                                        <i class="fa-solid fa-peso-sign"></i> 
+                                                        @if (!empty($job->salary))
+                                                            {{ $job->salary }}
+                                                        @endif
+                                                    </p>
                                                 </div> 
                                             </div> 
                                         </div> 

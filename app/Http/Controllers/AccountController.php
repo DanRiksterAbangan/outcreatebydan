@@ -138,19 +138,14 @@ class AccountController extends Controller
         if ($validator->passes()) {
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 $user = Auth::user();
-                
+    
                 if ($user->isActive == 0) {
                     Auth::logout();
                     return redirect()->route('account.blocked');
                 }
     
-                // Apply Cache-Control headers to prevent caching of the redirect
-                return redirect()->intended(route('account.show', ['id' => $user->id]))
-                    ->withHeaders([
-                        'Cache-Control' => 'no-cache, no-store, must-revalidate',
-                        'Pragma' => 'no-cache',
-                        'Expires' => '0'
-                    ]);
+                // Redirect without setting cache headers here, let the middleware handle it
+                return redirect()->intended(route('account.show', ['id' => $user->id]));
             } else {
                 return redirect()->route('account.login')->with('error', 'Invalid credentials.');
             }
@@ -226,13 +221,12 @@ class AccountController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
     
-        // Apply Cache-Control headers to prevent caching of the redirect
-        return redirect()->route('account.login')->withHeaders([
-            'Cache-Control' => 'no-cache, no-store, must-revalidate',
-            'Pragma' => 'no-cache',
-            'Expires' => '0'
-        ]);
-    }
+        // Return redirect with proper headers
+        return redirect()->route('account.login')->with('status', 'Logged out successfully.')
+                         ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+                         ->header('Pragma', 'no-cache')
+                         ->header('Expires', '0');
+    }    
     
     // Update Profile Picutre
     public function updateProfilePic(Request $request) {

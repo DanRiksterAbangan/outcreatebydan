@@ -1,5 +1,11 @@
 @extends('front.layouts.app')
 
+@section('head')
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, post-check=0, pre-check=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+@endsection
+
 @section('main')
     <section class="section-5">
         <div class="container my-5">
@@ -23,7 +29,8 @@
             <!-- Section Introduction -->
             <div class="row mb-5">
                 <div class="col-12 text-center">
-                    <h2 class="fw-bold text-primary">Welcome Back!</h2>                </div>
+                    <h2 class="fw-bold text-primary">Welcome Back!</h2>                
+                </div>
             </div>
 
             <!-- Login Form -->
@@ -74,7 +81,8 @@
 
                     <!-- Help Section -->
                     <div class="mt-4 text-center">
-                        <p>Do not have an account? <a href="{{ route('account.registration') }}" class="text-decoration-none text-primary">Register</a></p>                    </div>
+                        <p>Do not have an account? <a href="{{ route('account.registration') }}" class="text-decoration-none text-primary">Register</a></p>                    
+                    </div>
                 </div>
             </div>
 
