@@ -39,6 +39,7 @@ Route::post('/apply-job', [JobsController::class, 'applyJob'])->name('applyJob')
 Route::post('/save-the-job', [JobsController::class, 'saveTheJob'])->name('saveTheJob');
 Route::post('/hire-freelancer', [JobsController::class, 'hireFreelancer'])->name('hireFreelancer');
 Route::get('/profile/{id}', [AccountController::class, 'show'])->name('account.show');
+Route::get('/edit-hires/{hireId}', [AccountController::class, 'editHires'])->name('account.editHires');
 Route::get('/forgot-password', [AccountController::class, 'forgotPassword'])->name('account.forgotPassword');
 Route::post('/process-forgot-password', [AccountController::class, 'processForgotPassword'])->name('account.processForgotPassword');
 Route::get('/reset-password/{token}', [AccountController::class, 'resetPassword'])->name('account.resetPassword');
@@ -126,6 +127,7 @@ Route::group(['prefix' => 'account'], function () {
         Route::post('/update-job/{jobId}', [AccountController::class, 'updateJob'])->name('account.updateJob');
         Route::post('/delete-job/', [AccountController::class, 'deleteJob'])->name('account.deleteJob');
         Route::get('/hires', [AccountController::class, 'hiredFreelancers'])->name('account.hires');
+        Route::post('/update-hires/{hireId}', [AccountController::class, 'updateJob'])->name('account.updateJob');
         Route::get('/my-job-applications', [AccountController::class, 'myJobApplications'])->name('account.myJobApplications');
 
         Route::post('/remove-job-application', [AccountController::class, 'removeJobs'])->name('account.removeJobs');

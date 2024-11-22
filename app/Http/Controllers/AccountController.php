@@ -42,7 +42,7 @@ class AccountController extends Controller
 
     //  Client Register Method
     public function processRegistration(Request $request) {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'firstName' => 'required',
             'midName' => 'required',
             'lastName' => 'required',
@@ -51,36 +51,34 @@ class AccountController extends Controller
             'confirmPassword' => 'required',
             'role' => 'required|in:user',
         ]);
-
-        if ($validator->passes()) {
-
-            $user = new User();
-            $user->firstName = $request->firstName;
-            $user->midName = $request->midName;
-            $user->lastName = $request->lastName;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->role = $request->role;
-            $user->save();
-
-            session()->flash('success', 'You have registered sucessfully!');
-
-            return response()->json([
-                'status' => true,
-                'errors' => []
-            ]);
-
-        } else {
+    
+        if ($validator->fails()) {
             return response()->json([
                 'status' => false,
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ]);
         }
+    
+        User::create([
+            'firstName' => $request->firstName,
+            'midName' => $request->midName,
+            'lastName' => $request->lastName,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+        ]);
+    
+        session()->flash('success', 'You have registered successfully!');
+    
+        return response()->json([
+            'status' => true,
+            'redirect' => route('account.login'),
+        ]);
     }
-
+    
     //  Freelancer Register Method
     public function processFreelancerRegistration(Request $request) {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'firstName' => 'required',
             'midName' => 'required',
             'lastName' => 'required',
@@ -89,31 +87,29 @@ class AccountController extends Controller
             'confirmPassword' => 'required',
             'role' => 'required|in:freelancer',
         ]);
-
-        if ($validator->passes()) {
-
-            $user = new User();
-            $user->firstName = $request->firstName;
-            $user->midName = $request->midName;
-            $user->lastName = $request->lastName;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->role = $request->role;
-            $user->save();
-
-            session()->flash('success', 'You have registered sucessfully!');
-
-            return response()->json([
-                'status' => true,
-                'errors' => []
-            ]);
-
-        } else {
+    
+        if ($validator->fails()) {
             return response()->json([
                 'status' => false,
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ]);
         }
+    
+        User::create([
+            'firstName' => $request->firstName,
+            'midName' => $request->midName,
+            'lastName' => $request->lastName,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+        ]);
+    
+        session()->flash('success', 'You have registered successfully!');
+    
+        return response()->json([
+            'status' => true,
+            'redirect' => route('account.login'),
+        ]);
     }
 
     // User Login Page
@@ -772,4 +768,99 @@ class AccountController extends Controller
             ]);
         }
     }
+
+    // View Hire Transaction
+    public function editHires($hireId) {
+        $hire = Hire::with('job', 'freelancer', 'employer')->find($hireId); // Eager load job and freelancer
+
+        return view('front.account.edit-hires', [
+            'hire' => $hire,
+            'freelancer' => $hire->freelancer,
+            'client' => $hire->employer,
+            'job' => $hire->job, // Pass job data to the view
+        ]);
+    }
+
+    // Update
+    // public function updateJob(Request $request, $id) {
+    //     $rules = [
+    //         'title' => 'required|min:5|max:200',
+    //         'category' => 'required',
+    //         'jobType' => 'required',
+    //         'vacancy' => 'required|integer',
+    //         'salary' => 'required',
+    //         'location' => 'required|min:5|max:70',
+    //         'description' => 'required',
+    //         'company_name' => 'required|min:5|max:70',
+    //         'status' => 'nullable|in:0,1', // Assuming 'status' is either 0 (inactive) or 1 (active)
+    //     ];
+    
+    //     $validator = Validator::make($request->all(), $rules);
+    
+    //     if ($validator->passes()) {
+    //         $job = Job::find($id);
+    
+    //         if (!$job) {
+    //             return response()->json([
+    //                 'status' => false,
+    //                 'errors' => ['job' => 'Job not found.']
+    //             ]);
+    //         }
+    
+    //         // Update the job fields
+    //         $job->title = $request->title;
+    //         $job->category_id = $request->category;
+    //         $job->job_type_id = $request->jobType;
+    //         $job->vacancy = $request->vacancy;
+    //         $job->salary = $request->salary;
+    //         $job->location = $request->location;
+    //         $job->description = $request->description;
+    //         $job->company_name = $request->company_name;
+            
+    //         // Handle optional status update
+    //         if ($request->has('status')) {
+    //             $job->status = $request->status;
+    //         }
+    
+    //         // Handle file upload for company logo
+    //         if ($request->hasFile('company_logo')) {
+    //             try {
+    //                 // Delete the old logo if it exists
+    //                 if ($job->company_logo) {
+    //                     $oldFilePath = str_replace('storage/', '', $job->company_logo);
+    //                     Storage::delete('public/' . $oldFilePath); // Delete old logo
+    //                 }
+
+    //                 // Upload the new logo
+    //                 $file = $request->file('company_logo');
+    //                 $filename = time() . '_company_logo.' . $file->getClientOriginalExtension();
+
+    //                 // Store the file in the 'public/clients' directory
+    //                 $path = $file->storeAs('public/clients', $filename);
+
+    //                 // Assign the relative path for database storage
+    //                 $job->company_logo = 'storage/clients/' . $filename;
+    //             } catch (\Exception $e) {
+    //                 Log::error('File upload failed: ' . $e->getMessage());
+    //                 return response()->json([
+    //                     'status' => false,
+    //                     'errors' => ['company_logo' => 'Error uploading logo.']
+    //                 ]);
+    //             }
+    //         }
+
+    //         $job->save();
+    
+    //         return response()->json([
+    //             'status' => true,
+    //             'errors' => []
+    //         ]);
+    
+    //     } else {
+    //         return response()->json([
+    //             'status' => false,
+    //             'errors' => $validator->errors()
+    //         ]);
+    //     }
+    // }
 }

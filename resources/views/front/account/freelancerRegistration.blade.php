@@ -56,7 +56,23 @@
 
 @section('customJs')
     <script>
-        $("#freelancerRegistrationForm").submit(function(e){
+        function handleErrors(errors, fields) {
+            fields.forEach(field => {
+                if (errors[field]) {
+                    $(`#${field}`).addClass('is-invalid')
+                        .siblings('p')
+                        .addClass('invalid-feedback')
+                        .html(errors[field]);
+                } else {
+                    $(`#${field}`).removeClass('is-invalid')
+                        .siblings('p')
+                        .removeClass('invalid-feedback')
+                        .html('');
+                }
+            });
+        }
+
+        $("#freelancerRegistrationForm").submit(function(e) {
             e.preventDefault();
 
             $.ajax({
@@ -65,111 +81,15 @@
                 data: $("#freelancerRegistrationForm").serializeArray(),
                 dataType: 'json',
                 success: function(response) {
-                    if(response.status == false) {
-                        var errors = response.errors;
-                            if (errors.firstName) {
-                                $("#firstName").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.firstName)
-                            } else {
-                                $("#firstName").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.midName) {
-                                $("#midName").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.midName)
-                            } else {
-                                $("#midName").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.lastName) {
-                                $("#lastName").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.lastName)
-                            } else {
-                                $("#lastName").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.email) {
-                                $("#email").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.email)
-                            } else {
-                                $("#email").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.password) {
-                                $("#password").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.password)
-                            } else {
-                                $("#password").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.confirmPassword) {
-                                $("#confirmPassword").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.confirmPassword)
-                            } else {
-                                $("#confirmPassword").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
+                    const fields = ['firstName', 'midName', 'lastName', 'email', 'password', 'confirmPassword'];
+                    if (response.status == false) {
+                        handleErrors(response.errors, fields);
                     } else {
-                        $("#firstName").removeClass('is-invalid')
+                        fields.forEach(field => $(`#${field}`).removeClass('is-invalid')
                             .siblings('p')
                             .removeClass('invalid-feedback')
-                            .html('');
-
-                        $("#midName").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('');
-
-                        $("#lastName").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('');
-
-                        $("#email").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('');
-
-                        $("#password").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('');    
-
-                        $("#confirmpassword").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('');
-
-                        window.location.href='{{ route("account.login") }}';
+                            .html(''));
+                        window.location.href = '{{ route("account.login") }}';
                     }
                 }
             });
