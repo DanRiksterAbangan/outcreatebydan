@@ -15,6 +15,7 @@ class Hire extends Model
         'employer_id',
         'freelancer_id',
         'hired_date',
+        'progress_link',  // Add this field
     ];
 
     // Relationship with Job

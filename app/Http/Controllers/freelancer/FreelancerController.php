@@ -8,6 +8,7 @@ use App\Models\Hire;
 use App\Models\JobApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class FreelancerController extends Controller
 {
@@ -82,12 +83,43 @@ class FreelancerController extends Controller
     }
 
     // Details of the Hiring Transaction
-    public function hireDetails($id)
-    {
+    public function hireDetails($id) {
         // Fetch the transaction and related job details
         $transaction = JobApplication::findOrFail($id);
         $job = $transaction->job; // assuming there's a relationship between JobApplication and Job
     
-        return view('freelancer.hire-details', compact('transaction', 'job'));
+        // Fetch related hire details if necessary
+        $hire = Hire::where('job_id', $job->id)->first(); // Adjust the condition as needed
+    
+        return view('freelancer.hire-details', compact('transaction', 'job', 'hire'));
+    }    
+
+    // Freelancer Update Project Link
+    public function updateLink(Request $request, $id) {
+        
+        // Retrieve the hire record and check if it exists
+        $hire = Hire::find($id);
+        
+        if (!$hire) {
+            return redirect()->back()->with('error', 'Hire record not found.');
+        }
+
+        // Validation
+        $validator = Validator::make($request->all(), [
+            'progress_link' => 'required',
+            'hire_status' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors());
+        }
+
+        // Update the hire record
+        $hire->progress_link = $request->progress_link;
+        $hire->hire_status = $request->hire_status;
+        $hire->save();
+
+        // Return a success response
+        return redirect()->back()->with('success', 'Project Progress Link Updated Successfully!');
     }
 }

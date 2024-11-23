@@ -21,23 +21,35 @@
 
                 <div class="col-lg-9">
                     @include('front.message')
-                    <form action="#" method="POST" id="editHireForm" name="editHireForm" enctype="multipart/form-data">
-                        @method('PUT')
+                    <form action="{{ route('account.updateHires', ['hireId' => $hire->id]) }}" method="POST" id="editHireForm" name="editHireForm" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="card border-0 shadow mb-4 ">
                             <div class="card-body card-form p-4">
-                                <h3 class="fs-4 mb-1">Transaction Details</h3>
-                                <div class="row">
-                                    <div class="col-md-6 mb-4">
-                                        <label for="id" class="mb-2">Transaction ID</label>
-                                        <input value="{{ $freelancer ? $freelancer->id : '' }}" type="text" id="id" name="id" class="form-control" readonly>
-                                    </div>
-
-                                    <div class="col-md-6  mb-4">
-                                        <label for="freelancer_id" class="mb-2">Freelancer ID</label>
-                                        <input value="{{ $freelancer ? $freelancer->id : '' }}" type="text" id="id" name="id" class="form-control" readonly>
-                                    </div>
-                                </div>
+                                <div class="col-12 px-0 mb-4"> 
+                                    <div class="d-flex justify-content-between" style="gap: 20px;">
+                                        <div class="box-left" style="flex: 1;"> 
+                                            <div class="d-flex pb-2"> 
+                                                <p class="fw-bold h7">
+                                                    Transaction ID: 
+                                                </p>
+                                            </div> 
+                                            <h2 class="bold">
+                                                {{ $hire ? $hire->id : '' }}                                            </h2>
+                                        </div> 
+                                
+                                        <div class="box-right" style="flex: 1;"> 
+                                            <div class="d-flex pb-2"> 
+                                                <p class="fw-bold h7">
+                                                    Frelancer ID:  
+                                                </p>
+                                            </div>
+                                            <h2 class="bold">
+                                                {{ $freelancer ? $freelancer->id : '' }}
+                                            </h2>
+                                        </div> 
+                                    </div>                                           
+                                </div> 
 
                                 <div class="row">
                                     <div class="mb-4 col-md-4">
@@ -56,19 +68,30 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 mb-4"> 
-                                    <div class="row box-right"> 
-                                        <div class="col-md-8 ps-0 "> 
-                                            <p class="ps-3 textmuted fw-bold h6 mb-0 pb-3">SALARY</p> 
-                                            <p class="h1 fw-bold d-flex">
-                                                <i class="fa-solid fa-peso-sign"></i> 
+                                <div class="col-12 d-flex justify-content-between mb-4">
+                                    <!-- Salary Section -->
+                                    <div class="w-50 pe-2">
+                                        <div class="p-3 border rounded shadow-sm h-100">
+                                            <p class="text-muted fw-bold h6 mb-0 pb-3">SALARY</p>
+                                            <p class="h1 fw-bold d-flex align-items-center">
+                                                <i class="fa-solid fa-peso-sign me-2"></i>
                                                 @if (!empty($job->salary))
                                                     {{ $job->salary }}
                                                 @endif
                                             </p>
-                                        </div> 
+                                        </div>
                                     </div>
-                                </div>
+                                
+                                    <!-- Project Progress Section -->
+                                    <div class="w-50 ps-2">
+                                        <div class="p-3 border rounded shadow-sm h-100">
+                                            <p class="fw-bold h7 mb-2">
+                                                <span>Project Progress</span> Link
+                                            </p>
+                                            <input type="text" name="progress_link" value="{{ $hire->progress_link }}" placeholder="Freelancer Project Progress Link" id="progress_link" class="text-center form-control text-dark" readonly>
+                                        </div>
+                                    </div>
+                                </div>                                        
 
                                 <div class="col-12 mb-4 d-flex">
                                     <!-- Employer box (left side) -->
@@ -116,45 +139,44 @@
                                     <div class="box-right w-48 pe-2">
                                         <div class="d-flex pb-2"> 
                                             <p class="fw-bold h7">
-                                                <span class="">Interview and Assessment</span> Link
+                                                <span>Interview and Assessment</span>Link
                                             </p> 
                                         </div>
                                         <div id="col">
-                                            <input type="text" name="" placeholder="Enter Interview or Assessment Link Here" id="myInput" class="bg btn btn-primary h8 text-left text-dark">
+                                            <input type="text" value="{{ $hire->assessment_link }}" name="assessment_link" placeholder="Enter Interview or Assessment Link Here" id="assessment_link" class="bg btn btn-primary h8 text-left text-dark">
                                         </div>                                 
                                     </div>
                                 
-                                    <!-- Job Status and Radio Buttons -->
-                                    <div class="mb-4 col-md-6 w-48 ps-2">
-                                        <label for="" class="mb-2 fw-bold h7">Job Status</label>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="3" id="isActive-active" name="isActive">
-                                            <label class="form-check-label" for="isActive-active">
-                                                Hired
-                                            </label>
+                                    <div class="mb-4 col-md-6 ps-2">
+                                        <label class="mb-2 fw-bold h7" for="jobStatus">Job Status</label>
+                                        <div id="jobStatus">
+                                            <div class="form-check">
+                                                
+                                                <input {{ ($hire->hire_status == 3) ? 'checked' : '' }} class="form-check-input" type="radio" value="3" id="hire_status-hired" name="hire_status"> 
+                                                <label class="form-check-label" for="hire_status">
+                                                    Hired
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input {{ ($hire->hire_status == 2) ? 'checked' : '' }} class="form-check-input" type="radio" value="2" id="hire_status-final-interview" name="hire_status">
+                                                <label class="form-check-label" for="hire_status">
+                                                    Final Interview
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input {{ ($hire->hire_status == 1) ? 'checked' : '' }} class="form-check-input" type="radio" value="1" id="hire_status-assessment" name="hire_status">
+                                                <label class="form-check-label" for="hire_status">
+                                                    Assessment
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input {{ ($hire->hire_status == 0) ? 'checked' : '' }} class="form-check-input" type="radio" value="0" id="hire_status-initial-interview" name="hire_status">
+                                                <label class="form-check-label" for="hire_status">
+                                                    Initial Interview
+                                                </label>
+                                            </div>
                                         </div>
-                                        
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="2" id="isActive-final-interview" name="isActive">
-                                            <label class="form-check-label" for="isActive-final-interview">
-                                                Final Interview
-                                            </label>
-                                        </div>
-                                        
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="1" id="isActive-assessment" name="isActive">
-                                            <label class="form-check-label" for="isActive-assessment">
-                                                Assessment
-                                            </label>
-                                        </div>
-                                        
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="0" id="isActive-initial-interview" name="isActive">
-                                            <label class="form-check-label" for="isActive-initial-interview">
-                                                Initial Interview
-                                            </label>
-                                        </div>
-                                    </div>
+                                    </div>                                    
                                 </div>
                                 
                                 <!-- Centered Button to Open the Modal -->
@@ -210,7 +232,7 @@
 
                                 <div class="d-flex justify-content-end pt-3">
                                     <button type="submit" class="btn btn-primary me-2">Update Request</button>
-                                    <a href="{{ route('admin.freelancer-verifications.list') }}" class="btn btn-outline-danger">Cancel</a>
+                                    <a href="{{ route('account.hires') }}" class="btn btn-outline-danger">Cancel</a>
                                 </div>
                             </div>
                         </div>

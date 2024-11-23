@@ -781,86 +781,51 @@ class AccountController extends Controller
         ]);
     }
 
-    // Update
-    // public function updateJob(Request $request, $id) {
-    //     $rules = [
-    //         'title' => 'required|min:5|max:200',
-    //         'category' => 'required',
-    //         'jobType' => 'required',
-    //         'vacancy' => 'required|integer',
-    //         'salary' => 'required',
-    //         'location' => 'required|min:5|max:70',
-    //         'description' => 'required',
-    //         'company_name' => 'required|min:5|max:70',
-    //         'status' => 'nullable|in:0,1', // Assuming 'status' is either 0 (inactive) or 1 (active)
-    //     ];
+    // Update Hire Transaction
+    public function updateHires(Request $request, $hireId) {
+        // Use $hireId passed as a parameter to find the specific hire
+        $hire = Hire::with('job', 'freelancer', 'employer')->find($hireId);
     
-    //     $validator = Validator::make($request->all(), $rules);
+        if (!$hire) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'status' => false,
+                    'errors' => ['Hire not found.']
+                ]);
+            } else {
+                return redirect()->back()->withErrors(['Hire not found.']);
+            }
+        }
     
-    //     if ($validator->passes()) {
-    //         $job = Job::find($id);
+        // Validation
+        $validator = Validator::make($request->all(), [
+            'assessment_link' => 'required',
+            'hire_status' => 'required',
+        ]);
     
-    //         if (!$job) {
-    //             return response()->json([
-    //                 'status' => false,
-    //                 'errors' => ['job' => 'Job not found.']
-    //             ]);
-    //         }
+        if ($validator->fails()) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'status' => false,
+                    'errors' => $validator->errors()
+                ]);
+            } else {
+                return redirect()->back()->withErrors($validator->errors());
+            }
+        }
     
-    //         // Update the job fields
-    //         $job->title = $request->title;
-    //         $job->category_id = $request->category;
-    //         $job->job_type_id = $request->jobType;
-    //         $job->vacancy = $request->vacancy;
-    //         $job->salary = $request->salary;
-    //         $job->location = $request->location;
-    //         $job->description = $request->description;
-    //         $job->company_name = $request->company_name;
-            
-    //         // Handle optional status update
-    //         if ($request->has('status')) {
-    //             $job->status = $request->status;
-    //         }
+        // Update the hire record
+        $hire->assessment_link = $request->assessment_link;
+        $hire->hire_status = $request->hire_status;
+        $hire->save();
     
-    //         // Handle file upload for company logo
-    //         if ($request->hasFile('company_logo')) {
-    //             try {
-    //                 // Delete the old logo if it exists
-    //                 if ($job->company_logo) {
-    //                     $oldFilePath = str_replace('storage/', '', $job->company_logo);
-    //                     Storage::delete('public/' . $oldFilePath); // Delete old logo
-    //                 }
-
-    //                 // Upload the new logo
-    //                 $file = $request->file('company_logo');
-    //                 $filename = time() . '_company_logo.' . $file->getClientOriginalExtension();
-
-    //                 // Store the file in the 'public/clients' directory
-    //                 $path = $file->storeAs('public/clients', $filename);
-
-    //                 // Assign the relative path for database storage
-    //                 $job->company_logo = 'storage/clients/' . $filename;
-    //             } catch (\Exception $e) {
-    //                 Log::error('File upload failed: ' . $e->getMessage());
-    //                 return response()->json([
-    //                     'status' => false,
-    //                     'errors' => ['company_logo' => 'Error uploading logo.']
-    //                 ]);
-    //             }
-    //         }
-
-    //         $job->save();
-    
-    //         return response()->json([
-    //             'status' => true,
-    //             'errors' => []
-    //         ]);
-    
-    //     } else {
-    //         return response()->json([
-    //             'status' => false,
-    //             'errors' => $validator->errors()
-    //         ]);
-    //     }
-    // }
+        if ($request->ajax()) {
+            return response()->json([
+                'status' => true,
+                'errors' => []
+            ]);
+        } else {
+            return redirect()->back()->with('success', 'Hire Transaction Updated Successfully!');
+        }
+    }    
 }

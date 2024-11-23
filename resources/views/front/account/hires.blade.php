@@ -8,7 +8,7 @@
                     <nav aria-label="breadcrumb" class=" rounded-3 p-3 mb-4">
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Hired Transactions</li>
+                            <li class="breadcrumb-item active">Hired Freelancers Transactions</li>
                         </ol>
                     </nav>
                 </div>
@@ -24,7 +24,7 @@
                         <div class="card-body card-form">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <h3 class="fs-4 mb-1">Hired Transactions</h3>
+                                    <h3 class="fs-4 mb-1">Hired Freelancers Transactions</h3>
                                 </div>
 
                                 <div class="col-6 col-md-2">

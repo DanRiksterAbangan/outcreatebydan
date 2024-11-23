@@ -40,6 +40,7 @@ Route::post('/save-the-job', [JobsController::class, 'saveTheJob'])->name('saveT
 Route::post('/hire-freelancer', [JobsController::class, 'hireFreelancer'])->name('hireFreelancer');
 Route::get('/profile/{id}', [AccountController::class, 'show'])->name('account.show');
 Route::get('/edit-hires/{hireId}', [AccountController::class, 'editHires'])->name('account.editHires');
+Route::put('/edit-hires/{hireId}', [AccountController::class, 'updateHires'])->name('account.updateHires');
 Route::get('/forgot-password', [AccountController::class, 'forgotPassword'])->name('account.forgotPassword');
 Route::post('/process-forgot-password', [AccountController::class, 'processForgotPassword'])->name('account.processForgotPassword');
 Route::get('/reset-password/{token}', [AccountController::class, 'resetPassword'])->name('account.resetPassword');
@@ -98,6 +99,7 @@ Route::group(['prefix' => 'freelancer', 'middleware' => 'checkFreelancer'], func
     
     // Make sure this route matches the link in the Blade file
     Route::get('/transactions/{id}', [FreelancerController::class, 'hireDetails'])->name('freelancer.hire-details');
+    Route::put('/update-transactions/{id}', [FreelancerController::class, 'updateLink'])->name('freelancer.updateLink');
 });
 
 Route::group(['prefix' => 'account'], function () {
