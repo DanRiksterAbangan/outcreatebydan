@@ -193,6 +193,18 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <form method="POST" action="/process-payment" class="p-3">
+                                                <div class="mb-4 mt-4">
+                                                    <!-- Pay to -->
+                                                    <label for="send_to_name" class="text-center form-label fw-bold h7">Send To</label>
+                                                    <input type="text" value="Gcash - Dan Rikster Dizon Abangan" name="send_to_name" placeholder="Reference ID" id="send_to_name" class="form-control text-dark mb-2 text-center" readonly>
+                                                    <input type="text" value="09920628141" name="send_to_number" placeholder="Send To" id="send_to_number" class="form-control text-dark text-center mb-2" readonly>
+                                                    <small class="text-danger">Note: A Service Fee of 1% will be applied to all transactions.</small>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <!-- Payment ID -->
+                                                    <label for="amout_payable" class="form-label fw-bold h7">Amount Payable</label>
+                                                    <input type="text" value="{{ $job->salary + $job->salary * .01 }}" name="amount_payable" placeholder="Amount Payable" id="amount_payable" class="form-control text-dark text-center" readonly>
+                                                </div>
                                                 <div class="mb-4">
                                                     <!-- Payment ID -->
                                                     <label for="reference_id" class="form-label fw-bold h7">Payment ID</label>
