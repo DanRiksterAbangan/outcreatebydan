@@ -45,6 +45,9 @@
                     <a href="{{ route('account.profile') }}">Profile Settings</a>
                 </li>
                 <li class="list-group-item d-flex justify-content-between p-3">
+                    <a href="{{ route('chatify') }}">Chat</a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between p-3">
                     <a href="{{ route('account.accountPassword') }}">Change Password</a>
                 </li>
 

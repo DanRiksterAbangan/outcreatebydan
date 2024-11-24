@@ -43,9 +43,7 @@ class AccountController extends Controller
     //  Client Register Method
     public function processRegistration(Request $request) {
         $validator = Validator::make($request->all(), [
-            'firstName' => 'required',
-            'midName' => 'required',
-            'lastName' => 'required',
+            'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|same:confirmPassword',
             'confirmPassword' => 'required',
@@ -60,10 +58,7 @@ class AccountController extends Controller
         }
     
         User::create([
-            'firstName' => $request->firstName,
-            'midName' => $request->midName,
-            'lastName' => $request->lastName,
-            'email' => $request->email,
+            'name' => $request->name,            'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
@@ -79,9 +74,7 @@ class AccountController extends Controller
     //  Freelancer Register Method
     public function processFreelancerRegistration(Request $request) {
         $validator = Validator::make($request->all(), [
-            'firstName' => 'required',
-            'midName' => 'required',
-            'lastName' => 'required',
+            'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|same:confirmPassword',
             'confirmPassword' => 'required',
@@ -96,9 +89,7 @@ class AccountController extends Controller
         }
     
         User::create([
-            'firstName' => $request->firstName,
-            'midName' => $request->midName,
-            'lastName' => $request->lastName,
+            'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,

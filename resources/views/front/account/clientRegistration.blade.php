@@ -13,18 +13,8 @@
                             <input type="hidden" name="role" value="{{ request('role') }}">
                             
                             <div class="mb-3">
-                                <label for="" class="mb-2">First Name*</label>
-                                <input type="text" name="firstName" id="firstName" class="form-control" placeholder="John">
-                                <p></p>
-                            </div> 
-                            <div class="mb-3">
-                                <label for="" class="mb-2">Middle Name* (Put N/A if not applicable.)</label>
-                                <input type="text" name="midName" id="midName" class="form-control" placeholder="Smith">
-                                <p></p>
-                            </div> 
-                            <div class="mb-3">
-                                <label for="" class="mb-2">Last Name*</label>
-                                <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Doe">
+                                <label for="name" class="mb-2">Name*</label>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="John Doe">
                                 <p></p>
                             </div> 
                             <div class="mb-3">
@@ -81,7 +71,7 @@
                 data: $("#registrationForm").serializeArray(),
                 dataType: 'json',
                 success: function(response) {
-                    const fields = ['firstName', 'midName', 'lastName', 'email', 'password', 'confirmPassword'];
+                    const fields = ['name', 'email', 'password', 'confirmPassword'];
                     if (response.status == false) {
                         handleErrors(response.errors, fields);
                     } else {

@@ -2,14 +2,21 @@
 
 namespace App\Models;
 
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use HasProfilePhoto;
+    use Notifiable;
+    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -17,16 +24,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'firstName',
-        'midName',
-        'lastName',
-        'address',
+        'name',
         'email',
         'password',
-        'mobile',
-        'contact_method',
-        'contact_time',
-        'role',
     ];
 
     /**
@@ -35,9 +35,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'role',
         'password',
         'remember_token',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
     ];
 
     /**
@@ -50,14 +51,11 @@ class User extends Authenticatable
     ];
 
     /**
-     * Relationship with the Freelancers model.
+     * The accessors to append to the model's array form.
+     *
+     * @var array<int, string>
      */
-    public function freelancer()
-    {
-        return $this->hasOne(Freelancers::class, 'user_id', 'id');
-    }
-
-    public function client() {
-        return $this->hasOne(Clients::class); // Adjust the relationship if needed
-    }
+    protected $appends = [
+        'profile_photo_url',
+    ];
 }
