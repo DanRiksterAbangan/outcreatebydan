@@ -82,7 +82,7 @@
                                 <div class="mb-4">
                                     <label for="valid_id" class="mb-2">Valid ID</label>
                                     <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light" style="cursor: pointer;">
-                                        <img src="{{ $freelancer->valid_id }}" class="w-100" id="openModal" />
+                                        <img src="{{ $freelancer->valid_id }}" style="height: 400px" class="w-50" id="openModal" />
                                         <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
                                     </div>
                                 </div>
@@ -103,7 +103,7 @@
                                 <div class="mb-4">
                                     <label for="selfie_with_id" class="mb-2">Selfie with Valid ID</label>
                                     <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light" style="cursor: pointer;">
-                                        <img src="{{ $freelancer->selfie_with_id }}" class="w-100" id="openSelfieModal" />
+                                        <img src="{{ $freelancer->selfie_with_id }}" class="w-50" id="openSelfieModal" />
                                         <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@
                                 <div class="mb-4">
                                     <label for="diploma" class="mb-2">Diploma</label>
                                     <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light" style="cursor: pointer;">
-                                        <img src="{{ $freelancer->diploma }}" class="w-100" id="openDiplomaModal" />
+                                        <img src="{{ $freelancer->diploma }}"  style="height: 400px" class="w-50" id="openDiplomaModal" />
                                         <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
                                     </div>
                                 </div>
@@ -119,7 +119,7 @@
                                 <div class="mb-4">
                                     <label for="certificate" class="mb-2">Certificate</label>
                                     <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light" style="cursor: pointer;">
-                                        <img src="{{ $freelancer->certificate }}" class="w-100" id="openCertificateModal" />
+                                        <img src="{{ $freelancer->certificate }}" style="height: 400px" class="w-50" id="openCertificateModal" />
                                         <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
                                     </div>
                                 </div>

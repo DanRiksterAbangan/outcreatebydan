@@ -1,11 +1,38 @@
-/********** Template CSS **********/
+@charset "UTF-8";
+/* Colours */
+/* Fonts */
+/* Bootstrap Styles */
 :root {
-    --primary: #00B074;
-    --secondary: #2B9BFF;
-    --light: #EFFDF5;
-    --dark: #2B3940;
+  --bs-white: #fff;
+  --bs-gray: #6c757d;
+  --bs-secondary: #6c757d;
+  --bs-success: #198754;
+  --bs-info: #0dcaf0;
+  --bs-warning: #ffc107;
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #212529;
+  --bs-secondary-rgb: 108, 117, 125;
+  --bs-success-rgb: 25, 135, 84;
+  --bs-info-rgb: 13, 202, 240;
+  --bs-warning-rgb: 255, 193, 7;
+  --bs-danger-rgb: 220, 53, 69;
+  --bs-light-rgb: 248, 249, 250;
+  --bs-dark-rgb: 33, 37, 41;
+  --bs-white-rgb: 255, 255, 255;
+  --bs-black-rgb: 0, 0, 0;
+  --bs-body-color-rgb: 33, 37, 41;
+  --bs-body-bg-rgb: 255, 255, 255;
+  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+  --bs-body-font-family: var(--bs-font-sans-serif);
+  --bs-body-font-size: 1rem;
+  --bs-body-font-weight: 400;
+  --bs-body-line-height: 1.5;
+  --bs-body-color: #212529;
+  --bs-body-bg: #fff;
 }
-
 .back-to-top {
     position: fixed;
     display: none;
@@ -37,11 +64,6 @@
     transition: .5s;
 }
 
-.btn.btn-primary,
-.btn.btn-secondary {
-    color: #FFFFFF;
-}
-
 .btn-square {
     width: 38px;
     height: 38px;
@@ -70,17 +92,18 @@
 
 
 /*** Navbar ***/
+/* Navbar Styles */
 .navbar .dropdown-toggle::after {
     border: none;
-    content: "\f107";
+    content: "\f107"; /* FontAwesome icon for dropdown */
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     vertical-align: middle;
     margin-left: 5px;
-    transition: .5s;
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Improved transition */
 }
 
-.navbar .dropdown-toggle[aria-expanded=true]::after {
+.navbar .dropdown-toggle[aria-expanded="true"]::after {
     transform: rotate(-180deg);
 }
 
@@ -92,6 +115,7 @@
     font-size: 15px;
     text-transform: uppercase;
     outline: none;
+    transition: color 0.3s ease;
 }
 
 .navbar-dark .navbar-nav .nav-link:hover,
@@ -101,6 +125,7 @@
     color: var(--primary);
 }
 
+/* Mobile View Adjustments */
 @media (max-width: 991.98px) {
     .navbar-dark .navbar-nav .nav-link,
     .navbar-light .navbar-nav .nav-link  {
@@ -113,19 +138,25 @@
     }
 }
 
+/* Navbar Brand & Button */
 .navbar-light .navbar-brand,
 .navbar-light a.btn {
     height: 75px;
+    display: flex;
+    align-items: center; /* Vertically center content */
 }
 
+/* Navbar Link for Light Theme */
 .navbar-light .navbar-nav .nav-link {
     color: var(--dark);
     font-weight: 500;
+    transition: color 0.3s ease;
 }
 
+/* Sticky Navbar */
 .navbar-light.sticky-top {
     top: -100px;
-    transition: .5s;
+    transition: top 0.5s ease-in-out; /* Smooth transition for sticky navbar */
 }
 
 @media (min-width: 992px) {
@@ -137,20 +168,18 @@
         transform-origin: 0% 0%;
         opacity: 0;
         visibility: hidden;
-        transition: .5s;
-        
+        transition: transform 0.5s ease, opacity 0.5s ease; /* Smooth dropdown transition */
     }
 
     .navbar .nav-item:hover .dropdown-menu {
         transform: rotateX(0deg);
         visibility: visible;
-        transition: .5s;
         opacity: 1;
     }
 }
 
 
-/*** Header ***/
+/*** Header Section ***/
 .header-carousel .container,
 .page-header .container {
     position: relative;
@@ -177,12 +206,13 @@
     margin-top: -15px;
 }
 
+/* Mobile-specific Styles for Carousel */
 @media (max-width: 768px) {
     .header-carousel .owl-carousel-item {
         position: relative;
         min-height: 500px;
     }
-    
+
     .header-carousel .owl-carousel-item img {
         position: absolute;
         width: 100%;
@@ -201,6 +231,7 @@
     }
 }
 
+/* Owl Carousel Navigation */
 .header-carousel .owl-nav {
     position: absolute;
     top: 50%;
@@ -223,7 +254,7 @@
     border: 1px solid #FFFFFF;
     border-radius: 2px;
     font-size: 22px;
-    transition: .5s;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .header-carousel .owl-nav .owl-prev:hover,
@@ -231,6 +262,54 @@
     background: var(--primary);
     border-color: var(--primary);
 }
+
+/* Focus States for Accessibility */
+.navbar .navbar-nav .nav-link:focus,
+.navbar-light .navbar-nav .nav-link:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.navbar-light .navbar-brand:focus,
+.navbar-light a.btn:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Accessibility Enhancements */
+.navbar .dropdown-toggle:focus {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+/* Sticky Header for Mobile */
+@media (max-width: 768px) {
+    .navbar-light.sticky-top {
+        top: 0;
+        transition: top 0.3s ease-in-out;
+    }
+}
+
+/* General Improvements */
+.navbar-light, .navbar-dark {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar-light.sticky-top,
+.navbar-dark.sticky-top {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effects */
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link:hover {
+    color: var(--primary);
+    transition: transform 0.3s ease;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    transform: scale(1.05);
+}
+
 
 .page-header {
     background: linear-gradient(rgba(43, 57, 64, .5), rgba(43, 57, 64, .5));
@@ -474,3 +553,87 @@ a.text-primary:hover {
 .alert {
     border-radius: 8px;
 }
+
+@media (max-width: 991px) {
+    #navbar {
+        background-color: white !important; /* Set background to white on mobile */
+    }
+}
+
+.btn-social {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.btn-social:hover {
+    background: #ffffff;
+    color: #000000;
+}
+/* Remove underlines from links */
+a {
+    text-decoration: none;
+}
+
+/* Job title and text enhancements */
+.job-item h5 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.job-item p, .job-item span {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.job-item .job-details-header {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.job-item .apply_now {
+    display: flex;
+    align-items: center;
+}
+
+.job-item .apply_now a {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.job-item .apply_now a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Buttons */
+.btn-outline-dark {
+    border-color: #333;
+    color: #333;
+}
+
+.btn-outline-dark:hover {
+    background-color: #333;
+    color: white;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary.disabled {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    cursor: not-allowed;
+}
+

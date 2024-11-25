@@ -7,7 +7,7 @@
                 <div class="col">
                     <nav aria-label="breadcrumb" class="rounded-3 p-3 mb-4">
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Admin</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i class="fa fa-tachometer-alt"></i> Admin</a></li>
                             <li class="breadcrumb-item active">Clients Verification Requests</li>
                         </ol>
                     </nav>
@@ -31,22 +31,29 @@
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <div class="flex-grow-1">
                                     <form method="GET" action="{{ route('admin.client-verifications.list') }}">
-                                        <input 
-                                            value="{{ Request::get('keyword') }}" 
-                                            type="text" 
-                                            name="keyword" 
-                                            id="keyword" 
-                                            placeholder="Search a Client Verification Request" 
-                                            class="form-control"
-                                        >
+                                        <div class="input-group">
+                                            <input 
+                                                value="{{ Request::get('keyword') }}" 
+                                                type="text" 
+                                                name="keyword" 
+                                                id="keyword" 
+                                                placeholder="Search a Client Verification Request" 
+                                                class="form-control"
+                                            >
+                                            <button type="submit" class="btn btn-outline-secondary">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
                                     </form>
                                 </div>
 
                                 <div class="ms-3">
                                     <form method="GET" action="{{ route('admin.client-verifications.list') }}">
-                                        <button type="submit" class="btn btn-secondary">Reset</button>
+                                        <button type="submit" class="btn btn-secondary">
+                                            <i class="fa fa-refresh"></i> Reset
+                                        </button>
                                     </form>
-                                </div>                                
+                                </div>                                 
                             </div>
 
                             <!-- Sorting Dropdown moved to the right -->
@@ -62,7 +69,6 @@
                                     </form>
                                 </div>
                             </div>
-                            
 
                             <div class="table-responsive">
                                 <table class="table">
@@ -85,15 +91,15 @@
                                                     <td>{{ $client->user->name ?? 'N/A' }}</td>
                                                     <td>
                                                         @if ($client->isVerified == 1)
-                                                            <p class="text-success">Verified</p>
+                                                            <p class="text-success"><i class="fa fa-check-circle"></i> Verified</p>
                                                         @else
-                                                            <p class="text-danger">Pending</p>
+                                                            <p class="text-warning"><i class="fa fa-hourglass-half"></i> Pending</p>
                                                         @endif
-                                                    </td>                                                    
+                                                    </td>
                                                     <td>{{ \Carbon\Carbon::parse($client->created_at)->format('d M, Y') }}</td>
                                                     <td>
                                                         <div class="action-dots float-start">
-                                                            <button href="#" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <button class="btn" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end">
@@ -114,13 +120,13 @@
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td colspan="10" class="text-center text-danger">No Client Verification Requests Found!</td>
+                                                <td colspan="10" class="text-center text-danger"><i class="fa fa-exclamation-circle"></i> No Client Verification Requests Found!</td>
                                             </tr>
                                         @endif
-                                    </tbody>
-                                                                   
+                                    </tbody>                                       
                                 </table>
                             </div>
+
                             <div>
                                 {{ $clients->appends(['keyword' => Request::get('keyword'), 'sort' => Request::get('sort')])->links() }}
                             </div>
@@ -141,7 +147,7 @@
             window.location.href = `${baseUrl}?sort=${sortValue}`; // Reload page with new sort
         }
 
-        // Delete Hire Transaction
+        // Delete Client Verification Request
         function deleteVerification(id) {
             if (confirm("Are you sure you want to delete this Client Verification Request?")) {
                 $.ajax({

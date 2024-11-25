@@ -71,32 +71,35 @@
         <!-- Section Heading -->
         <div class="text-center mb-5">
             <h2 class="display-4 text-primary">Explore Job Categories</h2>
-            <p class="lead text-gray">Browse through a variety of job categories to find the right fit for your skills and interests. Whether you're looking for a job in marketing, customer service, or design, we've got you covered.</p>
+            <p class="lead text-gray">
+                Browse through a variety of job categories to find the right fit for your skills and interests. 
+                Whether you're looking for opportunities in marketing, customer service, or design, we've got you covered.
+            </p>
         </div>
 
         <!-- Categories Grid -->
         <div class="row pt-5">
             @if ($categories->isNotEmpty())
                 @foreach ($categories as $category)
-                    <div class="col-sm-4 mb-4">
-                        <a href="{{ route('jobs'). '?category='.$category->id }}">
-                            <div class="single_category rounded p-4 shadow-lg bg-white text-center">
-                                <!-- Icon for category (optional) -->
-                                <i class="fa fa-3x fa-briefcase text-primary mb-3"></i>
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <a href="{{ route('jobs', ['category' => $category->id]) }}" class="text-decoration-none">
+                            <div class="single-category rounded p-4 shadow-lg bg-white text-center">
+                                <!-- Dynamic Icon for each category (can be expanded to use icons from the database) -->
+                                <i class="fa fa-3x {{ $category->icon ?? 'fa-briefcase' }} text-primary mb-3"></i>
 
-                                <a href="{{ route('jobs'). '?category='.$category->id }}" class="text-decoration-none">
-                                    <h4 class="pb-2 text-dark">{{ $category->name }}</h4>
-                                </a>
-
-                                <!-- Placeholder for available positions (if needed) -->
-                                <p class="mb-0"><span>50</span> Available positions</p>
+                                <h4 class="pb-2 text-dark">{{ $category->name }}</h4>
+                                
+                                <!-- Placeholder for available positions -->
+                                <p class="text-gray mb-0">
+                                    {{ $category->available_positions ?? '0' }} Available Positions
+                                </p>
                             </div>
                         </a>
-                    </div>  
+                    </div>
                 @endforeach
             @else
                 <div class="col-12 text-center">
-                    <p class="text-white">No categories available at the moment. Please check back later.</p>
+                    <p class="text-light">No categories available at the moment. Please check back later.</p>
                 </div>
             @endif
         </div>
@@ -168,9 +171,11 @@
                                 {{ $featuredJobs->links() }}
                             </div>
                             <!-- Browse More Jobs Button -->
-                            <div class="text-center">
-                                <a class="btn btn-primary py-3 px-5 mt-4" href="{{ route('jobs') }}">Browse More Jobs</a>
+                            <div class="text-center mt-4 mb-4">
+                                <a class="btn btn-primary" style="padding-bottom: 30px" href="{{ route('jobs') }}">Browse More Jobs</a>
                             </div>
+                            
+                            
                         </div>
                     </div>
                 </div>
@@ -202,7 +207,7 @@
                                                     <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
                                                         <div class="d-flex mb-3">
                                                             <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a>
-                                                            <a class="btn btn-primary" href="{{ route('jobDetail', $latestJob->id) }}">Apply Now</a>
+                                                            <a class="btn btn-primary" style="padding-bottom: 35px" href="{{ route('jobDetail', $latestJob->id) }}">Apply Now</a>
                                                         </div>
                                                         <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date Line: {{ $latestJob->deadline ?? 'N/A' }}</small>
                                                     </div>
@@ -221,9 +226,10 @@
                                 {{ $latestJobs->links() }}
                             </div>
                             <!-- Browse More Jobs Button -->
-                            <div class="text-center">
-                                <a class="btn btn-primary py-3 px-5 mt-4 d-inline-block text-center" href="{{ route('jobs') }}">Browse More Jobs</a>
-                            </div>                            
+                            <div class="text-center mt-4 mb-4">
+                                <a class="btn btn-primary" style="padding-bottom: 30px" href="{{ route('jobs') }}">Browse More Jobs</a>
+                            </div>
+                                                     
                         </div>
                     </div>
                 </div>

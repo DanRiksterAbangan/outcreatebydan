@@ -7,7 +7,7 @@
                 <div class="col">
                     <nav aria-label="breadcrumb" class="rounded-3 p-3 mb-4">
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i> Home</a></li>
                             <li class="breadcrumb-item active">All Users</li>
                         </ol>
                     </nav>
@@ -27,28 +27,37 @@
                                     <h3 class="fs-4 mb-1">All Users</h3>
                                 </div> 
                                 <div style="margin-top: -10px;">
-                                    <a class="btn btn-primary me-2" href="{{ route('admin.users.create') }}" type="submit">Create User</a>
+                                    <a class="btn btn-primary me-2" href="{{ route('admin.users.create') }}" type="submit">
+                                        <i class="fa fa-plus"></i> Create User
+                                    </a>
                                 </div>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <div class="flex-grow-1">
                                     <form method="GET" action="{{ route('admin.users') }}">
-                                        <input 
-                                            value="{{ Request::get('keyword') }}" 
-                                            type="text" 
-                                            name="keyword" 
-                                            id="keyword" 
-                                            placeholder="Search a User" 
-                                            class="form-control"
-                                        >
+                                        <div class="input-group">
+                                            <input 
+                                                value="{{ Request::get('keyword') }}" 
+                                                type="text" 
+                                                name="keyword" 
+                                                id="keyword" 
+                                                placeholder="Search a User" 
+                                                class="form-control"
+                                            >
+                                            <button type="submit" class="btn btn-outline-secondary">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
                                     </form>
                                 </div>
                                 
                                 <div class="ms-3">
                                     <form method="GET" action="{{ route('admin.users') }}">
                                         <input type="hidden" name="sort" value="{{ Request::get('sort') }}">
-                                        <button type="submit" class="btn btn-secondary">Reset</button>
+                                        <button type="submit" class="btn btn-secondary">
+                                            <i class="fa fa-refresh"></i> Reset
+                                        </button>
                                     </form>
                                 </div>
                             </div>      
@@ -90,9 +99,9 @@
                                                     <td>{{ $user->role }}</td>
                                                     <td>
                                                         @if ($user->isActive == 1)
-                                                            <p class="text-success">Active</p>
+                                                            <p class="text-success"><i class="fa fa-check-circle"></i> Active</p>
                                                         @else
-                                                            <p class="text-danger">Blocked</p>
+                                                            <p class="text-danger"><i class="fa fa-ban"></i> Blocked</p>
                                                         @endif
                                                     </td>
                                                     <td>
@@ -101,8 +110,8 @@
                                                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end">
-                                                                <li><a class="dropdown-item" href="#"><i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
-                                                                <li><a class="dropdown-item" href="{{ route('admin.users.edit',$user->id) }}"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li>
+                                                                <li><a class="dropdown-item" href="{{ route('account.show', $user->id) }}"><i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
+                                                                <li><a class="dropdown-item" href="{{ route('admin.users.edit', $user->id) }}"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li>
                                                                 <li><a class="dropdown-item" href="javascript:void(0);" onclick="deleteUser({{ $user->id }})"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
                                                             </ul>
                                                         </div>
@@ -111,7 +120,7 @@
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td colspan="9" class="text-center text-danger">User Not Found!</td>
+                                                <td colspan="9" class="text-center text-danger"><i class="fa fa-exclamation-circle"></i> User Not Found!</td>
                                             </tr>
                                         @endif
                                     </tbody>

@@ -39,7 +39,7 @@
 
                             <div class="table-responsive">
                                 <table class="table ">
-                                    <thead class="bg-light">
+                                    <thead class="" style="background-color: rgb(155, 245, 245)">
                                         <tr>
                                             <th scope="col">Title</th>
                                             <th scope="col">Freelancer Name</th>
@@ -63,9 +63,9 @@
                                                     <td>{{ \Carbon\Carbon::parse($hire->hired_date)->format('d M, Y') }}</td>
                                                     <td>
                                                         @if ($hire->job->status == 1)
-                                                            <div class="job-status text-capitalize">Active</div>
+                                                            <div class="job-status text-capitalize" style="color: green">Active</div>
                                                         @else
-                                                            <div class="job-status text-capitalize">Blocked</div> 
+                                                            <div class="job-status text-capitalize" style="color: red">Blocked</div> 
                                                         @endif
                                                     </td>
                                                     <td>

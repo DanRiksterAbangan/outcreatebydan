@@ -24,22 +24,26 @@
                             <div class="card-body p-4">
                                 <h3 class="fs-4 mb-1">My Profile</h3>
                                 <div class="mb-4">
-                                    <label for="" class="mb-2">First Name*</label>
-                                    <input type="text" name="firstName" id="firstName" placeholder="John" class="form-control" value="{{ $user->firstName }}">
+                                    <label for="name" class="form-label mb-2">Full Name<span class="text-danger">*</span></label>
+                                    <input 
+                                        type="text" 
+                                        name="name" 
+                                        id="name" 
+                                        placeholder="Enter your full name" 
+                                        class="form-control @error('name') is-invalid @enderror" 
+                                        value="{{ old('name', $user->name) }}"
+                                        required 
+                                    >
+                                    
+                                    @error('name')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    <label for="about" class="mb-2 mt-4">About Me</label>
+                                    <textarea class="textarea" name="about" id="about" cols="5" rows="5" placeholder="About Me" value="{{ $user->about }}"></textarea>
                                     <p></p>
                                 </div>
-
-                                <div class="mb-4">
-                                    <label for="" class="mb-2">Middle name*</label>
-                                    <input type="text" name="midName" id="midName" placeholder="Smith" class="form-control" value="{{  $user->midName }}">
-                                    <p></p>
                                 </div>
-
-                                <div class="mb-4">
-                                    <label for="" class="mb-2">Last Name*</label>
-                                    <input type="text" name="lastName" id="lastName" placeholder="Doe" class="form-control" value="{{ $user->lastName }}">
-                                    <p></p>
-                                </div>
+                                
                             </div>
                         </div>
 
@@ -69,10 +73,6 @@
                             <div class="card-body  p-4">
                                 <h3 class="fs-4 mb-1">More Info</h3>
                                 <div class="mb-4">
-                                    <label for="about" class="mb-2">About Me</label>
-                                    <textarea class="textarea" name="about" id="about" cols="5" rows="5" placeholder="About Me" value="{{ $user->about }}"></textarea>
-                                    <p></p>
-                                </div>
 
                                 <div class="mb-4">
                                     <label for="education" class="mb-2">Education</label>

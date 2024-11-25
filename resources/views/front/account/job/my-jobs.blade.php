@@ -26,14 +26,14 @@
                                 <div>
                                     <h3 class="fs-4 mb-1">My Jobs</h3>
                                 </div>
-                                <div style="margin-top: -10px;">
+                                <div">
                                     <a href="{{ route('account.createJob') }}" class="btn btn-primary">Post a Job</a>
                                 </div>
                                 
                             </div>
                             <div class="table-responsive">
                                 <table class="table ">
-                                    <thead class="bg-light">
+                                    <thead style="background-color: rgb(155, 245, 245)" >
                                         <tr>
                                             <th scope="col">Title</th>
                                             <th scope="col">Job Created</th>
@@ -54,9 +54,9 @@
                                                     <td>{{ $job->applications->count() }}</td>
                                                     <td>
                                                         @if ($job->status==1)
-                                                            <div class="job-status text-capitalize">Active</div>
+                                                            <div class="job-status text-capitalize" style="color: green;">Active</div>
                                                         @else
-                                                            <div class="job-status text-capitalize">Block</div> 
+                                                            <div class="job-status text-capitalize" style="color: red;>Block</div> 
                                                         @endif
                                                     </td>
                                                     <td>

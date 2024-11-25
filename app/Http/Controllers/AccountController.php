@@ -123,31 +123,43 @@ class AccountController extends Controller
 
     // User Login Method
     public function authenticate(Request $request) {
+        // Validate input
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
         ]);
-    
+        
+        // Check if validation passes
         if ($validator->passes()) {
+            // Attempt to log the user in with the provided credentials
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-                $user = Auth::user();
+                $user = Auth::user(); // Get the authenticated user
     
+                // Check if user is active
                 if ($user->isActive == 0) {
                     Auth::logout();
                     return redirect()->route('account.blocked');
                 }
     
-                // Redirect without setting cache headers here, let the middleware handle it
+                // Redirect based on user role (admin or normal user)
+                if ($user->role === 'admin') {
+                    // Redirect admin to the admin dashboard
+                    return redirect()->route('admin.dashboard');
+                }
+    
+                // Redirect normal user to their account page
                 return redirect()->intended(route('account.show', ['id' => $user->id]));
             } else {
+                // Invalid credentials
                 return redirect()->route('account.login')->with('error', 'Invalid credentials.');
             }
         } else {
+            // Validation failed, redirect back with errors
             return redirect()->route('account.login')
                 ->withErrors($validator)
                 ->withInput($request->only('email'));
         }
-    }
+    } 
     
     // User Profile Page
     public function profile() {
@@ -168,14 +180,14 @@ class AccountController extends Controller
         $id = Auth::user()->id;
 
         $validator = Validator::make($request->all(),[
-            'namae' => 'required',
+            'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id.',id',
         ]);
 
         if ($validator->passes()) {
 
             $user = User::find($id);
-            $user->namae = $request->namae;
+            $user->name = $request->name;
             $user->email = $request->email;
             $user->designation = $request->designation;
             $user->mobile = $request->mobile;
