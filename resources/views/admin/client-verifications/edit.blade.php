@@ -41,18 +41,8 @@
 
                                 <div class="row">
                                     <div class="mb-4 col-md-4">
-                                        <label for="firstName" class="mb-2">Client First Name</label>
-                                        <input value="{{ $client->user->firstName }}" type="text" id="firstName" name="firstName" class="form-control" readonly>
-                                    </div>
-        
-                                    <div class="mb-4 col-md-4">
-                                        <label for="midName" class="mb-2">Client Middle Name</label>
-                                        <input value="{{ $client->user->midName }}" type="text" id="midName" name="midName" class="form-control" readonly>
-                                    </div>
-
-                                    <div class="mb-4 col-md-4">
-                                        <label for="lastName" class="mb-2">Client Last Name</label>
-                                        <input value="{{ $client->user->lastName }}" type="text" id="lastName" name="lastName" class="form-control" readonly>
+                                        <label for="name" class="mb-2">Client Name</label>
+                                        <input value="{{ $client->user->name }}" type="text" id="name" name="name" class="form-control" readonly>
                                     </div>
                                 </div>
 

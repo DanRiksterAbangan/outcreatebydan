@@ -29,6 +29,7 @@
                     </div>
                     
                     <div class="col-lg-8">
+                        @include('front.message')
                         <div class="ps-lg-1-6 ps-xl-5">
                             <div class="mb-5 wow fadeIn">
                                 <div class="text-start mb-4 wow fadeIn">
@@ -50,7 +51,7 @@
 
                                 {{-- Center Name --}}
                                 <div class="d-flex justify-content-center align-items-center mt-3 pb-0">
-                                    <h5 class="mb-0">{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</h5>
+                                    <h5 class="mb-0">{{ Auth::user()->name }}</h5>
                                 </div>
 
                                 {{-- Center Designation/Position --}}

@@ -59,18 +59,8 @@
                     
                                             <div class="row">
                                                 <div class="mb-4 col-md-4">
-                                                    <label for="firstName" class="mb-2">Employer First Name</label>
-                                                    <input value="{{ $transaction ? $transaction->employer->firstName : '' }}" type="text" id="firstName" name="firstName" class="form-control" readonly>
-                                                </div>
-                    
-                                                <div class="mb-4 col-md-4">
-                                                    <label for="midName" class="mb-2">Employer Middle Name</label>
-                                                    <input value="{{ $transaction ? $transaction->employer->midName : '' }}" type="text" id="midName" name="midName" class="form-control" readonly>
-                                                </div>
-                    
-                                                <div class="mb-4 col-md-4">
-                                                    <label for="lastName" class="mb-2">Employer Last Name</label>
-                                                    <input value="{{ $transaction ? $transaction->employer->lastName : '' }}" type="text" id="lastName" name="lastName" class="form-control" readonly>
+                                                    <label for="firstName" class="mb-2">Employer Name</label>
+                                                    <input value="{{ $transaction ? $transaction->employer->name : '' }}" type="text" id="firstName" name="firstName" class="form-control" readonly>
                                                 </div>
                                             </div>
                     

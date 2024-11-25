@@ -66,12 +66,8 @@
                                         <tr>
                                             <th scope="col">ID</th>
                                             <th scope="col">Job Title</th>
-                                            <th scope="col">Freelancer First Name</th>
-                                            <th scope="col">Freelancer Middle Name</th>
-                                            <th scope="col">Freelancer Last Name</th>
-                                            <th scope="col">Client First Name</th>
-                                            <th scope="col">Client Middle Name</th>
-                                            <th scope="col">Client Last Name</th>
+                                            <th scope="col">Freelancer Name</th>
+                                            <th scope="col">Client Name</th>
                                             <th scope="col">Hired Created</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -84,12 +80,8 @@
                                                     <td>
                                                         <p>{{ $hire->job->title }}</p>
                                                     </td>
-                                                    <td>{{ $hire->freelancer ? $hire->freelancer->firstName : 'N/A' }}</td>
-                                                    <td>{{ $hire->freelancer ? $hire->freelancer->midName : 'N/A' }}</td>
-                                                    <td>{{ $hire->freelancer ? $hire->freelancer->lastName : 'N/A' }}</td>
-                                                    <td>{{ $hire->employer->firstName }}</td>
-                                                    <td>{{ $hire->employer->midName }}</td>
-                                                    <td>{{ $hire->employer->lastName }}</td>
+                                                    <td>{{ $hire->freelancer ? $hire->freelancer->name : 'N/A' }}</td>
+                                                    <td>{{ $hire->employer->name }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($hire->applied_date)->format('d M, Y') }}</td>
                                                     <td>
                                                         <div class="action-dots float-start">

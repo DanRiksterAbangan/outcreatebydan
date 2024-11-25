@@ -71,9 +71,7 @@
                                     <thead class="bg-light">
                                         <tr>
                                             <th scope="col">ID</th>
-                                            <th scope="col">First Name</th>
-                                            <th scope="col">Middle Name</th>
-                                            <th scope="col">Last Name</th>
+                                            <th scope="col">Name</th>
                                             <th scope="col">Email</th>
                                             <th scope="col">Mobile</th>
                                             <th scope="col">Role</th>
@@ -86,9 +84,7 @@
                                             @foreach ($users as $user)
                                                 <tr class="active">
                                                     <td>{{ $user->id }}</td>
-                                                    <td>{{ $user->firstName }}</td>
-                                                    <td>{{ $user->midName }}</td>
-                                                    <td>{{ $user->lastName }}</td>
+                                                    <td>{{ $user->name }}</td>
                                                     <td>{{ $user->email }}</td>
                                                     <td>{{ $user->mobile }}</td>
                                                     <td>{{ $user->role }}</td>

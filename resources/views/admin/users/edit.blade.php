@@ -29,20 +29,8 @@
                                         <div class="card-body p-4">
                                             <h3 class="fs-4 mb-1">Edit User</h3>
                                             <div class="mb-4">
-                                                <label for="" class="mb-2">First Name*</label>
-                                                <input type="text" name="firstName" id="firstName" placeholder="John" class="form-control" value="{{ $user->firstName }}">
-                                                <p></p>
-                                            </div>
-            
-                                            <div class="mb-4">
-                                                <label for="" class="mb-2">Middle name*</label>
-                                                <input type="text" name="midName" id="midName" placeholder="Smith" class="form-control" value="{{  $user->midName }}">
-                                                <p></p>
-                                            </div>
-            
-                                            <div class="mb-4">
-                                                <label for="" class="mb-2">Last Name*</label>
-                                                <input type="text" name="lastName" id="lastName" placeholder="Doe" class="form-control" value="{{ $user->lastName }}">
+                                                <label for="name" class="mb-2">Name*</label>
+                                                <input type="text" name="name" id="name" placeholder="John" class="form-control" value="{{ $user->name }}">
                                                 <p></p>
                                             </div>
 
@@ -128,17 +116,7 @@
                     
                     if(response.status == true) {
 
-                        $("#firstName").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('')
-
-                        $("#midName").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('')
-
-                        $("#lastName").removeClass('is-invalid')
+                        $("#name").removeClass('is-invalid')
                             .siblings('p')
                             .removeClass('invalid-feedback')
                             .html('')
@@ -153,37 +131,13 @@
                     } else {
                         var errors = response.errors;
 
-                        if (errors.firstName) {
-                                $("#firstName").addClass('is-invalid')
+                        if (errors.name) {
+                                $("#name").addClass('is-invalid')
                                 .siblings('p')
                                 .addClass('invalid-feedback')
-                                .html(errors.firstName)
+                                .html(errors.name)
                             } else {
-                                $("#firstName").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.midName) {
-                                $("#midName").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.midName)
-                            } else {
-                                $("#midName").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-
-                            if (errors.lastName) {
-                                $("#lastName").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.lastName)
-                            } else {
-                                $("#lastName").removeClass('is-invalid')
+                                $("#name").removeClass('is-invalid')
                                 .siblings('p')
                                 .removeClass('invalid-feedback')
                                 .html('')

@@ -105,7 +105,7 @@ Route::group(['prefix' => 'freelancer', 'middleware' => 'checkFreelancer'], func
 Route::group(['prefix' => 'account'], function () {
 
     // Guest Routes
-    Route::group(['middleware' => ['guest', \App\Http\Middleware\PreventCacheLoginPage::class]], function () {
+    Route::group(['middleware' => 'guest','preventCacheLogin'], function () {
         Route::get('/register', [AccountController::class, 'registration'])->name('account.registration');
         Route::get('/client-register', [AccountController::class, 'clientRegistration'])->name('account.clientRegistration');
         Route::get('/freelancer-register', [AccountController::class, 'freelancerRegistration'])->name('account.freelancerRegistration');

@@ -8,8 +8,8 @@
                     <nav aria-label="breadcrumb" class=" rounded-3 p-3 mb-4">
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('admin.jobs.jobs-list') }}">Jobs</a></li>
-                            <li class="breadcrumb-item active">Edit Job Details</li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.jobs.jobs-list') }}">Freelancer Verification Requests</a></li>
+                            <li class="breadcrumb-item active">Process Request</li>
                         </ol>
                     </nav>
                 </div>
@@ -41,18 +41,8 @@
 
                                 <div class="row">
                                     <div class="mb-4 col-md-4">
-                                        <label for="firstName" class="mb-2">Freelancer First Name</label>
-                                        <input value="{{ $freelancer->user->firstName }}" type="text" id="firstName" name="firstName" class="form-control" readonly>
-                                    </div>
-        
-                                    <div class="mb-4 col-md-4">
-                                        <label for="midName" class="mb-2">Freelancer Middle Name</label>
-                                        <input value="{{ $freelancer->user->midName }}" type="text" id="midName" name="midName" class="form-control" readonly>
-                                    </div>
-
-                                    <div class="mb-4 col-md-4">
-                                        <label for="lastName" class="mb-2">Freelancer Last Name</label>
-                                        <input value="{{ $freelancer->user->lastName }}" type="text" id="lastName" name="lastName" class="form-control" readonly>
+                                        <label for="firstName" class="mb-2">Freelancer Name</label>
+                                        <input value="{{ $freelancer->user->name }}" type="text" id="firstName" name="firstName" class="form-control" readonly>
                                     </div>
                                 </div>
 

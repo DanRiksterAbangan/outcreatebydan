@@ -36,7 +36,6 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \App\Http\Middleware\PreventBackHistory::class,
-            // \App\Http\Middleware\PreventCacheLoginPage::class,  // Check this middleware too
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             // \Illuminate\Auth\Middleware\Authenticate::class,  // Ensure this line exists
         ],
@@ -69,5 +68,7 @@ class Kernel extends HttpKernel
         'checkRole' => \App\Http\Middleware\CheckAdmin::class,
         'checkFreelancer' => \App\Http\Middleware\CheckFreelancer::class,
         'CheckActiveStatus' => \App\Http\Middleware\CheckActiveStatus::class,
+        'preventCacheLogin' => \App\Http\Middleware\PreventCacheLoginPage::class,
+
     ];
 }

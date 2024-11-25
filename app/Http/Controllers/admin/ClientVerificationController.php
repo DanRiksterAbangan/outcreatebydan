@@ -14,7 +14,7 @@ class ClientVerificationController extends Controller
         $sort = $request->get('sort', '1');
         $search = $request->get('keyword', '');  // Use 'keyword' instead of 'search'
         
-        $clients = Clients::with('user:id,firstName,midName,lastName');
+        $clients = Clients::with('user:id,name');
         
         // Handle sorting
         if ($sort == '1') { // Latest
@@ -33,9 +33,7 @@ class ClientVerificationController extends Controller
                 $query->where('id', 'like', "%$search%") // Search Freelancer ID
                       ->orWhereHas('user', function ($query) use ($search) {
                           $query->where('id', 'like', "%$search%")  // Search User ID
-                                ->orWhere('firstName', 'like', "%$search%")
-                                ->orWhere('midName', 'like', "%$search%")
-                                ->orWhere('lastName', 'like', "%$search%")
+                                ->orWhere('name', 'like', "%$search%")
                                 ->orWhere('email', 'like', "%$search%"); // Search User email
                       });
             });

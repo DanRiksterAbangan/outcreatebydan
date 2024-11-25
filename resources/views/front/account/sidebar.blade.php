@@ -9,7 +9,7 @@
 
             <div class="d-flex justify-content-center align-items-center mt-3 pb-0">
                 <h5 class="mb-0">
-                    {{ Auth::user()->firstName }} {{ Auth::user()->lastName }}
+                    {{ Auth::user()->name }}
 
                     <!-- Show verified image beside the name if the freelancer is verified -->
                     @if(Auth::user()->freelancer && Auth::user()->freelancer->isVerified == 1)

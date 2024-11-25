@@ -7,8 +7,9 @@
                 <div class="col">
                     <nav aria-label="breadcrumb" class=" rounded-3 p-3 mb-4">
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Account Settings</li>
+                            <li class="breadcrumb-item"><a href="#">Admin</a></li>
+                            <li class="breadcrumb-item active">Users</li>
+                            <li class="breadcrumb-item active">Create User</li>
                         </ol>
                     </nav>
                 </div>
@@ -26,20 +27,8 @@
                                 <h3 class="fs-4 mb-1">Create User</h3>
                                 <div class="row">
                                     <div class="col-sm">
-                                        <label for="" class="mb-2">First Name<span class="req">*</span></label>
-                                        <input type="text" placeholder="John" id="firstName" name="firstName" class="form-control">
-                                        <p></p>
-                                    </div>
-
-                                    <div class="col-sm">
-                                        <label for="" class="mb-2">Middle Name</label>
-                                        <input type="text" placeholder="Smith" id="midName" name="midName" class="form-control">
-                                        <p></p>
-                                    </div>
-
-                                    <div class="col-sm">
-                                        <label for="" class="mb-2">Last Name<span class="req">*</span></label>
-                                        <input type="text" placeholder="Doe" id="lastName" name="lastName" class="form-control">
+                                        <label for="name" class="mb-2">Name<span class="req">*</span></label>
+                                        <input type="text" placeholder="John Doe" id="name" name="name" class="form-control">
                                         <p></p>
                                     </div>
                                 </div>
@@ -106,17 +95,7 @@
                     $("button[type='submit']").prop('disabled',false)
                     if(response.status == true) {
 
-                        $("#firstName").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('')
-
-                        $("#midName").removeClass('is-invalid')
-                            .siblings('p')
-                            .removeClass('invalid-feedback')
-                            .html('')
-
-                        $("#lastName").removeClass('is-invalid')
+                        $("#name").removeClass('is-invalid')
                             .siblings('p')
                             .removeClass('invalid-feedback')
                             .html('')
@@ -146,40 +125,18 @@
                     } else {
                         var errors = response.errors;
 
-                        if (errors.firstName) {
-                                $("#firstName").addClass('is-invalid')
+                        if (errors.name) {
+                                $("#name").addClass('is-invalid')
                                 .siblings('p')
                                 .addClass('invalid-feedback')
-                                .html(errors.firstName)
+                                .html(errors.name)
                             } else {
-                                $("#firstName").removeClass('is-invalid')
+                                $("#name").removeClass('is-invalid')
                                 .siblings('p')
                                 .removeClass('invalid-feedback')
                                 .html('')
                             }
 
-                        if (errors.midName) {
-                                $("#midName").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.midName)
-                            } else {
-                                $("#midName").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
-                        if (errors.lastName) {
-                                $("#lastName").addClass('is-invalid')
-                                .siblings('p')
-                                .addClass('invalid-feedback')
-                                .html(errors.lastName)
-                            } else {
-                                $("#lastName").removeClass('is-invalid')
-                                .siblings('p')
-                                .removeClass('invalid-feedback')
-                                .html('')
-                            }
                         if (errors.email) {
                                 $("#email").addClass('is-invalid')
                                 .siblings('p')

@@ -13,10 +13,9 @@
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-10 col-lg-8">
-                                <h1 class="display-3 text-white animated slideInDown mb-4">Find The Perfect Job That You Deserved</h1>
-                                <p class="fs-5 fw-medium text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea elitr.</p>
-                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Search A Job</a>
-                                <a href="" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Find A Talent</a>
+                                <h1 class="display-3 text-white animated slideInDown mb-4">Empowering Filipino Talent.</h1>
+                                <p class="fs-5 fw-medium text-white mb-4 pb-2">"Connecting clients with skilled Filipino freelancers to bring visions to life."</p>
+                                <a href="{{ route('jobs') }}" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Search A Job</a>
                             </div>
                         </div>
                     </div>
@@ -170,7 +169,7 @@
                             </div>
                             <!-- Browse More Jobs Button -->
                             <div class="text-center">
-                                <a class="btn btn-primary py-3 px-5 mt-4" href="#">Browse More Jobs</a>
+                                <a class="btn btn-primary py-3 px-5 mt-4" href="{{ route('jobs') }}">Browse More Jobs</a>
                             </div>
                         </div>
                     </div>
@@ -222,7 +221,9 @@
                                 {{ $latestJobs->links() }}
                             </div>
                             <!-- Browse More Jobs Button -->
-                            <a class="btn btn-primary py-3 px-5 mt-4" href="#">Browse More Jobs</a>
+                            <div class="text-center">
+                                <a class="btn btn-primary py-3 px-5 mt-4 d-inline-block text-center" href="{{ route('jobs') }}">Browse More Jobs</a>
+                            </div>                            
                         </div>
                     </div>
                 </div>

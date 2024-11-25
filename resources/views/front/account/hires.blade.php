@@ -8,7 +8,7 @@
                     <nav aria-label="breadcrumb" class=" rounded-3 p-3 mb-4">
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Hired Freelancers Transactions</li>
+                            <li class="breadcrumb-item active">Hired Freelancers</li>
                         </ol>
                     </nav>
                 </div>
@@ -42,9 +42,7 @@
                                     <thead class="bg-light">
                                         <tr>
                                             <th scope="col">Title</th>
-                                            <th scope="col">Freelancer FirstName</th>
-                                            <th scope="col">Freelancer Middle Name</th>
-                                            <th scope="col">Freelancer Last Name</th>
+                                            <th scope="col">Freelancer Name</th>
                                             <th scope="col">Mobile</th>
                                             <th scope="col">Email</th>
                                             <th scope="col">Hired Date</th>
@@ -59,9 +57,7 @@
                                                     <td>
                                                         <div class="job-name fw-500">{{ $hire->job->title }}</div>
                                                     </td>
-                                                    <td>{{ $hire->freelancer->firstName }}</td>
-                                                    <td>{{ $hire->freelancer->midName }}</td>
-                                                    <td>{{ $hire->freelancer->lastName }}</td>
+                                                    <td>{{ $hire->freelancer->name }}</td>
                                                     <td>{{ $hire->freelancer->mobile }}</td>
                                                     <td>{{ $hire->freelancer->email }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($hire->hired_date)->format('d M, Y') }}</td>

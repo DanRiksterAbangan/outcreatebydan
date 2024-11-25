@@ -42,6 +42,7 @@ class AccountController extends Controller
 
     //  Client Register Method
     public function processRegistration(Request $request) {
+        // Validate input
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
@@ -50,6 +51,7 @@ class AccountController extends Controller
             'role' => 'required|in:user',
         ]);
     
+        // Check validation
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
@@ -57,17 +59,21 @@ class AccountController extends Controller
             ]);
         }
     
+        // Register user
         User::create([
-            'name' => $request->name,            'email' => $request->email,
+            'name' => $request->name,            
+            'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
     
+        // Flash success message
         session()->flash('success', 'You have registered successfully!');
     
+        // Redirect to login page after successful registration
         return response()->json([
             'status' => true,
-            'redirect' => route('account.login'),
+            'redirect' => route('account.login'), // Ensure this URL points to your login route
         ]);
     }
     
@@ -162,18 +168,14 @@ class AccountController extends Controller
         $id = Auth::user()->id;
 
         $validator = Validator::make($request->all(),[
-            'firstName' => 'required',
-            'midName' => 'required',
-            'lastName' => 'required',
+            'namae' => 'required',
             'email' => 'required|email|unique:users,email,'.$id.',id',
         ]);
 
         if ($validator->passes()) {
 
             $user = User::find($id);
-            $user->firstName = $request->firstName;
-            $user->midName = $request->midName;
-            $user->lastName = $request->lastName;
+            $user->namae = $request->namae;
             $user->email = $request->email;
             $user->designation = $request->designation;
             $user->mobile = $request->mobile;
@@ -223,35 +225,36 @@ class AccountController extends Controller
         $validator = Validator::make($request->all(),[
             'image' => 'required|image'
         ]);
-
+    
         if ($validator->passes()) {
-
+    
             $image = $request->image;
             $ext = $image->getClientOriginalExtension();
             $imageName = $id.'-'.time().'.'.$ext;
             $image->move(public_path('/profile_pic/'), $imageName);
-
+    
             // Create a small thumbnail
             $sourcePath = public_path('/profile_pic/'.$imageName);
             $manager = new ImageManager(Driver::class);
             $image = $manager->read($sourcePath);
-
+    
             $image->cover(150, 150);
             $image->toPng()->save(public_path('/profile_pic/thumb/'.$imageName));
-
+    
             // Delete Old Profile Picture
-            File::delete(public_path('/profile_pic/thumb/'.Auth::user()->image));
-            File::delete(public_path('/profile_pic/'.Auth::user()->image));
-
-            User::where('id',$id)->update(['image' => $imageName]);
-
+            File::delete(public_path('/profile_pic/thumb/'.Auth::user()->avatar));
+            File::delete(public_path('/profile_pic/'.Auth::user()->avatar));
+    
+            // Update the avatar column instead of image
+            User::where('id', $id)->update(['avatar' => $imageName]);
+    
             session()->flash('success','Profile Picture Updated Successfully!');
-
+    
             return response()->json([
                 'status' => true,
                 'errors' => []
             ]);
-
+    
         } else {
             return response()->json([
                 'status' => false,
@@ -259,7 +262,7 @@ class AccountController extends Controller
             ]);
         }
     }
-
+        
     // Create Job
     public function createJob() {
 

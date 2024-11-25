@@ -70,9 +70,7 @@
                                         <tr>
                                             <th scope="col">Request ID</th>
                                             <th scope="col">Freelancer ID</th>
-                                            <th scope="col">Freelancer First Name</th>
-                                            <th scope="col">Freelancer Middle Name</th>
-                                            <th scope="col">Freelancer Last Name</th>
+                                            <th scope="col">Freelancer Name</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Request Date</th>
                                             <th scope="col">Action</th>
@@ -84,9 +82,7 @@
                                                 <tr>
                                                     <td>{{ $freelancer->id }}</td>
                                                     <td>{{ $freelancer->user->id ?? 'N/A' }}</td>
-                                                    <td>{{ $freelancer->user->firstName ?? 'N/A' }}</td>
-                                                    <td>{{ $freelancer->user->midName ?? 'N/A' }}</td>
-                                                    <td>{{ $freelancer->user->lastName ?? 'N/A' }}</td>
+                                                    <td>{{ $freelancer->user->name ?? 'N/A' }}</td>
                                                     <td>
                                                         @if ($freelancer->isVerified == 1)
                                                             <p class="text-success">Verified</p>

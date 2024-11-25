@@ -36,12 +36,8 @@
                                         <tr>
                                             <th scope="col">ID</th>
                                             <th scope="col">Job Title</th>
-                                            <th scope="col">Freelancer First Name</th>
-                                            <th scope="col">Freelancer Middle Name</th>
-                                            <th scope="col">Freelancer Last Name</th>
-                                            <th scope="col">Client First Name</th>
-                                            <th scope="col">Client Middle Name</th>
-                                            <th scope="col">Client Last Name</th>
+                                            <th scope="col">Freelancer Name</th>
+                                            <th scope="col">Client Name</th>
                                             <th scope="col">Applied Created</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -54,12 +50,8 @@
                                                     <td>
                                                         <p>{{ $application->job->title }}</p>
                                                     </td>
-                                                    <td>{{ $application->user->firstName }}</td>
-                                                    <td>{{ $application->user->midName }}</td>
-                                                    <td>{{ $application->user->lastName }}</td>
-                                                    <td>{{ $application->employer->firstName }}</td>
-                                                    <td>{{ $application->employer->midName }}</td>
-                                                    <td>{{ $application->employer->lastName }}</td>
+                                                    <td>{{ $application->user->name }}</td>
+                                                    <td>{{ $application->employer->name }}</td>
                                                     
                                                     <td>{{ \Carbon\Carbon::parse($application->applied_date)->format('d M, Y') }}</td>
                                                     <td>

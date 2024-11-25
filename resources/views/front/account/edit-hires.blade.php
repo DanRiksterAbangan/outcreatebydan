@@ -53,18 +53,8 @@
 
                                 <div class="row">
                                     <div class="mb-4 col-md-4">
-                                        <label for="firstName" class="mb-2">Freelancer First Name</label>
-                                        <input value="{{ $freelancer ? $freelancer->firstName : '' }}" type="text" id="id" name="id" class="form-control" readonly>
-                                    </div>
-        
-                                    <div class="mb-4 col-md-4">
-                                        <label for="midName" class="mb-2">Freelancer Middle Name</label>
-                                        <input value="{{ $freelancer ? $freelancer->midName : '' }}" type="text" id="id" name="id" class="form-control" readonly>
-                                    </div>
-
-                                    <div class="mb-4 col-md-4">
-                                        <label for="lastName" class="mb-2">Freelancer Last Name</label>
-                                        <input value="{{ $freelancer ? $freelancer->lastName : '' }}" type="text" id="id" name="id" class="form-control" readonly>
+                                        <label for="firstName" class="mb-2">Freelancer Name</label>
+                                        <input value="{{ $freelancer ? $freelancer->name : '' }}" type="text" id="id" name="id" class="form-control" readonly>
                                     </div>
                                 </div>
 

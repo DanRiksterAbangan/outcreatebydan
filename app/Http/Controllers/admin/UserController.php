@@ -22,9 +22,7 @@ class UserController extends Controller
             $keyword = $request->get('keyword');
             $users = $users->where(function($query) use ($keyword) {
                 $query->where('id', 'like', '%' . $keyword . '%')
-                      ->orWhere('firstName', 'like', '%' . $keyword . '%')
-                      ->orWhere('midName', 'like', '%' . $keyword . '%')
-                      ->orWhere('lastName', 'like', '%' . $keyword . '%')
+                      ->orWhere('name', 'like', '%' . $keyword . '%')
                       ->orWhere('email', 'like', '%' . $keyword . '%')
                       ->orWhere('mobile', 'like', '%' . $keyword . '%')
                       ->orWhere('role', 'like', '%' . $keyword . '%');
@@ -34,7 +32,7 @@ class UserController extends Controller
         // Apply role-based filtering based on the request
         if ($request->sort == '3') {
             // Display all users
-            $users = $users->whereIn('role', ['admin', 'freelancer']);
+            $users = $users->whereIn('role', ['admin', 'freelancer','user']);
         } else if ($request->sort == '2') {
             // Display only admins
             $users = $users->where('role', 'admin');
@@ -73,9 +71,7 @@ class UserController extends Controller
     public function update($id, Request $request) {
 
         $validator = Validator::make($request->all(),[
-            'firstName' => 'required',
-            'midName' => 'required',
-            'lastName' => 'required',
+            'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id.',id',
             'role' => 'required', 
         ]);
@@ -83,9 +79,7 @@ class UserController extends Controller
         if ($validator->passes()) {
 
             $user = User::find($id);
-            $user->firstName = $request->firstName;
-            $user->midName = $request->midName;
-            $user->lastName = $request->lastName;
+            $user->name = $request->name;
             $user->email = $request->email;
             $user->designation = $request->designation;
             $user->mobile = $request->mobile;
@@ -142,9 +136,7 @@ class UserController extends Controller
         $roles = User::select('role')->distinct()->pluck('role')->toArray(); // Get unique roles as an array
     
         $validator = Validator::make($request->all(),[
-            'firstName' => 'required',
-            'midName' => 'required',
-            'lastName' => 'required',
+            'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'role' => 'required|in:' . implode(',', $roles), // Allow only roles from the database
             'password' => 'required|min:6|same:confirmPassword',
@@ -153,9 +145,7 @@ class UserController extends Controller
     
         if ($validator->passes()) {
             $user = new User();
-            $user->firstName = $request->firstName;
-            $user->midName = $request->midName;
-            $user->lastName = $request->lastName;
+            $user->name = $request->name;
             $user->email = $request->email;
             $user->role = $request->role;
             $user->password = Hash::make($request->password);

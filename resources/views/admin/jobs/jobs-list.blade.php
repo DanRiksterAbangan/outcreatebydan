@@ -36,9 +36,7 @@
                                         <tr>
                                             <th scope="col">ID</th>
                                             <th scope="col">Job</th>
-                                            <th scope="col">First Name</th>
-                                            <th scope="col">Middle Name</th>
-                                            <th scopeac="col">Last Name</th>
+                                            <th scope="col">Name</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Date Created</th>
                                             <th scope="col">Action</th>
@@ -53,9 +51,7 @@
                                                         <p>{{ $job->title }}</p>
                                                         <p>Applicants: {{ $job->applications->count() }}</p>
                                                     </td>
-                                                    <td>{{ $job->user->firstName }}</td>
-                                                    <td>{{ $job->user->midName }}</td>
-                                                    <td>{{ $job->user->lastName }}</td>
+                                                    <td>{{ $job->user->name }}</td>
                                                     <td>
                                                         @if ($job->status == 1)
                                                             <p class="text-success">Active</p>

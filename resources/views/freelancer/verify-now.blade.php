@@ -103,7 +103,7 @@
             contentType: false,
             success: function(response) {
                 if (response.status === true) {
-                    window.location.href = "{{ route('freelancer.freelancer-dashboard') }}";
+                    window.location.href = "{{ route('account.show', ['id' => auth()->user()->id]) }}";
                 } else {
                     var errors = response.errors;
 

@@ -7,7 +7,7 @@
                 <div class="col">
                     <nav aria-label="breadcrumb" class="rounded-3 p-3 mb-4">
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Admin</a></li>
                             <li class="breadcrumb-item active">Clients Verification Requests</li>
                         </ol>
                     </nav>
@@ -36,7 +36,7 @@
                                             type="text" 
                                             name="keyword" 
                                             id="keyword" 
-                                            placeholder="Search a Freelancer Verification Request" 
+                                            placeholder="Search a Client Verification Request" 
                                             class="form-control"
                                         >
                                     </form>
@@ -69,10 +69,8 @@
                                     <thead class="bg-light">
                                         <tr>
                                             <th scope="col">Request ID</th>
-                                            <th scope="col">Freelancer ID</th>
-                                            <th scope="col">Freelancer First Name</th>
-                                            <th scope="col">Freelancer Middle Name</th>
-                                            <th scope="col">Freelancer Last Name</th>
+                                            <th scope="col">Client ID</th>
+                                            <th scope="col">Client Name</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Request Date</th>
                                             <th scope="col">Action</th>
@@ -84,9 +82,7 @@
                                                 <tr>
                                                     <td>{{ $client->id }}</td>
                                                     <td>{{ $client->user->id ?? 'N/A' }}</td>
-                                                    <td>{{ $client->user->firstName ?? 'N/A' }}</td>
-                                                    <td>{{ $client->user->midName ?? 'N/A' }}</td>
-                                                    <td>{{ $client->user->lastName ?? 'N/A' }}</td>
+                                                    <td>{{ $client->user->name ?? 'N/A' }}</td>
                                                     <td>
                                                         @if ($client->isVerified == 1)
                                                             <p class="text-success">Verified</p>

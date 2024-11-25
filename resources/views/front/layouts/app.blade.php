@@ -8,6 +8,7 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
     <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
@@ -197,23 +198,22 @@
     <div class="container py-5">
         <div class="row g-5">
             <!-- Company Section -->
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6 text-start">
                 <h5 class="text-white mb-4">Company</h5>
-                <a class="btn btn-link text-white-50" href=""><i class="fas fa-info-circle me-2"></i>About Us</a>
-                <a class="btn btn-link text-white-50" href=""><i class="fas fa-phone-alt me-2"></i>Contact Us</a>
-                <a class="btn btn-link text-white-50" href=""><i class="fas fa-cogs me-2"></i>Our Services</a>
-                <a class="btn btn-link text-white-50" href=""><i class="fas fa-shield-alt me-2"></i>Privacy Policy</a>
-                <a class="btn btn-link text-white-50" href=""><i class="fas fa-file-contract me-2"></i>Terms & Conditions</a>
-            </div>
+                <a class="text-white-50 d-block" style="padding: 0;" href="">About Us</a>
+                <a class="text-white-50 d-block" style="padding: 0;" href="">Contact Us</a>
+                <a class="text-white-50 d-block" style="padding: 0;" href="">Our Services</a>
+                <a class="text-white-50 d-block" style="padding: 0;" href="">Privacy Policy</a>
+                <a class="text-white-50 d-block" style="padding: 0;" href="">Terms & Conditions</a>
+            </div>                           
 
             <!-- Quick Links Section -->
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6 text-start">
                 <h5 class="text-white mb-4">Quick Links</h5>
-                <a class="btn btn-link text-white-50" href=""><i class="fas fa-briefcase me-2"></i>Jobs</a>
-                <a class="btn btn-link text-white-50" href=""><i class="fas fa-comments me-2"></i>Career Advice</a>
-                <a class="btn btn-link text-white-50" href=""><i class="fas fa-blog me-2"></i>Blog</a>
-                <a class="btn btn-link text-white-50" href=""><i class="fas fa-question-circle me-2"></i>FAQs</a>
-                <a class="btn btn-link text-white-50" href=""><i class="fas fa-users me-2"></i>Community</a>
+                <a class="text-white-50 d-block" style="padding: 0;" href="">Jobs</a>
+                <a class="text-white-50 d-block" style="padding: 0;" href="">Blog</a>
+                <a class="text-white-50 d-block" style="padding: 0;" href="">FAQs</a>
+                <a class="text-white-50 d-block" style="padding: 0;" href="">Community</a>
             </div>
 
             <!-- Contact Section -->
@@ -229,34 +229,14 @@
                     <a class="btn btn-outline-light btn-social me-2" href=""><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
-
-            <!-- Newsletter Section -->
-            <div class="col-lg-3 col-md-6">
-                <h5 class="text-white mb-4">Newsletter</h5>
-                <p>Stay updated with our latest news and job postings. Subscribe now!</p>
-                <div class="position-relative mx-auto" style="max-width: 400px;">
-                    <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                    <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">
-                        <i class="fas fa-paper-plane"></i> SignUp
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
     <div class="container">
         <div class="copyright">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved. 
-                    Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <div class="footer-menu">
-                        <a href=""><i class="fas fa-home me-2"></i>Home</a>
-                        <a href=""><i class="fas fa-cookie-bite me-2"></i>Cookies</a>
-                        <a href=""><i class="fas fa-question-circle me-2"></i>Help</a>
-                        <a href=""><i class="fas fa-info-circle me-2"></i>FAQs</a>
-                    </div>
+                    &copy; <a class="border-bottom" href="#">TechHive</a>, All Right Reserved. 
+                    Designed By <a class="border-bottom" href="https://htmlcodex.com">TechHive</a>.
                 </div>
             </div>
         </div>
@@ -266,8 +246,8 @@
 
 </div>
 
-<!-- JQuery (Use a single version) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@yield('customJs')
 
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -326,6 +306,5 @@
 		});
 	});
 </script>
-@yield('customJs')
 </body>
 </html>

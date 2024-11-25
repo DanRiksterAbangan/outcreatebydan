@@ -63,8 +63,8 @@
                                     </div>
 
                                     <div class="col-md-6  mb-4">
-                                        <label for="" class="mb-2">Vacancy<span class="req">*</span></label>
-                                        <input value="{{ $job->vacancy }}" type="number" min="1" placeholder="Vacancy" id="vacancy" name="vacancy" class="form-control">
+                                        <label for="vacancy" class="mb-2">Vacancy<span class="req">*</span></label>
+                                        <input value="{{ $job->vacancy }}" type="text" placeholder="Vacancy" id="vacancy" name="vacancy" class="form-control">
                                         <p></p>
                                     </div>
                                 </div>
