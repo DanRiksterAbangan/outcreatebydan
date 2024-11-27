@@ -15,7 +15,8 @@ class Hire extends Model
         'employer_id',
         'freelancer_id',
         'hired_date',
-        'progress_link',  // Add this field
+        'progress_link',
+        'hire_status',  // Add this field
     ];
 
     // Relationship with Job
@@ -39,5 +40,10 @@ class Hire extends Model
     public function application()
     {
         return $this->belongsTo(JobApplication::class, 'job_application_id');
+    }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
     }
 }

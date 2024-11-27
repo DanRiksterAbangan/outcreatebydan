@@ -96,12 +96,6 @@
                             <i class="fas fa-address-book me-2"></i>Contacts
                         </a>
                     @endif
-
-                    <!-- Logout -->
-                    <a href="{{ route('account.logout') }}" 
-                       class="list-group-item list-group-item-action py-2 ripple text-danger">
-                        <i class="fas fa-sign-out-alt fa-fw me-3"></i><span>Logout</span>
-                    </a>
                 </div>
             </div>
         </nav>

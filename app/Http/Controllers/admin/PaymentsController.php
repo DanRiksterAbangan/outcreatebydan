@@ -16,12 +16,14 @@ class PaymentsController extends Controller
 
         // Apply sorting
         if ($request->has('sort')) {
-            if ($request->sort == '2') {
-                $query->where('isPaid', true); // Paid Payments
-            } elseif ($request->sort == '1') {
+            if ($request->sort == '3') {
                 $query->orderBy('payment_date', 'desc'); // Latest Payments
-            } elseif ($request->sort == '0') {
+            }elseif ($request->sort == '2') {
                 $query->orderBy('payment_date', 'asc'); // Earliest Payments
+            } elseif ($request->sort == '1') {
+                $query->where('isPaid', true); // Paid Payments
+            } elseif ($request->sort == '0') {
+                $query->where('isPaid', false); // Paid Payments
             }
         }
 
@@ -44,12 +46,10 @@ class PaymentsController extends Controller
         return view('admin.payments.edit', compact('payment'));
     }
 
-
-    
-    public function update(Request $request, $id)
-    {
+    // Update Changes
+    public function update(Request $request, $id) {
         $payment = Payment::findOrFail($id);
-    
+        
         // Check if 'proof' file is uploaded and update its path
         if ($request->hasFile('proof')) {
             // Delete old proof file if exists
@@ -58,25 +58,23 @@ class PaymentsController extends Controller
             }
     
             // Store the new proof file in 'public/storage/payments' with a generated filename
-            $proofPath = $request->file('proof')->store('payments', 'public');  // This automatically generates a file name and stores in 'storage/app/public/payments'
-    
+            $proofPath = $request->file('proof')->store('payments', 'public');
+        
             // Save the relative path to the database (no 'public' prefix)
-            $payment->proof = $proofPath; // The path stored in DB will be 'payments/filename.jpg'
+            $payment->proof = $proofPath;
         }
-    
+        
         // Update the payment status
         $payment->isPaid = $request->isPaid;
-    
+        
         // Save the updated payment record
         $payment->save();
-    
-        // Return a success response with a flash message
+        
+        // Flash message for success
         session()->flash('success', 'Payment updated successfully!');
-        return response()->json([
-            'status' => true,
-            'errors' => []
-        ]);
-    }
     
+        // Redirect to the payments list
+        return redirect()->route('admin.payments.list');
+    }
     
 }

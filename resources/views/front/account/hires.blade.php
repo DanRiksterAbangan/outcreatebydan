@@ -41,12 +41,14 @@
                                 <table class="table ">
                                     <thead class="" style="background-color: rgb(155, 245, 245)">
                                         <tr>
+                                            <th scope="col">ID</th>
                                             <th scope="col">Title</th>
                                             <th scope="col">Freelancer Name</th>
                                             <th scope="col">Mobile</th>
                                             <th scope="col">Email</th>
                                             <th scope="col">Hired Date</th>
                                             <th scope="col">Status</th>
+                                            <th scope="col">Payment</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
@@ -54,6 +56,9 @@
                                         @if ($hires->isNotEmpty())
                                             @foreach ($hires as $hire)
                                                 <tr class="active">
+                                                    <td>
+                                                        <div class="job-name fw-500">{{ $hire->id }}</div>
+                                                    </td>
                                                     <td>
                                                         <div class="job-name fw-500">{{ $hire->job->title }}</div>
                                                     </td>
@@ -68,6 +73,13 @@
                                                             <div class="job-status text-capitalize" style="color: red">Blocked</div> 
                                                         @endif
                                                     </td>
+                                                    <td>
+                                                        @if ($hire->payment && $hire->payment->isPaid == 1)
+                                                            <div class="job-status text-capitalize" style="color: green">Paid</div>
+                                                        @else
+                                                            <div class="job-status text-capitalize" style="color: red">Pending</div>
+                                                        @endif
+                                                    </td>                                                    
                                                     <td>
                                                         <div class="action-dots float-start">
                                                             <button href="#" class="btn" data-bs-toggle="dropdown" aria-expanded="false">

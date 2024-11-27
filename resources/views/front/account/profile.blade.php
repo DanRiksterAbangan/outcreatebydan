@@ -23,27 +23,31 @@
                         <div class="card border-0 shadow mb-4">
                             <div class="card-body p-4">
                                 <h3 class="fs-4 mb-1">My Profile</h3>
-                                <div class="mb-4">
-                                    <label for="name" class="form-label mb-2">Full Name<span class="text-danger">*</span></label>
-                                    <input 
-                                        type="text" 
-                                        name="name" 
-                                        id="name" 
-                                        placeholder="Enter your full name" 
-                                        class="form-control @error('name') is-invalid @enderror" 
-                                        value="{{ old('name', $user->name) }}"
-                                        required 
-                                    >
-                                    
+                                    <div class="mb-4">
+                                        <label for="name" class="form-label mb-2">Full Name</label>
+                                        <input 
+                                            type="text" 
+                                            name="name" 
+                                            id="name" 
+                                            placeholder="Enter your full name" 
+                                            class="form-control @error('name') is-invalid @enderror" 
+                                            value="{{ old('name', $user->name) }}"
+                                            required 
+                                        >
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="" class="mb-2">Designation</label>
+                                        <input type="text" name="designation" id="designation" placeholder="Designation" value="{{ $user->designation }}" class="form-control">
+                                    </div>
+
                                     @error('name')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                    <label for="about" class="mb-2 mt-4">About Me</label>
-                                    <textarea class="textarea" name="about" id="about" cols="5" rows="5" placeholder="About Me" value="{{ $user->about }}"></textarea>
-                                    <p></p>
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                        <label for="about" class="mb-2">About Me</label>
+                                        <textarea class="textarea" name="about" id="about" cols="5" rows="5" placeholder="About Me" value="{{ $user->about }}"></textarea>
+                                        <p></p>
                                 </div>
-                                </div>
-                                
                             </div>
                         </div>
 
@@ -51,14 +55,9 @@
                             <div class="card-body  p-4">
                                 <h3 class="fs-4 mb-1">Contacts</h3>
                                 <div class="mb-4">
-                                    <label for="" class="mb-2">Email*</label>
+                                    <label for="" class="mb-2">Email</label>
                                     <input type="text" name="email" id="email" placeholder="johndoe@email.com" value="{{ $user->email }}" class="form-control">
                                     <p></p>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="" class="mb-2">Designation</label>
-                                    <input type="text" name="designation" id="designation" placeholder="Designation" value="{{ $user->designation }}" class="form-control">
                                 </div>
 
                                 <div class="mb-4">
@@ -96,6 +95,47 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{-- Portfolio and Socials --}}
+                        <div class="card border-0 shadow mb-4">
+                            <div class="card-body  p-4">
+                                <h3 class="fs-4 mb-1">Credentials and Socials</h3>
+                                <div class="mb-4">
+                                    <label for="portfolio" class="mb-2">Portfolio</label>
+                                    <input type="text" name="portfolio" id="portfolio" placeholder="johndoe.com" value="{{ $user->portfolio }}" class="form-control">
+                                    <p></p>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="facebook" class="mb-2">Facebook</label>
+                                    <input type="text" name="facebook" id="facebook" placeholder="https://www.facebook.com/JohnDoe" value="{{ $user->facebook }}" class="form-control">
+                                </div>   
+
+                                <div class="mb-4">
+                                    <label for="instagram" class="mb-2">Instagram</label>
+                                    <input type="text" name="instagram" id="instagram" placeholder="https://www.instagram.com/JohnDoe" value="{{ $user->instagram }}" class="form-control">
+                                </div>   
+
+                                <div class="mb-4">
+                                    <label for="twitter" class="mb-2">X</label>
+                                    <input type="text" name="twitter" id="twitter" placeholder="https://wwww.x.com/JohnDoe" value="{{ $user->twitter }}" class="form-control">
+                                </div>   
+
+                                <div class="mb-4">
+                                    <label for="tiktok" class="mb-2">TikTok</label>
+                                    <input type="text" name="tiktok" id="tiktok" placeholder="https://www.tiktok.com/JohnDoe" value="{{ $user->tiktok }}" class="form-control">
+                                </div>   
+                                <div class="mb-4">
+                                    <label for="youtube" class="mb-2">YouTube</label>
+                                    <input type="text" name="youtube" id="youtube" placeholder="https://www.youtube.com/JohnDoe" value="{{ $user->youtube }}" class="form-control">
+                                </div>   
+                                <div class="mb-4">
+                                    <label for="github" class="mb-2">Github</label>
+                                    <input type="text" name="github" id="github" placeholder="https://github.com/JohnDoe" value="{{ $user->github }}" class="form-control">
+                                </div>   
+                            </div>
+                        </div>
+
                             <div class="card-body p-4">
                                 <button type="submit" class="btn btn-primary">Save Changes</button>
                             </div>

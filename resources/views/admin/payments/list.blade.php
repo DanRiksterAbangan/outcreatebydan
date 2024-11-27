@@ -30,7 +30,7 @@
 
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <div class="flex-grow-1">
-                                    <form method="GET" action="{{ route('admin.users') }}">
+                                    <form method="GET" action="{{ route('admin.payments.list') }}">
                                         <div class="input-group">
                                             <input 
                                                 value="{{ Request::get('keyword') }}" 
@@ -61,10 +61,10 @@
                                 <div class="col-6 col-md-2">
                                     <div class="align-end">
                                         <select name="sort" id="sort" class="form-control" onchange="sortUsers()">
-                                            <option value="3" {{ (Request::get('sort') == '3') ? 'selected' : ''}}>All Payments</option>
-                                            <option value="2" {{ (Request::get('sort') == '2') ? 'selected' : ''}}>Paid</option>
-                                            <option value="1" {{ (Request::get('sort') == '1') ? 'selected' : ''}}>Latest</option>
-                                            <option value="0" {{ (Request::get('sort') == '0') ? 'selected' : ''}}>Oldest</option>
+                                            <option value="3" {{ (Request::get('sort') == '3') ? 'selected' : ''}}>Latest</option>
+                                            <option value="2" {{ (Request::get('sort') == '2') ? 'selected' : ''}}>Oldest</option>
+                                            <option value="1" {{ (Request::get('sort') == '1') ? 'selected' : ''}}>Paid</option>
+                                            <option value="0" {{ (Request::get('sort') == '0') ? 'selected' : ''}}>Pending</option>
                                         </select>
                                     </div>
                                 </div>

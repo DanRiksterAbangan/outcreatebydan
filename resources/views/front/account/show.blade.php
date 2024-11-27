@@ -94,22 +94,85 @@
                             {!! nl2br($user->other) !!}
                         </div>
 
-                        <!-- Skills Progress -->
-                        @foreach ([['title' => 'Wind Turbines', 'progress' => 70],
-                                   ['title' => 'Solar Panels', 'progress' => 90],
-                                   ['title' => 'Hybrid Energy', 'progress' => 80]] as $skill)
-                            <div class="progress-style1 mb-4">
-                                <div class="progress-text">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="fw-bold text-secondary">{{ $skill['title'] }}</span>
-                                        <span class="text-primary fw-bold">{{ $skill['progress'] }}%</span>
-                                    </div>
-                                </div>
-                                <div class="custom-progress progress rounded-pill" role="progressbar" aria-valuenow="{{ $skill['progress'] }}" aria-valuemin="0" aria-valuemax="100">
-                                    <div class="progress-bar bg-primary rounded-pill" style="width: {{ $skill['progress'] }}%;"></div>
-                                </div>
+                        <div class="card mb-4 mb-lg-0">
+                            <div class="card-body p-0">
+                                <ul class="list-group list-group-flush rounded-3">
+                                    @php
+                                        // Helper function to ensure proper URL formatting
+                                        function formatUrl($url) {
+                                            if ($url && !preg_match('/^http(s)?:\/\//', $url)) {
+                                                return 'http://' . $url;
+                                            }
+                                            return $url;
+                                        }
+                                    @endphp
+                        
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <i class="fas fa-globe fa-lg text-warning"></i>
+                                        <p class="mb-0">
+                                            <a href="{{ formatUrl($user->portfolio) }}" target="_blank">
+                                                {{ $user->portfolio }}
+                                            </a>
+                                        </p>
+                                    </li>
+                        
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                                        <p class="mb-0">
+                                            <a href="{{ formatUrl($user->facebook) }}" target="_blank">
+                                                {{ $user->facebook }}
+                                            </a>
+                                        </p>
+                                    </li>
+                        
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
+                                        <p class="mb-0">
+                                            <a href="{{ formatUrl($user->instagram) }}" target="_blank">
+                                                {{ $user->instagram }}
+                                            </a>
+                                        </p>
+                                    </li>
+                        
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
+                                        <p class="mb-0">
+                                            <a href="{{ formatUrl($user->twitter) }}" target="_blank">
+                                                {{ $user->twitter }}
+                                            </a>
+                                        </p>
+                                    </li>
+                        
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <i class="fab fa-tiktok fa-lg" style="color: #55acee;"></i>
+                                        <p class="mb-0">
+                                            <a href="{{ formatUrl($user->tiktok) }}" target="_blank">
+                                                {{ $user->tiktok }}
+                                            </a>
+                                        </p>
+                                    </li>
+                        
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <i class="fab fa-youtube fa-lg" style="color: #55acee;"></i>
+                                        <p class="mb-0">
+                                            <a href="{{ formatUrl($user->youtube) }}" target="_blank">
+                                                {{ $user->youtube }}
+                                            </a>
+                                        </p>
+                                    </li>
+                        
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <i class="fab fa-github fa-lg text-body"></i>
+                                        <p class="mb-0">
+                                            <a href="{{ formatUrl($user->github) }}" target="_blank">
+                                                {{ $user->github }}
+                                            </a>
+                                        </p>
+                                    </li>
+                                </ul>
                             </div>
-                        @endforeach
+                        </div>
+                        
                     </div>
                 </div>
             </div>

@@ -3,63 +3,67 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
-use App\Models\Hire; // Include Hire model if needed
+use App\Models\Hire;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
     public function showPaymentForm($paymentId) {
         // Load the payment with the associated hire, freelancer, and employer
-        $payment = Payment::with('hire', 'freelancer', 'employer')->find($paymentId);
+        $payment = Payment::with('hire', 'freelancer', 'employer')->findOrFail($paymentId);
     
-        // Initialize $hireId to null
-        $hireId = null;
-    
-        // Check if the payment exists and if the hire relationship is loaded correctly
-        if ($payment && $payment->hire) {
-            $hireId = $payment->hire->id;
-        }
+        // Ensure `hireId` is defined
+        $hireId = $payment->hire ? $payment->hire->id : null;
     
         // Pass the payment and hireId to the view
         return view('front.account.edit-hires.payment.form', compact('payment', 'hireId'));
-    }    
+    }
     
     public function sendPayment(Request $request) {
-        // Validate the incoming data
+        // Step 1: Validate the request
         $validated = $request->validate([
-            'hire_id' => 'required|exists:hires,id', // Ensure the hire_id is valid
-            'reference_id' => 'required|string|max:255',
+            'hire_id' => 'required|exists:hires,id',
+            'employer_id' => 'required|exists:users,id',
+            'freelancer_id' => 'required|exists:users,id',
+            'reference_id' => 'required|string',
             'payment_method' => 'required|integer',
-            'amount_payable' => 'required|numeric',
-            'employer_id' => 'required|exists:users,id', // Ensure employer_id exists in the users table
-            'freelancer_id' => 'required|exists:users,id', // Ensure freelancer_id exists in the users table
-            'bank_name' => 'nullable|string|max:255', // Optional, only required for Bank Transfer
+            'bank_name' => 'nullable|string',
+            'proof' => 'nullable|mimes:png,jpg,jpeg,webp|max:2048',
+            'job_salary' => 'required|numeric', // Validate job_salary
+            'service_fee' => 'required|numeric', // Validate service_fee
+            'amount_payable' => 'required|numeric', // Validate amount_payable
         ]);
-    
-        // Create a new payment with the validated data
-        $payment = new Payment();
-        $payment->hire_id = $validated['hire_id']; // Save the hire_id
-        $payment->employer_id = $validated['employer_id']; // Save the employer_id
-        $payment->freelancer_id = $validated['freelancer_id']; // Save the freelancer_id
-        $payment->reference_id = $validated['reference_id'];
-        $payment->payment_method = $validated['payment_method'];
-        $payment->amount_payable = $validated['amount_payable'];
-    
-        // Save bank_name only if the payment method is Bank Transfer (0)
-        if ($validated['payment_method'] == 0 && $request->has('bank_name')) {
-            $payment->bank_name = $validated['bank_name'];  // Save bank_name if method is Bank Transfer
-        }
-    
-        // If a file was uploaded (proof of payment), handle it
+        
+        // Step 2: Handle proof file if uploaded
         if ($request->hasFile('proof')) {
-            $payment->proof = $request->file('proof')->store('payments');
+            // Store the proof file and assign the path to the validated data
+            $validated['proof'] = $request->file('proof')->store('payment_proofs', 'public');
         }
     
-        $payment->save();
+        // Step 3: Create the payment record
+        try {
+            // Create a new payment record using the validated data
+            Payment::create([
+                'hire_id' => $validated['hire_id'],
+                'employer_id' => $validated['employer_id'],
+                'freelancer_id' => $validated['freelancer_id'],
+                'reference_id' => $validated['reference_id'],
+                'payment_method' => $validated['payment_method'],
+                'bank_name' => $validated['bank_name'] ?? null, // Nullable field
+                'proof' => $validated['proof'] ?? null, // Nullable field
+                'job_salary' => $validated['job_salary'],
+                'service_fee' => $validated['service_fee'],
+                'amount_payable' => $validated['amount_payable'],
+            ]);
+        } catch (\Exception $e) {
+            // Log the error for debugging and return back with an error message
+            Log::error('Payment creation failed: ' . $e->getMessage());
+            return back()->withErrors('Error creating payment.')->withInput();
+        }
     
-        // Redirect or return a response
-        return redirect()->route('account.hires')->with('success', 'Payment submitted successfully!');
+        // Step 4: Redirect with success message
+        return redirect()->route('account.hires')->with('success', 'Payment record created successfully!');
     }
     
 }

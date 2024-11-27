@@ -91,7 +91,7 @@
                             <div class="mb-4">
                                 <label for="" class="mb-2">Experience <span class="req">*</span></label>
                                 <select name="experience" id="experience" class="form-control">
-                                    <option value="1">1 Year</option>
+                                    <option value="1">0 - 1 Year</option>
                                     <option value="2">2 Years</option>
                                     <option value="3">3 Years</option>
                                     <option value="4">4 Years</option>

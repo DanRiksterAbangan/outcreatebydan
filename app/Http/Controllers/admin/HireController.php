@@ -14,9 +14,10 @@ class HireController extends Controller
         $sort = $request->get('sort', '1');
         
         // Query the hires with sorting based on hired_date
-        $hires = Hire::with('job', 'freelancer', 'employer') // Corrected relationships
-            ->orderBy('hired_date', $sort == '0' ? 'ASC' : 'DESC') // Sort by hired_date
-            ->paginate(10);
+        $hires = Hire::with('job', 'freelancer', 'employer', 'payment') // Include the 'payment' relationship
+        ->orderBy('hired_date', $sort == '0' ? 'ASC' : 'DESC')
+        ->paginate(10);
+    
     
         // Return the view with the sorted data
         return view('admin.hires.hires-list', [

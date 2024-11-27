@@ -196,6 +196,13 @@ class AccountController extends Controller
             $user->career_start = $request->career_start;
             $user->experience = $request->experience;
             $user->other = $request->other;
+            $user->portfolio = $request->portfolio;
+            $user->facebook = $request->facebook;
+            $user->instagram = $request->instagram;
+            $user->twitter = $request->twitter;
+            $user->tiktok = $request->tiktok;
+            $user->youtube = $request->youtube;
+            $user->github = $request->github;
             $user->save();
 
             session()->flash('success','Profile Updated Successfully!');
@@ -727,17 +734,22 @@ class AccountController extends Controller
         $client = Clients::firstOrNew(['user_id' => $user->id]);
     
         $request->validate([
-            'valid_id' => 'nullable|mimes:png,jpg,jpeg,webp',
-            'selfie_with_id' => 'nullable|mimes:png,jpg,jpeg,webp',
-            'business_permit' => 'nullable|mimes:png,jpg,jpeg,webp',
-            'dti_registration' => 'nullable|mimes:png,jpg,jpeg,webp',
-            'sec_registration' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'valid_id' => 'nullable|mimes:png,jpg,jpeg,webp|max:2048',
+            'selfie_with_id' => 'nullable|mimes:png,jpg,jpeg,webp|max:2048',
+            'business_permit' => 'nullable|mimes:png,jpg,jpeg,webp|max:2048',
+            'dti_registration' => 'nullable|mimes:png,jpg,jpeg,webp|max:2048',
+            'sec_registration' => 'nullable|mimes:png,jpg,jpeg,webp|max:2048',
         ], [
             'valid_id.mimes' => 'Valid ID must be a file of type: png, jpg, jpeg, webp.',
+            'valid_id.max' => 'Valid ID must not exceed 2MB.',
             'selfie_with_id.mimes' => 'Selfie with Valid ID must be a file of type: png, jpg, jpeg, webp.',
+            'selfie_with_id.max' => 'Selfie with Valid ID must not exceed 2MB.',
             'business_permit.mimes' => 'Business Permit must be a file of type: png, jpg, jpeg, webp.',
-            'dti_registration.mimes' => 'DTI Registraion must be a file of type: png, jpg, jpeg, webp.',
+            'business_permit.max' => 'Business Permit must not exceed 2MB.',
+            'dti_registration.mimes' => 'DTI Registration must be a file of type: png, jpg, jpeg, webp.',
+            'dti_registration.max' => 'DTI Registration must not exceed 2MB.',
             'sec_registration.mimes' => 'SEC Registration must be a file of type: png, jpg, jpeg, webp.',
+            'sec_registration.max' => 'SEC Registration must not exceed 2MB.',
         ]);
     
         $uploadedFiles = [];

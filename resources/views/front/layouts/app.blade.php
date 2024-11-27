@@ -20,10 +20,6 @@
     
     <!-- Icon Font Stylesheet -->
 
-<!-- Bootstrap 5 JS (for Modal functionality) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ti-icons@0.1.2/css/themify-icons.css">
 
@@ -73,13 +69,11 @@
                 <i class="fas fa-briefcase mb-1"></i>
                 <span>Jobs</span>
             </a>
-            @auth
-                <!-- These links will only show if the user is logged in -->
-                <a href="{{ route('browseFreelancers') }}" class="nav-item nav-link {{ request()->routeIs('browseFreelancers') ? 'active fw-bold text-primary' : '' }}">
-                    <i class="fas fa-users mb-1"></i>
-                    <span>Freelancers</span>
-                </a>
-            @endauth
+            <!-- These links will only show if the user is logged in -->
+            <a href="{{ route('browseFreelancers') }}" class="nav-item nav-link {{ request()->routeIs('browseFreelancers') ? 'active fw-bold text-primary' : '' }}">
+                <i class="fas fa-users mb-1"></i>
+                <span>Freelancers</span>
+            </a>
             <a href="{{ route('about') }}" class="nav-item nav-link {{ request()->routeIs('about') ? 'active fw-bold text-primary' : '' }}">
                 <i class="fas fa-info-circle mb-1"></i>
                 <span>About</span>
@@ -92,55 +86,53 @@
         
         
         <style>
-/* Adjust navbar height and padding */
-.navbar-nav {
-    padding-top: 5px; /* Reduce top padding */
-    padding-bottom: 5px; /* Reduce bottom padding */
-    margin: 0; /* Remove any margin around navbar */
-}
+            /* Adjust navbar height and padding */
+            .navbar-nav {
+                padding-top: 5px; /* Reduce top padding */
+                padding-bottom: 5px; /* Reduce bottom padding */
+                margin: 0; /* Remove any margin around navbar */
+            }
 
-/* Style for each navigation item */
-.navbar-nav .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Align icons and text vertically */
-    justify-content: center;
-    text-align: center;
-    margin: 0 10px; /* Reduce horizontal space between items */
-}
+            /* Style for each navigation item */
+            .navbar-nav .nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center; /* Align icons and text vertically */
+                justify-content: center;
+                text-align: center;
+                margin: 0 10px; /* Reduce horizontal space between items */
+            }
 
-/* Adjust icon styling */
-.navbar-nav .nav-link i {
-    font-size: 20px; /* Reduce icon size */
-    margin-bottom: 5px; /* Space between icon and text */
-    padding: 3px; /* Less padding around the icon */
-}
+            /* Adjust icon styling */
+            .navbar-nav .nav-link i {
+                font-size: 20px; /* Reduce icon size */
+                margin-bottom: 5px; /* Space between icon and text */
+                padding: 3px; /* Less padding around the icon */
+            }
 
-/* Adjust text size and spacing */
-.navbar-nav .nav-link span {
-    font-size: 12px; /* Smaller text size */
-    display: block; /* Ensure the text is below the icon */
-    padding: 2px 0; /* Add minimal vertical padding for spacing */
-}
+            /* Adjust text size and spacing */
+            .navbar-nav .nav-link span {
+                font-size: 12px; /* Smaller text size */
+                display: block; /* Ensure the text is below the icon */
+                padding: 2px 0; /* Add minimal vertical padding for spacing */
+            }
 
-/* Add space around the active link */
-.navbar-nav .nav-link.active {
-    margin-top: 3px; /* Reduce space on top of active link */
-    margin-bottom: 3px; /* Reduce space below active link */
-}
+            /* Add space around the active link */
+            .navbar-nav .nav-link.active {
+                margin-top: 3px; /* Reduce space on top of active link */
+                margin-bottom: 3px; /* Reduce space below active link */
+            }
 
-/* Add hover effects to the icons and links for better interactivity */
-.navbar-nav .nav-link:hover {
-    text-decoration: none; /* Remove underline on hover */
-    color: #007bff; /* Change link color on hover */
-}
+            /* Add hover effects to the icons and links for better interactivity */
+            .navbar-nav .nav-link:hover {
+                text-decoration: none; /* Remove underline on hover */
+                color: #007bff; /* Change link color on hover */
+            }
 
-.navbar-nav .nav-link.active {
-    color: #007bff; /* Active state color */
-    font-weight: bold; /* Make active text bold */
-}
-
-
+            .navbar-nav .nav-link.active {
+                color: #007bff; /* Active state color */
+                font-weight: bold; /* Make active text bold */
+            }
         </style>
         <!-- Authentication Dropdown -->
         <div class="dropdown ms-lg-3" style="margin-right: 50px;">
@@ -161,7 +153,9 @@
     @else
     <!-- Post a Job for User/Admin -->
         @if (Auth::user()->role == 'user' || Auth::user()->role == 'admin')
-            <li><a class="dropdown-item" href="{{ route('account.createJob') }}"><i class="fas fa-plus me-2"></i>Post a Job</a></li>
+            @if (Auth::user()->client && Auth::user()->client->isVerified == 1)
+                <li><a class="dropdown-item" href="{{ route('account.createJob') }}"><i class="fas fa-plus me-2"></i>Post a Job</a></li>
+            @endif
         @endif
 
         <!-- Freelancer Account Link -->
@@ -170,14 +164,18 @@
         @endif
 
         <!-- Notifications Link -->
-        <li><a class="dropdown-item" href="#">
-            <i class="fas fa-bell me-2"></i> Notifications
-        </a></li>
+        <li>
+            <a class="dropdown-item" href="#">
+                <i class="fas fa-bell me-2"></i> Notifications
+            </a>
+        </li>
 
         <!-- Messages Link -->
-        <li><a class="dropdown-item" href="{{ route('chatify') }}">
-            <i class="fas fa-envelope me-2"></i> Inbox
-        </a></li>
+        <li>
+            <a class="dropdown-item" href="{{ route('chatify') }}">
+                <i class="fas fa-comment fa-fw me-3"></i><span>Chat</span>
+            </a>
+        </li>
 
         <li><hr class="dropdown-divider"></li>
 

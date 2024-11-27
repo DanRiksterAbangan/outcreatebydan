@@ -7,28 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
+        'hire_id',
+        'employer_id',
+        'freelancer_id',
+        'send_to_name',
+        'send_to_number',
+        'job_salary',
+        'service_fee',
+        'amount_payable',
         'reference_id',
         'bank_name',
         'payment_method',
         'proof',
     ];
 
-    // In the Payment model
-    public function hire()
-    {
+    public function hire() {
         return $this->belongsTo(Hire::class);
     }
 
-    // Relationship with User (Employer)
-    public function employer()
-    {
+    public function employer() {
         return $this->belongsTo(User::class, 'employer_id');
     }
 
-    // Relationship with User (Freelancer)
     public function freelancer() {
         return $this->belongsTo(User::class, 'freelancer_id');
     }
