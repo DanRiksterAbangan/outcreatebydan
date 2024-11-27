@@ -12,6 +12,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\freelancer\FreelancerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobsController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +42,8 @@ Route::post('/hire-freelancer', [JobsController::class, 'hireFreelancer'])->name
 Route::get('/profile/{id}', [AccountController::class, 'show'])->name('account.show');
 Route::get('/edit-hires/{hireId}', [AccountController::class, 'editHires'])->name('account.editHires');
 Route::put('/edit-hires/{hireId}', [AccountController::class, 'updateHires'])->name('account.updateHires');
+Route::get('/payment/{paymentId?}', [PaymentController::class, 'showPaymentForm'])->name('payment.show');
+Route::post('/payment', [PaymentController::class, 'sendPayment'])->name('account.sendPayment');
 Route::get('/forgot-password', [AccountController::class, 'forgotPassword'])->name('account.forgotPassword');
 Route::post('/process-forgot-password', [AccountController::class, 'processForgotPassword'])->name('account.processForgotPassword');
 Route::get('/reset-password/{token}', [AccountController::class, 'resetPassword'])->name('account.resetPassword');

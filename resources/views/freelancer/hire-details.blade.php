@@ -51,18 +51,33 @@
                                                             {{ $transaction->job_id }}
                                                         </h2>
                                                     </div> 
+
+                                                    <div class="box-right" style="flex: 1;"> 
+                                                        <div class="d-flex pb-2"> 
+                                                            <p class="fw-bold h7">
+                                                                Employer ID:  
+                                                            </p>
+                                                        </div>
+                                                        <h2 class="bold">
+                                                            {{ $transaction->employer->id }}
+                                                        </h2>
+                                                    </div> 
                                                 </div>                                           
                                             </div>               
                     
                                             <!-- Add Hidden Input for hire_status -->
                                             <input type="hidden" name="hire_status" value="{{ old('hire_status', $hire->hire_status) }}">
-                    
-                                            <div class="row">
-                                                <div class="mb-4 col-md-4">
-                                                    <label for="firstName" class="mb-2">Employer Name</label>
-                                                    <input value="{{ $transaction ? $transaction->employer->name : '' }}" type="text" id="firstName" name="firstName" class="form-control" readonly>
+
+                                            <div class="row justify-content-center">
+                                                <div class="col-12 col-md-6">
+                                                    <div class="mb-4">
+                                                        <label for="firstName" class="mb-2 d-block text-center" style="font-weight: 600; font-size: 1.1rem;">Employer Name</label>
+
+                                                        <input value="{{ $transaction ? $transaction->employer->name : '' }}" type="text" id="firstName" name="firstName" class="form-control text-center" readonly>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            
                     
                                             <div class="col-12 d-flex justify-content-between mb-4">
                                                 <!-- Salary Section -->
