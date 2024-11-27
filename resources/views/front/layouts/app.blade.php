@@ -69,6 +69,13 @@
                 <i class="fas fa-briefcase mb-1"></i>
                 <span>Jobs</span>
             </a>
+            @auth
+                <!-- These links will only show if the user is logged in -->
+                <a href="{{ route('browseFreelancers') }}" class="nav-item nav-link {{ request()->routeIs('browseFreelancers') ? 'active fw-bold text-primary' : '' }}">
+                    <i class="fas fa-users mb-1"></i>
+                    <span>Freelancers</span>
+                </a>
+            @endauth
             <a href="{{ route('about') }}" class="nav-item nav-link {{ request()->routeIs('about') ? 'active fw-bold text-primary' : '' }}">
                 <i class="fas fa-info-circle mb-1"></i>
                 <span>About</span>
@@ -78,6 +85,7 @@
                 <span>Contact</span>
             </a>
         </div>
+        
         
         <style>
 /* Adjust navbar height and padding */

@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\FreelancerVerificationController;
 use App\Http\Controllers\admin\HireController;
 use App\Http\Controllers\admin\JobApplicationController;
 use App\Http\Controllers\admin\JobController;
+use App\Http\Controllers\admin\PaymentsController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\freelancer\FreelancerController;
 use App\Http\Controllers\HomeController;
@@ -28,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/browse-freelancers', [HomeController::class, 'browseFreelancers'])->name('browseFreelancers');
 
 // Contact Form Routes
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
@@ -92,6 +94,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
     Route::get('/client-verifications/edit/{id}', [ClientVerificationController::class, 'edit'])->name('admin.client-verifications.edit');
     Route::put('/client-verifications/update/{id}', [ClientVerificationController::class, 'update'])->name('admin.client-verifications.update');
     Route::delete('/client-verifications/{id}', [ClientVerificationController::class, 'destroyVerification'])->name('admin.client-verifications.list.deleteVerification');
+
+    // Admin Payments Authority
+    Route::get('/payments', [PaymentsController::class, 'list'])->name('admin.payments.list');
+    Route::get('/payments/edit/{id}', [PaymentsController::class, 'edit'])->name('admin.payments.edit');
+    Route::put('/payments/update/{id}', [PaymentsController::class, 'update'])->name('admin.payments.update');
 });
 
 Route::group(['prefix' => 'freelancer', 'middleware' => 'checkFreelancer'], function () {

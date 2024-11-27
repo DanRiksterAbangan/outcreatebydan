@@ -15,7 +15,8 @@
                             <div class="col-10 col-lg-8">
                                 <h1 class="display-3 text-white animated slideInDown mb-4">Empowering Filipino Talent.</h1>
                                 <p class="fs-5 fw-medium text-white mb-4 pb-2">"Connecting clients with skilled Filipino freelancers to bring visions to life."</p>
-                                <a href="{{ route('jobs') }}" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Search A Job</a>
+                                <a href="{{ route('jobs') }}" class="btn search-btn py-md-3 px-md-5 animated slideInRight p-2" style="background-color: rgb(51, 130, 221);  color: rgb(255, 255, 255);">Search Job</a>
+                                <a href="{{ route('browseFreelancers') }}" class="btn search-btn py-md-3 px-md-5 animated slideInRight p-2" style="background-color: rgb(133, 139, 160);  color: rgb(255, 255, 255); margin-left: 15px;">Search Freelancers</a>
                             </div>
                         </div>
                     </div>

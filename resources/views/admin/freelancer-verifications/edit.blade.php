@@ -175,7 +175,7 @@
         </div>
     </section>
 
-    <script>
+    <script type="text/javascript">
         document.getElementById('openModal').addEventListener('click', function() {
             var modal = new bootstrap.Modal(document.getElementById('exampleModal1'));
             modal.show();

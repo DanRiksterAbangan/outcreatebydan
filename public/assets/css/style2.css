@@ -637,3 +637,52 @@ a {
     cursor: not-allowed;
 }
 
+
+/* Define button colors for reuse */
+:root {
+    --job-btn-bg: rgb(51, 130, 221);
+    --freelancer-btn-bg: rgb(133, 139, 160);
+    --text-color: rgb(37, 34, 34);
+}
+
+/* Common button styles */
+.search-btn {
+    transition: all 0.3s ease-in-out; /* Smooth transition for hover and focus */
+    font-weight: bold;
+    border-radius: 8px;
+    text-transform: uppercase;
+}
+
+/* Hover and active states for both buttons */
+.search-btn:hover {
+    opacity: 1;
+    transform: translateY(-5px); /* Lift the button on hover */
+}
+
+.search-btn:active {
+    transform: translateY(0); /* Return to normal on click */
+}
+
+.search-btn:focus {
+    outline: none; /* Remove the default outline */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a soft focus shadow */
+}
+
+/* Individual button color customizations */
+.search-btn:nth-child(1) {
+    background-color: var(--job-btn-bg);
+    color: var(--text-color);
+}
+
+.search-btn:nth-child(2) {
+    background-color: var(--freelancer-btn-bg);
+    color: var(--text-color);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 767px) {
+    .search-btn {
+        width: 100%; /* Make buttons full width on smaller screens */
+        margin: 5px 0;
+    }
+}

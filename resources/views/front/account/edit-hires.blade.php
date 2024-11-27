@@ -30,7 +30,7 @@
                                     <div class="d-flex justify-content-between" style="gap: 20px;">
                                         <div class="box-left" style="flex: 1;"> 
                                             <div class="d-flex pb-2"> 
-                                                <p class="fw-bold h7">
+                                                <p class="fw-bold h7" style="font-weight: 600; font-size: 1.2rem; color: #575757;">
                                                     Transaction ID: 
                                                 </p>
                                             </div> 
@@ -41,7 +41,7 @@
                                 
                                         <div class="box-right" style="flex: 1;"> 
                                             <div class="d-flex pb-2"> 
-                                                <p class="fw-bold h7">
+                                                <p class="fw-bold h7" style="font-weight: 600; font-size: 1.2rem; color: #575757;">
                                                     Freelancer ID:  
                                                 </p>
                                             </div>
@@ -52,10 +52,12 @@
                                     </div>                                           
                                 </div> 
 
-                                <div class="row">
-                                    <div class="mb-4 col-md-4">
-                                        <label for="firstName" class="mb-2">Freelancer Name</label>
-                                        <input value="{{ $freelancer ? $freelancer->name : '' }}" type="text" id="id" name="id" class="form-control" readonly>
+                                <div class="row justify-content-center mb-4">
+                                    <div class="col-12 col-md-6">
+                                        <div class="mb-4">
+                                            <label for="firstName" class="mb-2 d-block text-center" style="font-weight: 600; font-size: 1.2rem; color: #575757;">Freelancer Name</label>
+                                            <input value="{{ $freelancer ? $freelancer->name : '' }}" type="text" id="id" name="id" class="form-control text-center fw-semibold" readonly>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -64,7 +66,7 @@
                                     <div class="w-50 pe-2">
                                         <div class="p-3 border rounded shadow-sm h-100">
                                             <p class="text-muted fw-bold h6 mb-0 pb-3">SALARY</p>
-                                            <p class="h1 fw-bold d-flex align-items-center">
+                                            <p class="h4 fw-bold d-flex align-items-center">
                                                 <i class="fa-solid fa-peso-sign me-2"></i>
                                                 @if (!empty($job->salary))
                                                     {{ $job->salary }}
@@ -73,15 +75,25 @@
                                         </div>
                                     </div>
                                 
-                                    <!-- Project Progress Section -->
-                                    <div class="w-50 ps-2">
-                                        <div class="p-3 border rounded shadow-sm h-100">
-                                            <p class="fw-bold h7 mb-2">
-                                                <span>Project Progress</span> Link
-                                            </p>
-                                            <input type="text" name="progress_link" value="{{ $hire->progress_link }}" placeholder="Freelancer Project Progress Link" id="progress_link" class="text-center form-control text-dark" readonly>
-                                        </div>
-                                    </div>
+                                                                        <!-- Company box (right side) -->
+                                                                        <div class="box-right w-50 ps-3">
+                                                                            <div class="col-md-12 ps-0"> 
+                                                                                <p class="ps-3 textmuted fw-bold h6 mb-0 pb-3  text-primary" style="font-size: 17px;">Company</p> 
+                                                                                <p class="h1 fw-bold d-flex" style="font-size: 15px; color:#575757;">
+                                                                                    @if (!empty($job->company_name))
+                                                                                        {{ $job->company_name }}
+                                                                                    @endif
+                                                                                    @if (!empty($job->company_location))
+                                                                                        {{ $job->company_location }}
+                                                                                    @endif
+                                                                                    @if (!empty($job->company_website))
+                                                                                        {{ $job->company_website }}
+                                                                                    @endif
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+
+                                    
                                 </div>                                        
 
                                 <div class="col-12 mb-4 d-flex">
@@ -106,73 +118,64 @@
                                         </div>
                                     </div>
                                 
-                                    <!-- Company box (right side) -->
-                                    <div class="box-right w-50 ps-3">
-                                        <div class="col-md-12 ps-0"> 
-                                            <p class="ps-3 textmuted fw-bold h6 mb-0 pb-3">Company</p> 
-                                            <p class="h1 fw-bold d-flex">
-                                                @if (!empty($job->company_name))
-                                                    {{ $job->company_name }}
-                                                @endif
-                                                @if (!empty($job->company_location))
-                                                    {{ $job->company_location }}
-                                                @endif
-                                                @if (!empty($job->company_website))
-                                                    {{ $job->company_website }}
-                                                @endif
+                                    <!-- Project Progress Section -->
+                                    <div class="w-50 ps-2">
+                                        <div class="p-3 border rounded shadow-sm h-100">
+                                            <p class="fw-bold h7 mb-2">
+                                                <span>Project Progress</span> Link
                                             </p>
+                                            <input type="text" name="progress_link" value="{{ $hire->progress_link }}" placeholder="Freelancer Project Progress Link" id="progress_link" class="text-center form-control text-dark" readonly>
+                                            <button class="btn btn-primary" id="clipboard" onclick="myFunction()">Copy Link</button>
                                         </div>
                                     </div>
                                 </div>                                                                                                                      
 
                                 <div class="col-12 px-0 mb-4 d-flex justify-content-between">
-                                    <!-- Interview and Assessment Link -->
+                                    <!-- Interview and Assessment Link (Left) -->
                                     <div class="box-right w-48 pe-2">
-                                        <div class="d-flex pb-2"> 
-                                            <p class="fw-bold h7">
-                                                <span>Interview and Assessment</span>Link
-                                            </p> 
+                                        <div class="p-3 border rounded shadow-sm">
+                                            <p class="fw-bold h6 mb-3">Interview and Assessment Link</p>
+                                            <div class="d-flex align-items-center">
+                                                <input type="text" value="{{ $hire->assessment_link }}" name="assessment_link" id="assessment_link" class="form-control me-2" placeholder="Enter Interview or Assessment Link Here" style="max-width: 75%; color: gray;">
+                                            </div>
                                         </div>
-                                        <div id="col">
-                                            <input type="text" value="{{ $hire->assessment_link }}" name="assessment_link" placeholder="Enter Interview or Assessment Link Here" id="assessment_link" class="bg btn btn-primary h8 text-left text-dark">
-                                        </div>                                 
                                     </div>
                                 
+                                    <!-- Job Status (Right) -->
                                     <div class="mb-4 col-md-6 ps-2">
                                         <label class="mb-2 fw-bold h7" for="jobStatus">Job Status</label>
                                         <div id="jobStatus">
                                             <div class="form-check">
-                                                
                                                 <input {{ ($hire->hire_status == 3) ? 'checked' : '' }} class="form-check-input" type="radio" value="3" id="hire_status-hired" name="hire_status"> 
-                                                <label class="form-check-label" for="hire_status">
+                                                <label class="form-check-label" for="hire_status-hired">
                                                     Hired
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <input {{ ($hire->hire_status == 2) ? 'checked' : '' }} class="form-check-input" type="radio" value="2" id="hire_status-final-interview" name="hire_status">
-                                                <label class="form-check-label" for="hire_status">
+                                                <label class="form-check-label" for="hire_status-final-interview">
                                                     Final Interview
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <input {{ ($hire->hire_status == 1) ? 'checked' : '' }} class="form-check-input" type="radio" value="1" id="hire_status-assessment" name="hire_status">
-                                                <label class="form-check-label" for="hire_status">
+                                                <label class="form-check-label" for="hire_status-assessment">
                                                     Assessment
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <input {{ ($hire->hire_status == 0) ? 'checked' : '' }} class="form-check-input" type="radio" value="0" id="hire_status-initial-interview" name="hire_status">
-                                                <label class="form-check-label" for="hire_status">
+                                                <label class="form-check-label" for="hire_status-initial-interview">
                                                     Initial Interview
                                                 </label>
                                             </div>
                                         </div>
-                                    </div>                                    
-                                </div>                 
+                                    </div>
+                                </div>            
 
                                 <div class="d-flex justify-content-end pt-3">
-                                    <button type="submit" class="btn btn-primary me-2">Update Request</button>
-                                    <a href="{{ route('account.hires') }}" class="btn btn-outline-danger">Cancel</a>
+                                    <button type="submit" class="btn btn-primary me-2 p-2">Update Request</button>
+                                    <a href="{{ route('account.hires') }}" class="btn btn-outline-danger p-2">Cancel</a>
                                 </div>
                             </div>
                         </div>
@@ -209,10 +212,26 @@
                                         <small class="text-danger">Note: A Service Fee of 1% will be applied to all transactions.</small>
                                     </div>
                                 
+                                    <div class="mb-4 text-center">
+                                        <label for="amount_payable" class="form-label fw-bold h7">Breakdown</label>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <!-- Amount Payable -->
+                                        <label for="amount_payable" class="form-label fw-bold h7">Job Salary</label>
+                                        <input type="text" value="{{ $job->salary }}" name="amount_payable" id="amount_payable" class="form-control text-dark text-center" readonly>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <!-- Amount Payable -->
+                                        <label for="amount_payable" class="form-label fw-bold h7">Service Fee</label>
+                                        <input type="text" value="{{ $job->salary * .05 }}" name="amount_payable" id="amount_payable" class="form-control text-dark text-center" readonly>
+                                    </div>
+
                                     <div class="mb-4">
                                         <!-- Amount Payable -->
                                         <label for="amount_payable" class="form-label fw-bold h7">Amount Payable</label>
-                                        <input type="text" value="{{ $job->salary + $job->salary * .01 }}" name="amount_payable" id="amount_payable" class="form-control text-dark text-center" readonly>
+                                        <input type="text" value="{{ $job->salary + $job->salary * .05 }}" name="amount_payable" id="amount_payable" class="form-control text-dark text-center" readonly>
                                     </div>
                                 
                                     <div class="mb-4">
@@ -250,7 +269,7 @@
                                     </div>
                                 </form>                                
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
                                 </div>
                             </div>
                         </div>
@@ -283,6 +302,28 @@
                     sendToNumberElement.value = '';
                 }
             });
+    
+            const copyButton = document.getElementById('clipboard');
+            copyButton.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent the form submission or page reload
+    
+                // Get the text field for the progress link
+                const copyText = document.getElementById('progress_link');
+    
+                if (copyText) {
+                    // Copy the text to the clipboard
+                    navigator.clipboard.writeText(copyText.value)
+                        .then(() => {
+                            alert("Copied the link: " + copyText.value);
+                        })
+                        .catch(err => {
+                            console.error("Failed to copy: ", err);
+                            alert("Failed to copy the link.");
+                        });
+                } else {
+                    alert("Progress link input not found.");
+                }
+            });
         });
-    </script>
+    </script>    
 @endsection

@@ -96,13 +96,10 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="card border-0 shadow mb-4">
                             <div class="card-body p-4">
                                 <button type="submit" class="btn btn-primary">Save Changes</button>
                             </div>
                         </div>
-                    </div>
                 </form>
             </div>
         </div>

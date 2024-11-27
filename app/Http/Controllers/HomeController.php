@@ -86,5 +86,10 @@ class HomeController extends Controller
             ]);
         }
     }
+
+    // All Freelancers
+    public function browseFreelancers() {
+        return view('front.browse-freelancers');
+    }
     
 }

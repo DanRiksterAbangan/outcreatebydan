@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('freelancer_id')->constrained('users')->onDelete('cascade');
             $table->string('amount_payable');
             $table->string('reference_id');
-            $table->string('bank_name');
+            $table->string('bank_name')->nullable();
             $table->integer('payment_method')->default(0);
             $table->string('proof');
             $table->integer('isPaid')->default(0);

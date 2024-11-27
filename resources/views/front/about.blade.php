@@ -42,7 +42,6 @@
                         <li><i class="fa fa-check text-primary me-3"></i>Find top talents to grow your business</li>
                         <li><i class="fa fa-check text-primary me-3"></i>Seamless experience with easy-to-use tools</li>
                     </ul>
-                    <a class="btn btn-primary py-3 px-5 mt-3 rounded-pill" href="">Read More</a>
                 </div>
             </div>
         </div>

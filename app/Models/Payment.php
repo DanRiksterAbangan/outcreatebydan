@@ -21,8 +21,6 @@ class Payment extends Model
     {
         return $this->belongsTo(Hire::class);
     }
-    
-
 
     // Relationship with User (Employer)
     public function employer()

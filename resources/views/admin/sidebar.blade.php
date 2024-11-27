@@ -83,6 +83,10 @@
                            class="list-group-item list-group-item-action py-2 ripple {{ request()->routeIs('admin.hires.hires-list') ? 'active' : '' }}">
                             <i class="fas fa-users-cog me-2"></i>Hires
                         </a>
+                        <a href="{{ route('admin.payments.list') }}" 
+                           class="list-group-item list-group-item-action py-2 ripple {{ request()->routeIs('admin.hires.hires-list') ? 'active' : '' }}">
+                           <i class="fa-solid fa-peso-sign me-2"></i>Payments
+                        </a>
                         <a href="{{ route('admin.freelancer-verifications.list') }}" 
                            class="list-group-item list-group-item-action py-2 ripple {{ request()->routeIs('admin.freelancer-verifications.list') ? 'active' : '' }}">
                             <i class="fas fa-check-circle me-2"></i>Freelancer Verification
