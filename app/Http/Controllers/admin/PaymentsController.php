@@ -44,45 +44,39 @@ class PaymentsController extends Controller
         return view('admin.payments.edit', compact('payment'));
     }
 
-// Update Payment
-public function update(Request $request, $id)
-{
-    // Validate the request: required 'isPaid' and optionally, the files
-    $request->validate([
-        'isPaid' => 'required|boolean', // Validate the payment status
-        'proof' => 'nullable|file|mimes:jpg,jpeg,png,gif', // Optional proof file validation (image)
-    ]);
 
-    // Find the payment record by ID, or fail if not found
-    $payment = Payment::findOrFail($id);
-
-    // Update the payment status
-    $payment->isPaid = $request->isPaid;
-
-    // Check if the 'proof' file is uploaded and handle it
-    if ($request->hasFile('proof')) {
-        // Check and delete the old proof file if it exists (optional)
-        if ($payment->proof && Storage::exists('public/' . $payment->proof)) {
-            Storage::delete('public/' . $payment->proof); // Delete old proof file from public storage
+    
+    public function update(Request $request, $id)
+    {
+        $payment = Payment::findOrFail($id);
+    
+        // Check if 'proof' file is uploaded and update its path
+        if ($request->hasFile('proof')) {
+            // Delete old proof file if exists
+            if ($payment->proof && Storage::exists('public/' . $payment->proof)) {
+                Storage::delete('public/' . $payment->proof);
+            }
+    
+            // Store the new proof file in 'public/storage/payments' with a generated filename
+            $proofPath = $request->file('proof')->store('payments', 'public');  // This automatically generates a file name and stores in 'storage/app/public/payments'
+    
+            // Save the relative path to the database (no 'public' prefix)
+            $payment->proof = $proofPath; // The path stored in DB will be 'payments/filename.jpg'
         }
-
-        // Store the new proof file in 'payments' folder under public storage
-        $file = $request->file('proof');
-        $proofPath = $file->store('payments', 'public'); // Store the proof file
-
-        // Save the path to the payment record
-        $payment->proof = $proofPath;
+    
+        // Update the payment status
+        $payment->isPaid = $request->isPaid;
+    
+        // Save the updated payment record
+        $payment->save();
+    
+        // Return a success response with a flash message
+        session()->flash('success', 'Payment updated successfully!');
+        return response()->json([
+            'status' => true,
+            'errors' => []
+        ]);
     }
-
-    // Save the updated payment record
-    $payment->save();
-
-    // Return a success response with a flash message
-    session()->flash('success', 'Payment updated successfully!');
-    return response()->json([
-        'status' => true,
-        'errors' => []
-    ]);
-}
-
+    
+    
 }

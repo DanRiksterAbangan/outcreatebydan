@@ -92,12 +92,35 @@
                                                 <label class="form-check-label" for="isPaid">Pending</label>
                                             </div>
                                         </div>
-                                        <img src="{{ asset('storage/' . $payment->proof) }}" alt="Payment Proof" class="img-fluid">
-
-                                        <div class="col-md-6 mb-4">
-                                            <label for="proof" class="mb-2">Proof</label>
-                                            <button type="button" id="openProofModal" class="btn btn-link">View Proof</button>
+                                        <!-- Proof Modal -->
+                                        <div class="modal fade" id="proofModal" tabindex="-1" aria-labelledby="proofModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="proofModalLabel">Payment Proof</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        @if(Storage::disk('public')->exists($payment->proof)) <!-- Check if the file exists in the 'public' disk -->
+                                                            <img src="{{ asset('storage/' . $payment->proof) }}" alt="Payment Proof" class="img-fluid" id="proofImage" data-bs-toggle="modal" data-bs-target="#proofModal">
+                                                        @else
+                                                            <p>No proof available.</p>
+                                                        @endif
+                                                    </div>            
+                                                </div>
+                                            </div>
                                         </div>
+
+                                        <!-- Image Thumbnails -->
+                                        <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light" style="cursor: pointer;">
+                                            @if ($payment->proof)
+                                                <img src="{{ asset('storage/' . $payment->proof) }}" style="height: 400px" class="w-50" id="openModal" data-bs-toggle="modal" data-bs-target="#proofModal">
+                                            @else
+                                                <p>No proof uploaded.</p>
+                                            @endif
+                                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                                        </div>
+
                                     </div>
                                 </div>
 
@@ -115,26 +138,6 @@
     </div>
 </section>
 
-
-
-<!-- Proof Modal -->
-<div class="modal fade" id="proofModal" tabindex="-1" aria-labelledby="proofModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="proofModalLabel">Payment Proof</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                @if(Storage::disk('public')->exists($payment->proof)) <!-- Check if the file exists in the 'public' disk -->
-                    <img src="{{ asset('storage/' . $payment->proof) }}" alt="Payment Proof" class="img-fluid">
-                @else
-                    <p>No proof available.</p>
-                @endif
-            </div>            
-        </div>
-    </div>
-</div>
 
 <script type="text/javascript">
     document.getElementById('openProofModal').addEventListener('click', function() {
