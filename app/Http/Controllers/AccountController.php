@@ -364,7 +364,17 @@ class AccountController extends Controller
             ]);
         }
     }
-    
+
+    // Posted Jobs
+    public function myRequests() {
+
+        $jobs = Job::where('user_id',Auth::user()->id)->with('jobType')->orderBy('created_at','DESC')->paginate(10);
+
+        return view('front.account.my-requests',[
+            'jobs' => $jobs
+        ]);
+    }
+
     // Posted Jobs
     public function myJobs() {
 

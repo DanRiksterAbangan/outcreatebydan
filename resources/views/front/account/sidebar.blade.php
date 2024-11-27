@@ -45,6 +45,9 @@
                             <a href="{{ route('account.myJobs') }}" class="list-group-item list-group-item-action py-2 ripple {{ request()->routeIs('account.myJobs') ? 'active' : '' }}">
                                 <i class="fas fa-folder fa-fw me-3"></i><span>My Jobs</span>
                             </a>
+                            <a href="{{ route('account.myRequests') }}" class="list-group-item list-group-item-action py-2 ripple {{ request()->routeIs('account.myRequests') ? 'active' : '' }}">
+                                <i class="fa-solid fa-circle-exclamation me-3"></i><span>My Requests</span>
+                            </a>
                             <a href="{{ route('account.hires') }}" class="list-group-item list-group-item-action py-2 ripple {{ request()->routeIs('account.hires') ? 'active' : '' }}">
                                 <i class="fas fa-user-plus fa-fw me-3"></i><span>Hired Freelancers</span>
                             </a>

@@ -8,7 +8,7 @@
                     <nav aria-label="breadcrumb" class=" rounded-3 p-3 mb-4">
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Account Settings</li>
+                            <li class="breadcrumb-item active">Jobs Posted</li>
                         </ol>
                     </nav>
                 </div>
@@ -23,9 +23,11 @@
                     <div class="card border-0 shadow mb-4 p-3">
                         <div class="card-body card-form">
                             <div class="d-flex justify-content-between">
-                                <div>
-                                    <h3 class="fs-4 mb-1">My Jobs</h3>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h3 class="fs-4 mb-1 me-2">My Jobs</h3>
+                                    <a href="{{ route('account.createJob') }}" class="btn btn-primary me-2">Make Request</a>
                                 </div>
+                                
                                 <div">
                                     <a href="{{ route('account.createJob') }}" class="btn btn-primary">Post a Job</a>
                                 </div>
@@ -35,6 +37,7 @@
                                 <table class="table ">
                                     <thead style="background-color: rgb(155, 245, 245)" >
                                         <tr>
+                                            <th scope="col">ID</th>
                                             <th scope="col">Title</th>
                                             <th scope="col">Job Created</th>
                                             <th scope="col">Applicants</th>
@@ -47,8 +50,10 @@
                                             @foreach ($jobs as $job)
                                                 <tr class="active">
                                                     <td>
+                                                        <div class="job-name fw-500">{{ $job->id }}</div>
+                                                    </td>
+                                                    <td>
                                                         <div class="job-name fw-500">{{ $job->title }}</div>
-                                                        {{-- <div class="info1">{{ $job->jobType->name }} &#8226; {{ $job->location }}</div> --}}
                                                     </td>
                                                     <td>{{ \Carbon\Carbon::parse($job->created_at)->format('d M, Y') }}</td>
                                                     <td>{{ $job->applications->count() }}</td>
