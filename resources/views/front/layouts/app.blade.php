@@ -160,8 +160,18 @@
 
         <!-- Freelancer Account Link -->
         @if (Auth::user()->role == 'freelancer')
-            <li><a class="dropdown-item" href="{{ route('account.show', ['id' => Auth::user()->id]) }}"><i class="fas fa-user-circle me-2"></i>My Account</a></li>
+            <p class="dropdown-item text-center">
+                <img src="{{ asset('assets/images/wave.png') }}" class="w-10 h-10" style="width: 20px; height: 20px;"> Hi, Freelancer!
+            </p>
         @endif
+
+        @if (Auth::user()->role == 'user')
+            <p class="dropdown-item text-center">
+                <img src="{{ asset('assets/images/wave.png') }}" class="w-10 h-10" style="width: 20px; height: 20px;"> Hi, Client!
+            </p>
+        @endif
+
+        <li><hr class="dropdown-divider"></li>
 
         <!-- Notifications Link -->
         <li>
@@ -169,6 +179,8 @@
                 <i class="fas fa-bell me-2"></i> Notifications
             </a>
         </li>
+
+        <li><a class="dropdown-item" href="{{ route('account.show', ['id' => Auth::user()->id]) }}"><i class="fas fa-user-circle me-2"></i>My Account</a></li>
 
         <!-- Messages Link -->
         <li>
