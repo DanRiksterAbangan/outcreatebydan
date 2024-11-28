@@ -43,13 +43,17 @@
 </head>
 <body data-instant-intensity="mousedown">
 <!-- Navbar Start -->
-<nav class="navbar navbar-expand-lg shadow p-3" id="navbar" style="background-color: #ddfbfd">
-    <!-- Branding -->
-    <a href="{{ route('home') }}" class="navbar-brand d-flex align-items-center text-center py-0 px-3 px-lg-5">
-        <h1 class="m-0 text-primary fw-semibold" style="font-size: 1.5rem;">
-            <i class="fas fa-briefcase me-1" style="font-size: 1.2rem;"></i>TechHive
-        </h1>
-    </a>
+<nav class="navbar navbar-expand-lg shadow p-3" id="navbar" style="background-color: #defcff">
+<!-- Branding -->
+<a href="{{ route('home') }}" class="navbar-brand d-flex align-items-center text-center py-0 px-3 px-lg-5">
+    <h1 class="m-0 text-primary fw-semibold" style="font-size: 1.5rem;">
+        <img src="{{ asset('assets/images/logo.png') }}" 
+             alt="TechHive Logo" 
+             style="width: 3rem; height: 3rem; border-radius: 50%;" 
+             class="me-2 logo-enhanced">
+        TechHive
+    </h1>
+</a>
 
     <!-- Toggler for Mobile -->
     <button class="navbar-toggler me-4" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" 
@@ -72,8 +76,9 @@
             <!-- These links will only show if the user is logged in -->
             <a href="{{ route('browseFreelancers') }}" class="nav-item nav-link {{ request()->routeIs('browseFreelancers') ? 'active fw-bold text-primary' : '' }}">
                 <i class="fas fa-users mb-1"></i>
-                <span>Freelancers</span>
+                <span>Team</span> <!-- Changed text here -->
             </a>
+            
             <a href="{{ route('about') }}" class="nav-item nav-link {{ request()->routeIs('about') ? 'active fw-bold text-primary' : '' }}">
                 <i class="fas fa-info-circle mb-1"></i>
                 <span>About</span>
@@ -286,7 +291,7 @@
                 <ul class="list-unstyled">
                     <li><a class="d-block text-gray" href="{{ route('privacy.policy') }}" style="padding: 0; transition: color 0.3s; text-decoration: none;">Privacy Policy</a></li>
                     <li><a class="d-block text-gray" href="{{ route('jobs') }}" style="padding: 0; transition: color 0.3s; text-decoration: none;">Jobs</a></li>
-                    <li><a class="d-block text-gray" href="" style="padding: 0; transition: color 0.3s; text-decoration: none;">Freelancers</a></li>
+                    <li><a class="d-block text-gray" href="{{ route('browseFreelancers') }}" style="padding: 0; transition: color 0.3s; text-decoration: none;">Team Members</a></li>
                 </ul>
             </div>
 

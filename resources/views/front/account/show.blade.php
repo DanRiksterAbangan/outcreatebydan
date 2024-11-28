@@ -86,95 +86,108 @@
                     </div>
                 </div>
 
-                <!-- Certificates & Other Info Section -->
-                <div class="card border-0 shadow-sm mb-4 rounded-4">
-                    <div class="card-body p-5">
-                        <h2 class="text-primary mb-4">Other Info</h2>
-                        <div class="text-secondary mb-4 text-center">
-                            {!! nl2br($user->other) !!}
-                        </div>
+<!-- Certificates & Other Info Section -->
+<div class="card border-0 shadow-sm mb-4 rounded-4">
+    <div class="card-body p-4">
+        <h2 class="text-primary mb-4">Other Info</h2>
+        <div class="text-secondary mb-4 text-center">
+            {!! nl2br($user->other) !!}
+        </div>
 
-                        <div class="card mb-4 mb-lg-0">
-                            <div class="card-body p-0">
-                                <ul class="list-group list-group-flush rounded-3">
-                                    @php
-                                        // Helper function to ensure proper URL formatting
-                                        function formatUrl($url) {
-                                            if ($url && !preg_match('/^http(s)?:\/\//', $url)) {
-                                                return 'http://' . $url;
-                                            }
-                                            return $url;
-                                        }
-                                    @endphp
-                        
-                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                        <i class="fas fa-globe fa-lg text-warning"></i>
-                                        <p class="mb-0">
-                                            <a href="{{ formatUrl($user->portfolio) }}" target="_blank">
-                                                {{ $user->portfolio }}
-                                            </a>
-                                        </p>
-                                    </li>
-                        
-                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                        <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
-                                        <p class="mb-0">
-                                            <a href="{{ formatUrl($user->facebook) }}" target="_blank">
-                                                {{ $user->facebook }}
-                                            </a>
-                                        </p>
-                                    </li>
-                        
-                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                        <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
-                                        <p class="mb-0">
-                                            <a href="{{ formatUrl($user->instagram) }}" target="_blank">
-                                                {{ $user->instagram }}
-                                            </a>
-                                        </p>
-                                    </li>
-                        
-                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                        <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
-                                        <p class="mb-0">
-                                            <a href="{{ formatUrl($user->twitter) }}" target="_blank">
-                                                {{ $user->twitter }}
-                                            </a>
-                                        </p>
-                                    </li>
-                        
-                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                        <i class="fab fa-tiktok fa-lg" style="color: #55acee;"></i>
-                                        <p class="mb-0">
-                                            <a href="{{ formatUrl($user->tiktok) }}" target="_blank">
-                                                {{ $user->tiktok }}
-                                            </a>
-                                        </p>
-                                    </li>
-                        
-                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                        <i class="fab fa-youtube fa-lg" style="color: #55acee;"></i>
-                                        <p class="mb-0">
-                                            <a href="{{ formatUrl($user->youtube) }}" target="_blank">
-                                                {{ $user->youtube }}
-                                            </a>
-                                        </p>
-                                    </li>
-                        
-                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                        <i class="fab fa-github fa-lg text-body"></i>
-                                        <p class="mb-0">
-                                            <a href="{{ formatUrl($user->github) }}" target="_blank">
-                                                {{ $user->github }}
-                                            </a>
-                                        </p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                    </div>
+        <div class="d-flex flex-column">
+
+            @php
+                // Helper function to ensure proper URL formatting
+                function formatUrl($url) {
+                    if ($url && !preg_match('/^http(s)?:\/\//', $url)) {
+                        return 'http://' . $url;
+                    }
+                    return $url;
+                }
+            @endphp
+
+            <!-- Portfolio Link -->
+            <a href="{{ formatUrl($user->portfolio) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #f1e3a1; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
+                <div class="card-body text-center p-4" style="color: white;">
+                    <i class="fas fa-globe fa-lg text-warning mb-3" style="color: white;"></i>
+                    <h5 class="card-title fs-6 fw-bold">Portfolio</h5>
+                    <p class="card-text">
+                        <span class="text-dark fs-7">{{ $user->portfolio }}</span>
+                    </p>
                 </div>
+            </a>
+
+            <!-- Facebook Link -->
+            <a href="{{ formatUrl($user->facebook) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #3b5998; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
+                <div class="card-body text-center p-4" style="color: white;">
+                    <i class="fab fa-facebook-f fa-lg" style="color: white;"></i>
+                    <h5 class="card-title fs-6 fw-bold">Facebook</h5>
+                    <p class="card-text">
+                        <span class="text-dark fs-7">{{ $user->facebook }}</span>
+                    </p>
+                </div>
+            </a>
+
+            <!-- Instagram Link -->
+            <a href="{{ formatUrl($user->instagram) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #ac2bac; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
+                <div class="card-body text-center p-4" style="color: white;">
+                    <i class="fab fa-instagram fa-lg" style="color: white;"></i>
+                    <h5 class="card-title fs-6 fw-bold">Instagram</h5>
+                    <p class="card-text">
+                        <span class="text-dark fs-7">{{ $user->instagram }}</span>
+                    </p>
+                </div>
+            </a>
+
+            <!-- Twitter Link -->
+            <a href="{{ formatUrl($user->twitter) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #55acee; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
+                <div class="card-body text-center p-4" style="color: white;">
+                    <i class="fab fa-twitter fa-lg" style="color: white;"></i>
+                    <h5 class="card-title fs-6 fw-bold">Twitter</h5>
+                    <p class="card-text">
+                        <span class="text-dark fs-7">{{ $user->twitter }}</span>
+                    </p>
+                </div>
+            </a>
+
+            <!-- TikTok Link -->
+            <a href="{{ formatUrl($user->tiktok) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #000000; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
+                <div class="card-body text-center p-4" style="color: white;">
+                    <i class="fab fa-tiktok fa-lg" style="color: white;"></i>
+                    <h5 class="card-title fs-6 fw-bold">TikTok</h5>
+                    <p class="card-text">
+                        <span class="text-dark fs-7">{{ $user->tiktok }}</span>
+                    </p>
+                </div>
+            </a>
+
+            <!-- YouTube Link -->
+            <a href="{{ formatUrl($user->youtube) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #ff0000; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
+                <div class="card-body text-center p-4" style="color: white;">
+                    <i class="fab fa-youtube fa-lg" style="color: white;"></i>
+                    <h5 class="card-title fs-6 fw-bold">YouTube</h5>
+                    <p class="card-text">
+                        <span class="text-dark fs-7">{{ $user->youtube }}</span>
+                    </p>
+                </div>
+            </a>
+
+            <!-- GitHub Link -->
+            <a href="{{ formatUrl($user->github) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #333333; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
+                <div class="card-body text-center p-4" style="color: white;">
+                    <i class="fab fa-github fa-lg" style="color: white;"></i>
+                    <h5 class="card-title fs-6 fw-bold">GitHub</h5>
+                    <p class="card-text">
+                        <span class="text-dark fs-7">{{ $user->github }}</span>
+                    </p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+                
             </div>
         </div>
     </div>

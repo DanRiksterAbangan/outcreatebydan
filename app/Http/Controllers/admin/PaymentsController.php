@@ -39,8 +39,7 @@ class PaymentsController extends Controller
     }
 
     // Edit Payment Page
-    public function edit($id)
-    {
+    public function edit($id) {
         $payment = Payment::with(['hire', 'employer', 'freelancer'])->findOrFail($id);
 
         // Pass the payment method explicitly if needed

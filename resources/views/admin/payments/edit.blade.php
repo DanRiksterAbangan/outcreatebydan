@@ -135,7 +135,7 @@
                                         <!-- Image Thumbnails -->
                                         <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light" style="cursor: pointer;">
                                             @if ($payment->proof)
-                                                <img src="{{ asset('storage/' . $payment->proof) }}" style="height: 400px" class="w-50" id="openModal" data-bs-toggle="modal" data-bs-target="#proofModal">
+                                                <img src="{{ asset('storage/' . $payment->proof) }}" style="height: 400px; width:400px" id="openModal" data-bs-toggle="modal" data-bs-target="#proofModal">
                                             @else
                                                 <p>No proof uploaded.</p>
                                             @endif

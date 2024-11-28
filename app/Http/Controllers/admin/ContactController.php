@@ -19,6 +19,14 @@ class ContactController extends Controller
         ]);
     }
 
+    // View Message
+    public function view($id) {
+        $contact = Contact::findOrFail($id);  // Use singular $contact instead of $contacts
+        return view('admin.contacts.view', [
+            'contact' => $contact,  // Pass the singular variable to the view
+        ]);
+    }
+
     // Delete Contact
     public function destroyContact(Request $request) {
         $id = $request->id;

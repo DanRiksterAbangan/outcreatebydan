@@ -8,7 +8,7 @@
                     <nav aria-label="breadcrumb" class=" rounded-3 p-3 mb-4">
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Clients Jobs</li>
+                            <li class="breadcrumb-item active">All Contacts</li>
                         </ol>
                     </nav>
                 </div>
@@ -53,7 +53,7 @@
                                                     </td>
                                                     <td>{{ $contact->name }}</td>
                                                     <td>{{ $contact->email }}</td>
-                                                    <td>{{ $contact->message }}</td>
+                                                    <td>{{ implode(' ', array_slice(explode(' ', $contact->message), 0, 5)) }}...</td>
                                                     <td>{{ \Carbon\Carbon::parse($contact->created_at)->format('d M, Y') }}</td>
                                                     <td>
                                                         <div class="action-dots ">
@@ -61,8 +61,7 @@
                                                                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end">
-                                                                <li><a class="dropdown-item" href="#"><i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
-                                                                {{-- <li><a class="dropdown-item" href="{{ route('admin.jobs.edit',$job->id) }}"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li> --}}
+                                                                <li><a class="dropdown-item" href="{{ route('admin.contacts.view',$contact->id) }}"><i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
                                                                 <li><a class="dropdown-item" href="javascript:void(0);" onclick="deleteContact({{ $contact->id }})"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a></li>
                                                             </ul>
                                                         </div>

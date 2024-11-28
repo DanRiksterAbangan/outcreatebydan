@@ -24,12 +24,22 @@
                             </div> 
                             <div class="mb-3">
                                 <label for="password" class="mb-2">Password*</label>
-                                <input type="password" name="password" id="password" class="form-control" placeholder="********">
+                                <div class="input-group">
+                                    <input type="password" name="password" id="password" class="form-control" placeholder="********">
+                                    <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                                        <i class="bi bi-eye-slash" id="passwordIcon"></i>
+                                    </button>
+                                </div>
                                 <p></p>
                             </div> 
                             <div class="mb-3">
                                 <label for="confirmPassword" class="mb-2">Confirm Password*</label>
-                                <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" placeholder="********">
+                                <div class="input-group">
+                                    <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" placeholder="********">
+                                    <button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
+                                        <i class="bi bi-eye-slash" id="confirmPasswordIcon"></i>
+                                    </button>
+                                </div>
                                 <p></p>
                             </div> 
                             <button type="submit" class="btn btn-primary mt-2">Register</button>
@@ -46,6 +56,38 @@
 
 @section('customJs')
     <script type="text/javascript">
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordField = document.getElementById('password');
+            const passwordIcon = document.getElementById('passwordIcon');
+
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                passwordIcon.classList.remove('bi-eye-slash');
+                passwordIcon.classList.add('bi-eye');
+            } else {
+                passwordField.type = 'password';
+                passwordIcon.classList.remove('bi-eye');
+                passwordIcon.classList.add('bi-eye-slash');
+            }
+        });
+
+        document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
+            const confirmPasswordField = document.getElementById('confirmPassword');
+            const confirmPasswordIcon = document.getElementById('confirmPasswordIcon');
+
+            if (confirmPasswordField.type === 'password') {
+                confirmPasswordField.type = 'text';
+                confirmPasswordIcon.classList.remove('bi-eye-slash');
+                confirmPasswordIcon.classList.add('bi-eye');
+            } else {
+                confirmPasswordField.type = 'password';
+                confirmPasswordIcon.classList.remove('bi-eye');
+                confirmPasswordIcon.classList.add('bi-eye-slash');
+            }
+        });
+
+        // Handle validation errors and highlight fields
         function handleErrors(errors, fields) {
             fields.forEach(field => {
                 if (errors[field]) {

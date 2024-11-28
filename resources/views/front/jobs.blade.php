@@ -20,36 +20,44 @@
 
         <div class="row pt-5">
             <div class="col-md-4 col-lg-3 sidebar mb-4">
-                <form action="" name="searchForm" id="searchForm">
+                <form action="" name="searchForm" id="searchForm" method="get">
                     <div class="card border-0 shadow-lg p-4 rounded-3 bg-white">
                         <!-- Keywords Section -->
                         <div class="mb-4">
                             <h2 class="h5 text-primary mb-2">Job Title</h2>
-                            <input type="text" name="keyword" id="keyword" placeholder="Enter job title or keywords" class="form-control border-0 shadow-sm p-3 rounded-2" value="{{ Request::get('keyword') }}">
+                            <input type="text" name="keyword" id="keyword" 
+                                placeholder="Enter job title or keywords" 
+                                class="form-control border-0 shadow-sm p-3 rounded-2" 
+                                value="{{ Request::get('keyword') }}" 
+                                aria-label="Enter job title or keyword">
                         </div>
-
+                
                         <!-- Location Section -->
                         <div class="mb-4">
                             <h2 class="h5 text-primary mb-2">Location</h2>
-                            <input type="text" name="location" id="location" placeholder="City, State, or Zip Code" class="form-control border-0 shadow-sm p-3 rounded-2" value="{{ Request::get('location') }}">
+                            <input type="text" name="location" id="location" 
+                                placeholder="City, State, or Zip Code" 
+                                class="form-control border-0 shadow-sm p-3 rounded-2" 
+                                value="{{ Request::get('location') }}" 
+                                aria-label="Enter location">
                         </div>
-
+                
                         <!-- Category Section -->
                         <div class="mb-4">
-                            <h2 class="h5 text-primary mb-12">Category</h2>
-                            <select name="category" id="category" class="w-full h-16 border border-gray-300 shadow-sm p-3 rounded-lg focus:ring focus:ring-blue-200">
+                            <h2 class="h5 text-primary mb-2">Category</h2>
+                            <select name="category" id="category" class="form-control border-0 shadow-sm p-3 rounded-2" aria-label="Select job category">
                                 <option value="">Select a Category</option>
                                 @if ($categories)
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" {{ Request::get('category') == $category->id ? 'selected' : '' }}>
+                                        <option value="{{ $category->id }}" 
+                                            {{ Request::get('category') == $category->id ? 'selected' : '' }}>
                                             {{ $category->name }}
                                         </option>
                                     @endforeach
                                 @endif
                             </select>
                         </div>
-                        
-
+                
                         <!-- Job Type Section -->
                         <div class="mb-4">
                             <h2 class="h5 text-primary mb-2">Job Type</h2>
@@ -57,38 +65,50 @@
                                 @if ($jobTypes && $jobTypes->isNotEmpty())
                                     @foreach ($jobTypes as $jobType)
                                         <div class="form-check mb-2">
-                                            <input class="form-check-input shadow-sm" type="checkbox" id="jobTypeCheckbox{{ $jobType->id }}" value="{{ $jobType->id }}" name="jobTypes[]"
-                                                {{ in_array($jobType->id, (array) Request::get('jobTypes', [])) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="jobTypeCheckbox{{ $jobType->id }}">{{ $jobType->name }}</label>
+                                            <input class="form-check-input shadow-sm" 
+                                                type="checkbox" 
+                                                id="jobTypeCheckbox{{ $jobType->id }}" 
+                                                value="{{ $jobType->id }}" 
+                                                name="jobTypes[]"
+                                                {{ in_array($jobType->id, (array) Request::get('jobTypes', [])) ? 'checked' : '' }}
+                                                aria-label="Select job type {{ $jobType->name }}">
+                                            <label class="form-check-label" for="jobTypeCheckbox{{ $jobType->id }}">
+                                                {{ $jobType->name }}
+                                            </label>
                                         </div>
                                     @endforeach
                                 @endif
                             </div>
                         </div>
-                        
-
+                
                         <!-- Experience Section -->
                         <div class="mb-4">
                             <h2 class="h5 text-primary mb-2">Experience</h2>
-                            <select name="experience" id="experience" class="form-control border-0 shadow-sm rounded-2" style="height: 50px;">
+                            <select name="experience" id="experience" class="form-control border-0 shadow-sm p-3 rounded-2" style="height: 50px;" aria-label="Select years of experience">
                                 <option value="">Select Experience</option>
-                                <option value="1">1 Year</option>
-                                <option value="2">2 Years</option>
-                                <option value="3">3 Years</option>
-                                <option value="4">4 Years</option>
-                                <option value="5">5+ Years</option>
+                                <option value="1" {{ Request::get('experience') == 1 ? 'selected' : '' }}>1 Year</option>
+                                <option value="2" {{ Request::get('experience') == 2 ? 'selected' : '' }}>2 Years</option>
+                                <option value="3" {{ Request::get('experience') == 3 ? 'selected' : '' }}>3 Years</option>
+                                <option value="4" {{ Request::get('experience') == 4 ? 'selected' : '' }}>4 Years</option>
+                                <option value="5" {{ Request::get('experience') == 5 ? 'selected' : '' }}>5+ Years</option>
                             </select>
-                            
                         </div>
-
-                        <!-- Search Button -->
-                        <div class="d-grid">
-                            <button class="btn btn-primary shadow-sm py-3" type="submit">
+                
+                        <!-- Action Buttons (Search and Reset) -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-between">
+                            <!-- Search Button -->
+                            <button class="btn shadow-sm py-3 custom-btn" type="submit" style="background-color: rgb(79, 149, 255);">
                                 <i class="fas fa-search me-2"></i> Search Jobs
+                            </button>
+                            
+                            <!-- Reset Button -->
+                            <button class="btn shadow-sm py-3 custom-btn mt-3 mt-md-0" style="background-color: rgb(252, 145, 145);" type="reset" onclick="resetForm()">
+                                <i class="fas fa-times me-2"></i> Clear Filters
                             </button>
                         </div>
                     </div>
                 </form>
+                
             </div>
             <div class="col-md-8 col-lg-9">
                 <div class="job_listing_area">

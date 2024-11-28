@@ -51,9 +51,14 @@
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="mb-2">Password*</label>
-                                <input type="password" name="password" id="password" 
-                                       class="form-control @error('password') is-invalid @enderror" 
-                                       placeholder="******" required>
+                                <div class="input-group">
+                                    <input type="password" name="password" id="password" 
+                                           class="form-control @error('password') is-invalid @enderror" 
+                                           placeholder="******" required>
+                                    <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                                        <i class="bi bi-eye-slash" id="passwordIcon"></i>
+                                    </button>
+                                </div>
                                 @error('password')
                                     <p class="invalid-feedback">{{ $message }}</p>
                                 @enderror
@@ -63,19 +68,6 @@
                                 <a href="{{ route('account.forgotPassword') }}" class="mt-3 text-decoration-none text-primary">Forgot Password?</a>
                             </div>
                         </form>
-
-                        <!-- Optional Social Login Section -->
-                        <div class="text-center mt-4">
-                            <p class="text-muted">Or login with</p>
-                            <div class="d-flex justify-content-center">
-                                <button class="btn btn-outline-primary me-2">
-                                    <i class="fab fa-google me-2"></i> Google
-                                </button>
-                                <button class="btn btn-outline-primary">
-                                    <i class="fab fa-facebook me-2"></i> Facebook
-                                </button>
-                            </div>
-                        </div>
 
                     </div>
 
@@ -88,10 +80,31 @@
 
             <!-- Footer Links (Privacy Policy, Terms) -->
             <div class="mt-5 text-center">
-                <p><a href="#" class="text-muted text-decoration-none">Privacy Policy</a> | <a href="##" class="text-muted text-decoration-none">Terms and Conditions</a></p>
+                <p><a href="{{ route('privacy.policy') }}" class="text-muted text-decoration-none">Privacy Policy</a> | <a href="{{ route('terms.conditions') }}" class="text-muted text-decoration-none">Terms and Conditions</a></p>
             </div>
 
             <div class="py-lg-5">&nbsp;</div>
         </div>
     </section>
+@endsection
+
+@section('customJs')
+<script type="text/javascript">
+    document.getElementById('togglePassword').addEventListener('click', function (e) {
+        // Toggle the password visibility
+        var passwordField = document.getElementById('password');
+        var passwordIcon = document.getElementById('passwordIcon');
+        
+        // Check if the password field type is 'password'
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';  // Change it to text
+            passwordIcon.classList.remove('bi-eye-slash');
+            passwordIcon.classList.add('bi-eye');  // Change the icon to show
+        } else {
+            passwordField.type = 'password';  // Change it back to password
+            passwordIcon.classList.remove('bi-eye');
+            passwordIcon.classList.add('bi-eye-slash');  // Change the icon to hide
+        }
+    });
+</script>
 @endsection

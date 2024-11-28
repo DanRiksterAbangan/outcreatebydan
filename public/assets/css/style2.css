@@ -698,3 +698,106 @@ a {
         animation-duration: 1s; /* Adjust animation duration for mobile */
     }
 }
+
+
+/* Apply consistent size and layout to both buttons */
+.custom-btn {
+    height: 50px; /* Set a fixed height to both buttons */
+    border-radius: 8px; /* Rounded corners for a clean look */
+    font-size: 1rem; /* Consistent font size */
+    letter-spacing: 1px; /* Slight letter spacing for readability */
+    font-weight: 600; /* Bold text */
+    display: flex;
+    align-items: center; /* Vertically center the content */
+    justify-content: center; /* Horizontally center the content */
+    width: 100%; /* Full width on small screens */
+}
+
+/* Ensuring spacing between buttons is consistent */
+.d-md-flex {
+    gap: 15px; /* Space between buttons on larger screens */
+}
+
+/* Ensuring the buttons are full width on smaller screens */
+@media (max-width: 576px) {
+    .custom-btn {
+        width: 100%; /* Full width on small screens */
+    }
+}
+
+/* Enhance the circular logo with some hover effects */
+.logo-enhanced {
+    transition: transform 0.3s ease, filter 0.3s ease;
+    object-fit: cover; /* Ensures the logo is properly scaled within the circle */
+}
+
+.logo-enhanced:hover {
+    transform: scale(1.1);  /* Slightly enlarge the logo on hover */
+    filter: brightness(1.2);  /* Slight increase in brightness on hover */
+}
+
+.navbar-brand {
+    transition: background-color 0.3s ease;
+}
+
+.navbar-brand:hover {
+    background-color: rgba(0, 0, 0, 0.1);  /* Subtle background color change on hover */
+}
+
+/* For the card deck layout */
+.card-deck {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+/* Card styling */
+.card {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Icon styles */
+.card-body i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.card-body:hover i {
+    transform: scale(1.1);
+}
+
+/* Link and text styling */
+.card-body a {
+    font-weight: 600;
+    font-size: 14px;
+    color: #212529;
+    text-decoration: none;
+}
+
+.card-body a:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.card-body .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.card-body .card-text {
+    font-size: 0.9rem;
+}

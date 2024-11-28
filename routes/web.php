@@ -32,7 +32,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy.policy');
 Route::get('/terms-conditions', [HomeController::class, 'termsConditions'])->name('terms.conditions');
-Route::get('/browse-freelancers', [HomeController::class, 'browseFreelancers'])->name('browseFreelancers');
+Route::get('/meet-the-team', [HomeController::class, 'browseFreelancers'])->name('browseFreelancers');
 
 // Contact Form Routes
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
@@ -79,6 +79,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
 
     // Admin Job Contacts Authority
     Route::get('/contacts', [ContactController::class, 'index'])->name('admin.contacts.contacts-list');
+    Route::get('/contacts/view/{id}', [ContactController::class, 'view'])->name('admin.contacts.view');
     Route::delete('/contacts', [ContactController::class, 'destroyContact'])->name('admin.contacts.destroyContact');
 
     // Admin Hires Authority
