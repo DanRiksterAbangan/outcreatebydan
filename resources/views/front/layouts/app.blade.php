@@ -274,11 +274,9 @@
             <div class="col-lg-3 col-md-6 text-start">
                 <h5 class="text-white mb-4">Company</h5>
                 <ul class="list-unstyled">
-                    <li><a class="d-block text-gray" href="" style="padding: 0; transition: color 0.3s; text-decoration: none;">About Us</a></li>
-                    <li><a class="d-block text-gray" href="" style="padding: 0; transition: color 0.3s; text-decoration: none;">Contact Us</a></li>
-                    <li><a class="d-block text-gray" href="" style="padding: 0; transition: color 0.3s; text-decoration: none;">Our Services</a></li>
-                    <li><a class="d-block text-gray" href="" style="padding: 0; transition: color 0.3s; text-decoration: none;">Privacy Policy</a></li>
-                    <li><a class="d-block text-gray" href="" style="padding: 0; transition: color 0.3s; text-decoration: none;">Terms & Conditions</a></li>
+                    <li><a class="d-block text-gray" href="{{ route('about') }}" style="padding: 0; transition: color 0.3s; text-decoration: none;">About Us</a></li>
+                    <li><a class="d-block text-gray" href="{{ route('contact') }}" style="padding: 0; transition: color 0.3s; text-decoration: none;">Contact Us</a></li>
+                    <li><a class="d-block text-gray" href="{{ route('terms.conditions') }}" style="padding: 0; transition: color 0.3s; text-decoration: none;">Terms & Conditions</a></li>
                 </ul>
             </div>                           
 
@@ -286,33 +284,30 @@
             <div class="col-lg-3 col-md-6 text-start">
                 <h5 class="text-white mb-4">Quick Links</h5>
                 <ul class="list-unstyled">
-                    <li><a class="d-block text-gray" href="" style="padding: 0; transition: color 0.3s; text-decoration: none;">Jobs</a></li>
-                    <li><a class="d-block text-gray" href="" style="padding: 0; transition: color 0.3s; text-decoration: none;">Blog</a></li>
-                    <li><a class="d-block text-gray" href="" style="padding: 0; transition: color 0.3s; text-decoration: none;">FAQs</a></li>
-                    <li><a class="d-block text-gray" href="" style="padding: 0; transition: color 0.3s; text-decoration: none;">Community</a></li>
+                    <li><a class="d-block text-gray" href="{{ route('privacy.policy') }}" style="padding: 0; transition: color 0.3s; text-decoration: none;">Privacy Policy</a></li>
+                    <li><a class="d-block text-gray" href="{{ route('jobs') }}" style="padding: 0; transition: color 0.3s; text-decoration: none;">Jobs</a></li>
+                    <li><a class="d-block text-gray" href="" style="padding: 0; transition: color 0.3s; text-decoration: none;">Freelancers</a></li>
                 </ul>
             </div>
 
             <!-- Contact Section -->
             <div class="col-lg-3 col-md-6">
                 <h5 class="text-white mb-4">Contact</h5>
-                <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>South Poblacion, City of Naga, Cebu</p>
+                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>09916387846</p>
+                <p class="mb-2"><i class="fa fa-envelope me-3"></i>Techhive28@gmail.com</p>
                 <div class="d-flex pt-2">
-                    <a class="btn btn-outline-light btn-social me-2" href="" style="transition: background-color 0.3s;">
-                        <i class="fab fa-twitter"></i>
+                    <a class="btn btn-outline-light btn-social me-2" href="https://www.instagram.com/techhive_officialpage?igsh=NWtsOHp4enhhODgw" style="transition: background-color 0.3s;">
+                        <i class="fab fa-instagram"></i>
                     </a>
-                    <a class="btn btn-outline-light btn-social me-2" href="" style="transition: background-color 0.3s;">
+                    <a class="btn btn-outline-light btn-social me-2" href="https://www.facebook.com/profile.php?id=61569693745246&mibextid=ZbWKwL" style="transition: background-color 0.3s;">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a class="btn btn-outline-light btn-social me-2" href="" style="transition: background-color 0.3s;">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                    <a class="btn btn-outline-light btn-social me-2" href="" style="transition: background-color 0.3s;">
-                        <i class="fab fa-linkedin-in"></i>
+                    <a class="btn btn-outline-light btn-social me-2" href="mailto:Techhive28@gmail.com" style="transition: background-color 0.3s;">
+                        <i class="fas fa-envelope"></i>
                     </a>
                 </div>
+                
             </div>
 
             <!-- Google Map Section -->
@@ -334,7 +329,7 @@
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                     &copy; <a class="border-bottom text-gray" href="#" style="transition: color 0.3s; text-decoration: none;">TechHive</a>, All Rights Reserved. 
-                    Designed By <a class="border-bottom text-gray" href="https://htmlcodex.com" style="transition: color 0.3s; text-decoration: none;">TechHive</a>.
+                    Designed By <a class="border-bottom text-gray" href="https://techive.danabangan.online" style="transition: color 0.3s; text-decoration: none;">TechHive</a>.
                 </div>
             </div>
         </div>

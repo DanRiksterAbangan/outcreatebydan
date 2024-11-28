@@ -37,7 +37,7 @@
                                 <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
                                     <i class="fa fa-phone-alt"></i>
                                 </div>
-                                <span>+639 920 628 141</span>
+                                <span>09916387846</span>
                             </div>
                         </div>
                     </div>

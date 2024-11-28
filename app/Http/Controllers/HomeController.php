@@ -93,4 +93,17 @@ class HomeController extends Controller
         return view('front.browse-freelancers');
     }
     
+
+    public function privacyPolicy()
+        {
+            return view('front.privacy-policy');
+        }
+
+
+        public function termsConditions()
+        {
+            return view('front.terms-conditions');
+        }
+
+
 }

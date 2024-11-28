@@ -25,8 +25,8 @@
                                                     </h3>
                                                     <p>I am hiring for a project.</p>
                 
-                                                    <div class="d-grid mt-3">
-                                                        <a href="{{ route('account.clientRegistration', ['role' => 'user']) }}" class="btn btn-primary btn-lg">Register</a>
+                                                    <div class="d-grid mt-3 mb-3">
+                                                        <a href="{{ route('account.clientRegistration', ['role' => 'user']) }}" class="btn btn-primary">Register</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -45,8 +45,8 @@
                                                     </h3>
                                                     <p>I am looking for a project.</p>
                 
-                                                    <div class="d-grid mt-3">
-                                                        <a href="{{ route('account.freelancerRegistration', ['role' => 'freelancer']) }}" class="btn btn-primary btn-lg">Register</a>
+                                                    <div class="d-grid mt-3 mb-3">
+                                                        <a href="{{ route('account.freelancerRegistration', ['role' => 'freelancer']) }}" class="btn btn-primary">Register</a>
                                                     </div>
                                                 </div>
                                             </div>
