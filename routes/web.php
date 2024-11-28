@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\HireController;
 use App\Http\Controllers\admin\JobApplicationController;
 use App\Http\Controllers\admin\JobController;
 use App\Http\Controllers\admin\PaymentsController;
+use App\Http\Controllers\admin\RequestsController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\freelancer\FreelancerController;
 use App\Http\Controllers\HomeController;
@@ -99,6 +100,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkRole'], function () {
     Route::get('/payments', [PaymentsController::class, 'list'])->name('admin.payments.list');
     Route::get('/payments/edit/{id}', [PaymentsController::class, 'edit'])->name('admin.payments.edit');
     Route::put('/payments/update/{id}', [PaymentsController::class, 'update'])->name('admin.payments.update');
+
+    // Admin Requests Authority
+    Route::get('/requests', [RequestsController::class, 'list'])->name('admin.requests.list');
+    Route::get('/requests/edit/{id}', [RequestsController::class, 'edit'])->name('admin.requests.edit');
+    Route::put('/requests/update/{id}', [RequestsController::class, 'update'])->name('admin.requests.update');
 });
 
 Route::group(['prefix' => 'freelancer', 'middleware' => 'checkFreelancer'], function () {
@@ -135,6 +141,7 @@ Route::group(['prefix' => 'account'], function () {
         Route::get('/create-job', [AccountController::class, 'createJob'])->name('account.createJob');
         Route::post('/save-job', [AccountController::class, 'saveJob'])->name('account.saveJob');
         Route::get('/my-requests', [AccountController::class, 'myRequests'])->name('account.myRequests');
+        Route::post('/feature-request', [AccountController::class, 'featureRequest'])->name('account.featureRequest');
         Route::get('/my-jobs', [AccountController::class, 'myJobs'])->name('account.myJobs');
         Route::get('/my-jobs/edit/{jobId}', [AccountController::class, 'editJob'])->name('account.editJob');
         Route::post('/update-job/{jobId}', [AccountController::class, 'updateJob'])->name('account.updateJob');

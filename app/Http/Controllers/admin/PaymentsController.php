@@ -43,6 +43,9 @@ class PaymentsController extends Controller
     {
         $payment = Payment::with(['hire', 'employer', 'freelancer'])->findOrFail($id);
 
+        // Pass the payment method explicitly if needed
+        $paymentMethod = $payment->payment_method;
+
         return view('admin.payments.edit', compact('payment'));
     }
 

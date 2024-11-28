@@ -83,6 +83,10 @@
                            class="list-group-item list-group-item-action py-2 ripple {{ request()->routeIs('admin.hires.hires-list') ? 'active' : '' }}">
                             <i class="fas fa-users-cog me-2"></i>Hires
                         </a>
+                        <a href="{{ route('admin.requests.list') }}" 
+                           class="list-group-item list-group-item-action py-2 ripple {{ request()->routeIs('admin.requests.list') ? 'active' : '' }}">
+                            <i class="fa-solid fa-bell me-2"></i>Requests
+                        </a>
                         <a href="{{ route('admin.payments.list') }}" 
                            class="list-group-item list-group-item-action py-2 ripple {{ request()->routeIs('admin.hires.hires-list') ? 'active' : '' }}">
                            <i class="fa-solid fa-peso-sign me-2"></i>Payments

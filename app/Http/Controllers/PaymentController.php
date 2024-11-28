@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
+    // Open Payment Form
     public function showPaymentForm($paymentId) {
         // Load the payment with the associated hire, freelancer, and employer
         $payment = Payment::with('hire', 'freelancer', 'employer')->findOrFail($paymentId);
@@ -20,6 +21,7 @@ class PaymentController extends Controller
         return view('front.account.edit-hires.payment.form', compact('payment', 'hireId'));
     }
     
+    // Store Payment Details
     public function sendPayment(Request $request) {
         // Step 1: Validate the request
         $validated = $request->validate([
@@ -65,5 +67,4 @@ class PaymentController extends Controller
         // Step 4: Redirect with success message
         return redirect()->route('account.hires')->with('success', 'Payment record created successfully!');
     }
-    
 }

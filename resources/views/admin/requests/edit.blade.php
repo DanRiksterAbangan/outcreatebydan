@@ -8,8 +8,8 @@
                 <nav aria-label="breadcrumb" class="rounded-3 p-3 mb-4">
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.users') }}">Payments</a></li>
-                        <li class="breadcrumb-item active">Edit Payment</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.users') }}">Requests</a></li>
+                        <li class="breadcrumb-item active">Edit Request</li>
                     </ol>
                 </nav>
             </div>
@@ -23,46 +23,46 @@
                 @include('front.message')
                 <div class="card border-0 shadow mb-4">
                     <div class="card-body card-form">
-                        <form action="{{ route('admin.payments.update', $payment->id) }}" method="POST" id="paymentForm" name="paymentForm" enctype="multipart/form-data">
+                        <form action="{{ route('admin.requests.update', $request->id) }}" method="POST" id="requestForm" name="requestForm" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
                             <div>
                                 <div class="card border-0 shadow mb-4">
                                     <div class="card-body p-4">
-                                        <h3 class="fs-4 mb-1">Edit Payment</h3>
+                                        <h3 class="fs-4 mb-1">Edit Request</h3>
 
                                         <!-- Payment ID and Hire Transaction ID -->
                                         <div class="row">
                                             <div class="col-md-6 mb-4">
-                                                <label for="id" class="mb-2">Payment ID</label>
-                                                <input value="{{ $payment->id }}" type="text" id="id" name="id" class="form-control" readonly>
+                                                <label for="id" class="mb-2">Request ID</label>
+                                                <input value="{{ $request->id }}" type="text" id="id" name="id" class="form-control" readonly>
                                             </div>
                                             <div class="col-md-6 mb-4">
-                                                <label for="hire_id" class="mb-2">Hire Transaction ID</label>
-                                                <input value="{{ $payment->hire->id }}" type="text" id="hire_id" name="hire_id" class="form-control" readonly>
+                                                <label for="job_id" class="mb-2">Job ID</label>
+                                                <input value="{{ $request->job_id }}" type="text" id="job_id" name="job_id" class="form-control" readonly>
                                             </div>
                                         </div>
 
                                         <div class="mb-4">
-                                            <label for="employer_name" class="mb-2">Employer Name</label>
-                                            <input type="text" name="employer_name" id="employer_name" placeholder="John Doe" class="form-control" value="{{ $payment->employer->name }}" readonly>
+                                            <label for="job_title" class="mb-2">Job Title</label>
+                                            <input type="text" name="job_title" id="job_title" class="form-control" value="{{ $request->job_title }}" readonly>
                                         </div>
 
                                         <div class="mb-4">
-                                            <label for="freelancer_name" class="mb-2">Freelancer Name</label>
-                                            <input type="text" name="freelancer_name" id="freelancer_name" placeholder="John Doe" class="form-control" value="{{ $payment->freelancer->name }}" readonly>
+                                            <label for="client_name" class="mb-2">Client Name</label>
+                                            <input type="text" name="client_name" id="client_name" placeholder="John Doe" class="form-control" value="{{ $request->user->name }}" readonly>
                                         </div>
 
                                         <!-- Amount Payable and Reference ID -->
                                         <div class="row">
                                             <div class="col-md-6 mb-4">
                                                 <label for="amount_payable" class="mb-2">Amount Payable</label>
-                                                <input value="{{ $payment->amount_payable }}" type="text" id="amount_payable" name="amount_payable" class="form-control" readonly>
+                                                <input value="{{ $request->amount_payable }}" type="text" id="amount_payable" name="amount_payable" class="form-control" readonly>
                                             </div>
                                             <div class="col-md-6 mb-4">
                                                 <label for="reference_id" class="mb-2">Reference ID</label>
-                                                <input value="{{ $payment->reference_id }}" type="text" id="reference_id" name="reference_id" class="form-control" readonly>
+                                                <input value="{{ $request->reference_id }}" type="text" id="reference_id" name="reference_id" class="form-control" readonly>
                                             </div>
                                         </div>
 
@@ -70,7 +70,7 @@
                                         <div class="row">
                                             <div class="col-md-6 mb-4">
                                                 <label for="bank_name" class="mb-2">Bank Name</label>
-                                                <input value="{{ $payment->bank_name }}" type="text" id="bank_name" name="bank_name" class="form-control" readonly>
+                                                <input value="{{ $request->bank_name }}" type="text" id="bank_name" name="bank_name" class="form-control" readonly>
                                             </div>
 
                                             <div class="col-md-6 mb-4">
@@ -80,11 +80,11 @@
                                                     // Assign payment method text to a variable
                                                     $paymentMethodText = 'Unknown'; // Default value
                                             
-                                                    if ($payment->payment_method === 0) {
+                                                    if ($request->payment_method === 0) {
                                                         $paymentMethodText = 'Bank Transfer';
-                                                    } elseif ($payment->payment_method === 1) {
+                                                    } elseif ($request->payment_method === 1) {
                                                         $paymentMethodText = 'Paypal';
-                                                    } elseif ($payment->payment_method === 2) {
+                                                    } elseif ($request->payment_method === 2) {
                                                         $paymentMethodText = 'Gcash';
                                                     }
                                                 @endphp
@@ -97,19 +97,19 @@
                                                     class="form-control" 
                                                     readonly
                                                 >
-                                            </div>
+                                            </div>                                                                                                                                                                                                                                                                                                               
                                         </div>
 
                                         <!-- Payment Status -->
                                         <div class="mb-4 col-md-6">
                                             <div class="form-check-inline">
                                                 <label for="isPaid" class="mb-2">Payment Status:</label>
-                                                <input {{ ($payment->isPaid == 1) ? 'checked' : '' }} class="form-check-input" type="radio" value="1" id="isPaid-paid" name="isPaid">
+                                                <input {{ ($request->isPaid == 1) ? 'checked' : '' }} class="form-check-input" type="radio" value="1" id="isPaid-paid" name="isPaid">
                                                 <label class="form-check-label" for="isPaid">Paid</label>
                                             </div>
 
                                             <div class="form-check-inline">
-                                                <input {{ ($payment->isPaid == 0) ? 'checked' : '' }} class="form-check-input" type="radio" value="0" id="isPaid-pending" name="isPaid">
+                                                <input {{ ($request->isPaid == 0) ? 'checked' : '' }} class="form-check-input" type="radio" value="0" id="isPaid-pending" name="isPaid">
                                                 <label class="form-check-label" for="isPaid">Pending</label>
                                             </div>
                                         </div>
@@ -122,8 +122,8 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        @if(Storage::disk('public')->exists($payment->proof)) <!-- Check if the file exists in the 'public' disk -->
-                                                            <img src="{{ asset('storage/' . $payment->proof) }}" alt="Payment Proof" class="img-fluid" id="proofImage" data-bs-toggle="modal" data-bs-target="#proofModal">
+                                                        @if(Storage::disk('public')->exists($request->proof)) <!-- Check if the file exists in the 'public' disk -->
+                                                            <img src="{{ asset('storage/' . $request->proof) }}" alt="Payment Proof" class="img-fluid" id="proofImage" data-bs-toggle="modal" data-bs-target="#proofModal">
                                                         @else
                                                             <p>No proof available.</p>
                                                         @endif
@@ -134,8 +134,8 @@
 
                                         <!-- Image Thumbnails -->
                                         <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light" style="cursor: pointer;">
-                                            @if ($payment->proof)
-                                                <img src="{{ asset('storage/' . $payment->proof) }}" style="height: 400px" class="w-50" id="openModal" data-bs-toggle="modal" data-bs-target="#proofModal">
+                                            @if ($request->proof)
+                                                <img src="{{ asset('storage/' . $request->proof) }}" style="height: 400px" class="w-50" id="openModal" data-bs-toggle="modal" data-bs-target="#proofModal">
                                             @else
                                                 <p>No proof uploaded.</p>
                                             @endif

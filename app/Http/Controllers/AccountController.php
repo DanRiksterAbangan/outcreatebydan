@@ -8,6 +8,7 @@ use App\Models\Hire;
 use App\Models\Job;
 use App\Models\JobApplication;
 use App\Models\JobType;
+use App\Models\UserRequest;
 use App\Models\SavedJob;
 use App\Models\Clients;
 use App\Models\User;
@@ -365,16 +366,46 @@ class AccountController extends Controller
         }
     }
 
-    // Posted Jobs
+    // All Client Requests Page
     public function myRequests() {
-
-        $jobs = Job::where('user_id',Auth::user()->id)->with('jobType')->orderBy('created_at','DESC')->paginate(10);
-
-        return view('front.account.my-requests',[
-            'jobs' => $jobs
+        $requests = UserRequest::where('user_id', Auth::user()->id)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10);
+    
+        return view('front.account.my-requests', [
+            'requests' => $requests
         ]);
     }
 
+    // Feature a Job Request
+    public function featureRequest(Request $request) {
+        // Validate the incoming request
+        $validated = $request->validate([
+            'job_id' => 'required|integer', // User-inputted field
+            'job_title' => 'required|string|max:255',
+            'reference_id' => 'required|string|max:255',
+            'bank_name' => 'nullable|string',            
+            'payment_method' => 'required|in:0,1,2', // Validate against expected options (e.g., 0 = Bank, 1 = PayPal, 2 = GCash)
+            'proof' => 'required|mimes:png,jpg,jpeg,webp|max:2048', // Ensure file is an image
+        ]);
+    
+        // Create a new instance of the model
+        $userRequest = new UserRequest();
+        $userRequest->job_id = $validated['job_id']; // User-inputted field
+        $userRequest->job_title = $validated['job_title']; // User-inputted field
+        $userRequest->bank_name = $validated['bank_name'] ?? null; // Assign null if not provided
+        $userRequest->user_id = Auth::id(); // Automatically associate the logged-in user
+        $userRequest->reference_id = $validated['reference_id'];
+        $userRequest->payment_method = $validated['payment_method'];
+        $userRequest->proof = $request->file('proof')->store('requests', 'public'); // Save the uploaded file in storage/app/public/requests
+        $userRequest->amount_payable = '₱199'; // Assign the fixed value for amount_payable
+    
+        $userRequest->save();
+    
+        // Redirect back with success message
+        return redirect()->back()->with('success', 'Your request has been successfully sent!');
+    }
+    
     // Posted Jobs
     public function myJobs() {
 
