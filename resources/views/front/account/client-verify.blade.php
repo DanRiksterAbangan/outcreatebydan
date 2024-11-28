@@ -23,6 +23,17 @@
                         @if (Auth::user()->role == 'user')
                             <div class="card border-0 shadow mb-4">
                                 <div class="card-body p-4">
+
+                                    <h3 class="fs-4 mb-1">Profile Picture</h3>
+                                    <div class="mb-4">
+                                        <label for="profile_picture" class="form-label mb-2">Picture of your Valid ID</label>
+                                        <p>Please provide a Clear Image Copy of your Profile Picture.</p>
+                                        <input type="file" name="profile_picture" id="profile_picture" class="form-control @error('profile_picture') is-invalid @enderror">
+                                        @error('profile_picture')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
                                     <h3 class="fs-4 mb-1">Credentials</h3>
                                     <div class="mb-4">
                                         <label for="valid_id" class="form-label mb-2">Picture of your Valid ID</label>

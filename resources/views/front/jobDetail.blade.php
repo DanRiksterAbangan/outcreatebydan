@@ -158,6 +158,9 @@
                         </div>
                         <div class="job_content pt-3">
                             <ul class="list-unstyled" style="color: gray">
+                                <li><i class="fa fa-calendar-alt pb-3" aria-hidden="true"></i> Published By: <a href="{{ route('account.show', ['id' => $job->user->id]) }}"><span>{{ $job->user->name }}</span></a></li>
+
+
                                 <li><i class="fa fa-calendar-alt pb-3" aria-hidden="true"></i> Published on: <span>{{ Carbon\Carbon::parse($job->created_at)->format('d, M Y') }}</span></li>
                                 <li><i class="fa fa-users pb-3" aria-hidden="true"></i> Vacancy: <span>{{ $job->vacancy }}</span></li>
                                 

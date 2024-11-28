@@ -6,12 +6,15 @@
         <!-- Breadcrumb -->
         <div class="row mb-4">
             <div class="col">
+                @if (Auth::check())
                 <nav aria-label="breadcrumb" class=" rounded-3 p-3 mb-4">
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-primary text-decoration-none">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Me</li>
                     </ol>
                 </nav>
+                @endif
+               
             </div>
         </div>
 
@@ -32,27 +35,42 @@
                         
                         <!-- Profile Picture -->
                         <div class="text-center mb-4">
-                            <img src="{{ Auth::user()?->image ? asset('profile_pic/thumb/' . Auth::user()?->image) : asset('assets/images/avatar7.png') }}" 
-                                 alt="Profile Picture" 
-                                 class="rounded-circle img-fluid shadow-sm border border-2 border-primary" 
-                                 style="width: 150px; height: 150px; object-fit: cover;">
+                            @if($user->freelancer && $user->freelancer->isVerified == 1)
+                                <img src="{{ asset($user->freelancer->profile_picture) }}" 
+                                     alt="Profile Picture" 
+                                     class="rounded-circle img-fluid shadow-sm" 
+                                     style="width: 200px; height: 200px; object-fit: cover; border: 4px solid #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);" />
+                            @endif
                         </div>
+                        
 
+                        <div class="text-center mb-4">
+                            @if ($user->role == 'user')
+                                @if ($user->client && $user->client->isVerified == 1)
+                                    <img src="{{ asset($user->client->profile_picture) }}" 
+                                         alt="Profile Picture" 
+                                         class="rounded-circle img-fluid shadow-sm" 
+                                         style="width: 200px; height: 200px; object-fit: cover; border: 4px solid #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);" />
+                                @endif
+                            @endif
+                        </div>
+                        
                         <!-- Name and Designation -->
                         <div class="text-center">
                             <div class="">
                                 <h4 class="mb-0 fw-bold">
-                                    {{ $user->name}} 
-                                    @if(Auth::user()->freelancer && Auth::user()->freelancer->isVerified == 1)
+                                    {{ $user->name }} 
+                                    @if ($user->freelancer && $user->freelancer->isVerified == 1)
                                         <img src="{{ asset('assets/images/verified.png') }}" alt="Verified Freelancer" class="ms-2" style="width: 20px; height: 20px;">
                                     @endif
-
+                            
                                     <!-- Show verified image beside the name if the user/client is verified -->
-                                    @if(Auth::user()->client && Auth::user()->client->isVerified == 1)
+                                    @if ($user->client && $user->client->isVerified == 1)
                                         <img src="{{ asset('assets/images/verified.png') }}" alt="Verified Client" class="ms-2" style="width: 20px; height: 20px;">
                                     @endif 
                                 </h4>
                             </div>
+                            
                             <p class="text-muted fs-6 mb-2">{{ $user->designation ?? 'No designation provided' }}</p>
                         </div>
                         
@@ -98,7 +116,7 @@
 
             @php
                 // Helper function to ensure proper URL formatting
-                function formatUrl($url) {
+                function ($url) {
                     if ($url && !preg_match('/^http(s)?:\/\//', $url)) {
                         return 'http://' . $url;
                     }
@@ -107,7 +125,7 @@
             @endphp
 
             <!-- Portfolio Link -->
-            <a href="{{ formatUrl($user->portfolio) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #f1e3a1; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
+            <a href="{{ ($user->portfolio) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #f1e3a1; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
                 <div class="card-body text-center p-4" style="color: white;">
                     <i class="fas fa-globe fa-lg text-warning mb-3" style="color: white;"></i>
                     <h5 class="card-title fs-6 fw-bold">Portfolio</h5>
@@ -118,7 +136,7 @@
             </a>
 
             <!-- Facebook Link -->
-            <a href="{{ formatUrl($user->facebook) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #3b5998; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
+            <a href="{{ ($user->facebook) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #3b5998; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
                 <div class="card-body text-center p-4" style="color: white;">
                     <i class="fab fa-facebook-f fa-lg" style="color: white;"></i>
                     <h5 class="card-title fs-6 fw-bold">Facebook</h5>
@@ -129,7 +147,7 @@
             </a>
 
             <!-- Instagram Link -->
-            <a href="{{ formatUrl($user->instagram) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #ac2bac; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
+            <a href="{{ ($user->instagram) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #ac2bac; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
                 <div class="card-body text-center p-4" style="color: white;">
                     <i class="fab fa-instagram fa-lg" style="color: white;"></i>
                     <h5 class="card-title fs-6 fw-bold">Instagram</h5>
@@ -140,7 +158,7 @@
             </a>
 
             <!-- Twitter Link -->
-            <a href="{{ formatUrl($user->twitter) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #55acee; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
+            <a href="{{ ($user->twitter) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #55acee; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
                 <div class="card-body text-center p-4" style="color: white;">
                     <i class="fab fa-twitter fa-lg" style="color: white;"></i>
                     <h5 class="card-title fs-6 fw-bold">Twitter</h5>
@@ -151,7 +169,7 @@
             </a>
 
             <!-- TikTok Link -->
-            <a href="{{ formatUrl($user->tiktok) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #000000; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
+            <a href="{{ ($user->tiktok) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #000000; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
                 <div class="card-body text-center p-4" style="color: white;">
                     <i class="fab fa-tiktok fa-lg" style="color: white;"></i>
                     <h5 class="card-title fs-6 fw-bold">TikTok</h5>
@@ -162,7 +180,7 @@
             </a>
 
             <!-- YouTube Link -->
-            <a href="{{ formatUrl($user->youtube) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #ff0000; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
+            <a href="{{ ($user->youtube) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #ff0000; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
                 <div class="card-body text-center p-4" style="color: white;">
                     <i class="fab fa-youtube fa-lg" style="color: white;"></i>
                     <h5 class="card-title fs-6 fw-bold">YouTube</h5>
@@ -173,7 +191,7 @@
             </a>
 
             <!-- GitHub Link -->
-            <a href="{{ formatUrl($user->github) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #333333; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
+            <a href="{{ ($user->github) }}" target="_blank" class="card shadow-sm border-0 rounded-3 mb-3 social-card" style="background-color: #333333; transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none;">
                 <div class="card-body text-center p-4" style="color: white;">
                     <i class="fab fa-github fa-lg" style="color: white;"></i>
                     <h5 class="card-title fs-6 fw-bold">GitHub</h5>

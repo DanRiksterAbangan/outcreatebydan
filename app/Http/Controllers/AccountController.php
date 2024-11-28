@@ -111,8 +111,8 @@ class AccountController extends Controller
     }
 
     // User Login Page
-    public function login() {
-
+    public function login(Request $request) {
+        
         return view('front.account.login');
 
     }
@@ -236,53 +236,7 @@ class AccountController extends Controller
                          ->header('Pragma', 'no-cache')
                          ->header('Expires', '0');
     }    
-    
-    // Update Profile Picutre
-    public function updateProfilePic(Request $request) {
 
-        $id = Auth::user()->id;
-         
-        $validator = Validator::make($request->all(),[
-            'image' => 'required|image'
-        ]);
-    
-        if ($validator->passes()) {
-    
-            $image = $request->image;
-            $ext = $image->getClientOriginalExtension();
-            $imageName = $id.'-'.time().'.'.$ext;
-            $image->move(public_path('/profile_pic/'), $imageName);
-    
-            // Create a small thumbnail
-            $sourcePath = public_path('/profile_pic/'.$imageName);
-            $manager = new ImageManager(Driver::class);
-            $image = $manager->read($sourcePath);
-    
-            $image->cover(150, 150);
-            $image->toPng()->save(public_path('/profile_pic/thumb/'.$imageName));
-    
-            // Delete Old Profile Picture
-            File::delete(public_path('/profile_pic/thumb/'.Auth::user()->avatar));
-            File::delete(public_path('/profile_pic/'.Auth::user()->avatar));
-    
-            // Update the avatar column instead of image
-            User::where('id', $id)->update(['avatar' => $imageName]);
-    
-            session()->flash('success','Profile Picture Updated Successfully!');
-    
-            return response()->json([
-                'status' => true,
-                'errors' => []
-            ]);
-    
-        } else {
-            return response()->json([
-                'status' => false,
-                'errors' => $validator->errors()
-            ]);
-        }
-    }
-        
     // Create Job
     public function createJob() {
 
@@ -770,16 +724,18 @@ class AccountController extends Controller
     // Verify Credentials Function
     public function verifyCredentials(Request $request) {
         $user = Auth::user();
-    
+        
         // Use firstOrNew instead of firstOrCreate
         $client = Clients::firstOrNew(['user_id' => $user->id]);
-    
+        
+        // Validate the incoming files including profile_picture
         $request->validate([
             'valid_id' => 'nullable|mimes:png,jpg,jpeg,webp|max:2048',
             'selfie_with_id' => 'nullable|mimes:png,jpg,jpeg,webp|max:2048',
             'business_permit' => 'nullable|mimes:png,jpg,jpeg,webp|max:2048',
             'dti_registration' => 'nullable|mimes:png,jpg,jpeg,webp|max:2048',
             'sec_registration' => 'nullable|mimes:png,jpg,jpeg,webp|max:2048',
+            'profile_picture' => 'nullable|mimes:png,jpg,jpeg,webp|max:2048', // Added validation for profile picture
         ], [
             'valid_id.mimes' => 'Valid ID must be a file of type: png, jpg, jpeg, webp.',
             'valid_id.max' => 'Valid ID must not exceed 2MB.',
@@ -791,27 +747,46 @@ class AccountController extends Controller
             'dti_registration.max' => 'DTI Registration must not exceed 2MB.',
             'sec_registration.mimes' => 'SEC Registration must be a file of type: png, jpg, jpeg, webp.',
             'sec_registration.max' => 'SEC Registration must not exceed 2MB.',
+            'profile_picture.mimes' => 'Profile Picture must be a file of type: png, jpg, jpeg, webp.',
+            'profile_picture.max' => 'Profile Picture must not exceed 2MB.',
         ]);
-    
+        
         $uploadedFiles = [];
+        
+        // Loop through file fields and handle uploads
         foreach (['valid_id', 'selfie_with_id', 'business_permit', 'dti_registration', 'sec_registration'] as $fileField) {
             if ($request->hasFile($fileField)) {
                 $file = $request->file($fileField);
                 $filePath = $file->storeAs(
-                    'clients', // Changed to store in 'public/storage/clients'
+                    'clients', // Store in 'public/storage/clients'
                     time() . '_' . $fileField . '.' . $file->getClientOriginalExtension(),
                     'public' // Store in the 'public' disk
                 );
-    
+        
                 // Set the file path in the client model instance
                 $client->$fileField = '/storage/' . $filePath;
                 $uploadedFiles[$fileField] = $filePath;
             }
         }
-    
+        
+        // Handle profile picture upload
+        if ($request->hasFile('profile_picture')) {
+            $file = $request->file('profile_picture');
+            $profilePicturePath = $file->storeAs(
+                'clients', // Store in 'public/storage/clients'
+                time() . '_profile_picture.' . $file->getClientOriginalExtension(),
+                'public' // Store in the 'public' disk
+            );
+        
+            // Set the profile picture path in the client model instance
+            $client->profile_picture = '/storage/' . $profilePicturePath;
+            $uploadedFiles['profile_picture'] = $profilePicturePath;
+        }
+        
         // Save the instance to persist all updates at once
         $client->save();
-    
+        
+        // Check if any files were uploaded
         if (count($uploadedFiles) > 0) {
             session()->flash('success', 'Credentials Updated Successfully!');
             return response()->json([
@@ -827,6 +802,7 @@ class AccountController extends Controller
             ]);
         }
     }
+    
 
     // View Hire Transaction
     public function editHires($hireId) {

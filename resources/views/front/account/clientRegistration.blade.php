@@ -42,6 +42,18 @@
                                 </div>
                                 <p></p>
                             </div> 
+
+                            
+                        <!-- I agree to the Terms and Conditions -->
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input @error('terms') is-invalid @enderror" 
+                                   id="terms" name="terms" required>
+                            <label class="form-check-label" for="terms">I agree to the <a href="{{ route('terms.conditions') }}" class="text-decoration-none">Terms and Conditions</a></label>
+                            @error('terms')
+                                <p class="invalid-feedback">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        
                             <button type="submit" class="btn btn-primary mt-2">Register</button>
                         </form>                    
                     </div>

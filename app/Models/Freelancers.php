@@ -18,6 +18,7 @@ class Freelancers extends Model
         'diploma', 
         'certificate', 
         'resume', 
+        'profile_picture',
     ];    
 
     // Define the relationship with the User model

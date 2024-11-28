@@ -15,6 +15,7 @@ use App\Http\Controllers\freelancer\FreelancerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobsController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\RecoverController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,8 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy.policy');
 Route::get('/terms-conditions', [HomeController::class, 'termsConditions'])->name('terms.conditions');
 Route::get('/meet-the-team', [HomeController::class, 'browseFreelancers'])->name('browseFreelancers');
+Route::get('reset-password/{token}', [RecoverController::class, 'showResetForm'])->name('password.reset');
+Route::post('/password/update', [RecoverController::class, 'resetPassword'])->name('password.update');
 
 // Contact Form Routes
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');

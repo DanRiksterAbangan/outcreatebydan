@@ -28,27 +28,32 @@ class FreelancerController extends Controller
     // Verify Credentials Function
     public function verifyCredentials(Request $request) {
         $user = Auth::user();
-    
+        
         // Use firstOrNew instead of firstOrCreate
         $freelancer = Freelancers::firstOrNew(['user_id' => $user->id]);
     
+        // Validate the files
         $request->validate([
             'valid_id' => 'nullable|mimes:png,jpg,jpeg,webp',
             'selfie_with_id' => 'nullable|mimes:png,jpg,jpeg,webp',
             'diploma' => 'nullable|mimes:png,jpg,jpeg,webp',
             'certificate' => 'nullable|mimes:png,jpg,jpeg,webp',
             'resume' => 'nullable|mimes:pdf,doc,docx',
+            'profile_picture' => 'nullable|mimes:png,jpg,jpeg,webp|max:2048', // Added validation for profile picture
         ], [
             'valid_id.mimes' => 'Valid ID must be a file of type: png, jpg, jpeg, webp.',
             'selfie_with_id.mimes' => 'Selfie with Valid ID must be a file of type: png, jpg, jpeg, webp.',
             'diploma.mimes' => 'Diploma must be a file of type: png, jpg, jpeg, webp.',
             'certificate.mimes' => 'Certificate must be a file of type: png, jpg, jpeg, webp.',
             'resume.mimes' => 'Resume must be a file of type: pdf, doc, docx.',
+            'profile_picture.mimes' => 'Profile Picture must be a file of type: png, jpg, jpeg, webp.',
+            'profile_picture.max' => 'Profile Picture must not exceed 2MB.',
         ]);
         
-    
         $uploadedFiles = [];
-        foreach (['valid_id', 'selfie_with_id', 'diploma', 'certificate', 'resume'] as $fileField) {
+    
+        // Loop through all possible file fields including profile_picture
+        foreach (['valid_id', 'selfie_with_id', 'diploma', 'certificate', 'resume', 'profile_picture'] as $fileField) {
             if ($request->hasFile($fileField)) {
                 $file = $request->file($fileField);
                 $filePath = $file->storeAs(
@@ -66,6 +71,7 @@ class FreelancerController extends Controller
         // Save the instance to persist all updates at once
         $freelancer->save();
     
+        // Check if any files were uploaded and return the appropriate response
         if (count($uploadedFiles) > 0) {
             session()->flash('success', 'Credentials Updated Successfully!');
             return response()->json([
@@ -81,6 +87,7 @@ class FreelancerController extends Controller
             ]);
         }
     }
+    
 
     // Details of the Hiring Transaction
     public function hireDetails($id) {

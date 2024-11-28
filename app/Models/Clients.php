@@ -18,6 +18,8 @@ class Clients extends Model
         'business_permit', 
         'dti_registration', 
         'sec_registration', 
+        'profile_picture', 
+        
     ];    
 
     // Define the relationship with the User model
