@@ -66,7 +66,7 @@
                     <h2>11. Contact Us</h2>
                     <p>If you have any questions or concerns regarding these terms and conditions, please contact us at:</p>
                     <p><strong>Email:</strong> <a href="mailto:Techhive@gmail.com">Techhive@gmail.com</a></p>
-                    <p><strong>Address:</strong> [Your Company Address]</p>
+                    <p><strong>Address:</strong> City of Naga, Cebu</p>
                 </div>
             </div>
         </div>
