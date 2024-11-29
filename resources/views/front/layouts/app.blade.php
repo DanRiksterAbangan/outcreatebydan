@@ -74,10 +74,10 @@
                 <span>Jobs</span>
             </a>
             <!-- These links will only show if the user is logged in -->
-            <a href="{{ route('browseFreelancers') }}" class="nav-item nav-link {{ request()->routeIs('browseFreelancers') ? 'active fw-bold text-primary' : '' }}">
+            {{-- <a href="{{ route('browseFreelancers') }}" class="nav-item nav-link {{ request()->routeIs('browseFreelancers') ? 'active fw-bold text-primary' : '' }}">
                 <i class="fas fa-users mb-1"></i>
                 <span>Team</span> <!-- Changed text here -->
-            </a>
+            </a> --}}
             
             <a href="{{ route('about') }}" class="nav-item nav-link {{ request()->routeIs('about') ? 'active fw-bold text-primary' : '' }}">
                 <i class="fas fa-info-circle mb-1"></i>
@@ -179,11 +179,11 @@
         <li><hr class="dropdown-divider"></li>
 
         <!-- Notifications Link -->
-        <li>
+        {{-- <li>
             <a class="dropdown-item" href="#">
                 <i class="fas fa-bell me-2"></i> Notifications
             </a>
-        </li>
+        </li> --}}
 
         <li><a class="dropdown-item" href="{{ route('account.show', ['id' => Auth::user()->id]) }}"><i class="fas fa-user-circle me-2"></i>My Account</a></li>
 
