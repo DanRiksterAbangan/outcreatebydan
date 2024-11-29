@@ -119,9 +119,7 @@
                                             <th scope="col">Job Title</th>
                                             <th scope="col">Requested Date</th>
                                             <th scope="col">Status</th>
-                                            {{-- <th scope="col">Payment</th> --}}
-                                            <th scope="col">Action</th>
-                                        </tr>
+                                            {{-- <th scope="col">Payment</th> --}}                                        </tr>
                                     </thead>
                                     <tbody class="border-0">
                                         @if ($requests->isNotEmpty())
@@ -130,7 +128,7 @@
                                                     <td>{{ $request->id }}</td>
                                                     <td>{{ $request->job_id }}</td>
                                                     <td>{{ $request->job_title }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($request->request_at)->format('d M, Y') }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($request->request_date)->format('d M, Y') }}</td>
                                                     <td>
                                                         @if ($request->isPaid == 1)
                                                             <div class="request-status text-capitalize" style="color: green;"><i class="fa fa-check-circle"></i> Approved</div>
@@ -145,13 +143,7 @@
                                                             <p class="text-warning"><i class="fa fa-hourglass-half"></i> Pending</p>
                                                         @endif
                                                     </td> --}}
-                                                    <td>
-                                                        <div class="action-dots float-start">
-                                                            <button href="#" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                                            </button>
-                                                        </div>
-                                                    </td>
+                        
                                                 </tr>
                                             @endforeach
                                         @endif

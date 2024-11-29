@@ -25,7 +25,6 @@
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h3 class="fs-4 mb-1 me-2">My Jobs</h3>
-                                    <a href="{{ route('account.createJob') }}" class="btn btn-primary me-2">Make Request</a>
                                 </div>
                                 
                                 <div">
